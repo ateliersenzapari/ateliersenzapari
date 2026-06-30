@@ -52,6 +52,19 @@
 
   .nav-logo b { color: var(--dourado); font-weight: 300; }
 
+  .nav-back {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--marfim-dim);
+    text-decoration: none;
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 9px 18px;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .nav-back:hover { border-color: var(--dourado); color: var(--dourado); }
+
   .nav-tag {
     font-size: 9px;
     letter-spacing: 0.3em;
@@ -801,8 +814,9 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    nav { padding: 18px 24px; }
-    .hero { height: auto; min-height: 60vh; padding: 60px 24px; }
+    nav { padding: 14px 20px; flex-wrap: wrap; gap: 10px; }
+    .nav-tag { display: none; }
+    .hero { height: auto; min-height: 0; padding: 100px 24px 48px; }
     .combo { grid-template-columns: 1fr; direction: ltr !important; min-height: auto; }
     .combo:nth-child(even) > * { direction: ltr; }
     .combo-visual { min-height: 340px; }
@@ -824,7 +838,8 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo"><b>✦</b> &nbsp;Atelier Senza Pari</a>
+  <a href="index.html" class="nav-logo"><b>✦</b> &nbsp;Atelier Senza Pari</a>
+  <a href="index.html" class="nav-back">← Voltar ao site</a>
   <span class="nav-tag">Coleção I — Combos</span>
 </nav>
 
