@@ -73,6 +73,100 @@
     opacity: 0.7;
   }
 
+  /* ── PREVIEW GRIDS (Cases / Skins / Conjunto) ── */
+  .preview-section {
+    padding: 64px 48px 16px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .preview-section:first-of-type { padding-top: 0; }
+  .preview-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    opacity: 0.75;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .preview-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(24px, 3.2vw, 36px);
+    letter-spacing: 0.02em;
+    margin-bottom: 36px;
+  }
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .preview-card {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid rgba(201,168,76,0.12);
+    background: #111;
+  }
+  .preview-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    filter: brightness(0.88);
+  }
+  .preview-card:hover img {
+    transform: scale(1.06);
+    filter: brightness(1);
+  }
+  .preview-card-label {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 16px 14px;
+    background: linear-gradient(to top, rgba(10,10,10,0.92) 0%, transparent 100%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--marfim);
+  }
+  .preview-card-label em {
+    display: block;
+    font-style: italic;
+    font-size: 11px;
+    color: var(--dourado);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+  }
+  .preview-card-soon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    background: #111;
+    color: rgba(245,240,232,0.3);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .preview-card-soon span:first-child {
+    color: rgba(201,168,76,0.3);
+    font-size: 20px;
+  }
+  .preview-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.15), transparent);
+    margin: 56px 0 0;
+  }
+
   /* ── HERO ── */
   .hero {
     height: 100vh;
@@ -817,6 +911,8 @@
     nav { padding: 14px 20px; flex-wrap: wrap; gap: 10px; }
     .nav-tag { display: none; }
     .hero { height: auto; min-height: 0; padding: 100px 24px 48px; }
+    .preview-section { padding: 40px 20px 8px; }
+    .preview-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .combo { grid-template-columns: 1fr; direction: ltr !important; min-height: auto; }
     .combo:nth-child(even) > * { direction: ltr; }
     .combo-visual { min-height: 340px; }
@@ -852,6 +948,86 @@
   </h1>
   <div class="hero-rule"></div>
   <p class="hero-desc">Cada combo une case e skin da mesma linha — identidade visual completa para o seu iPhone.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PREVIEW: CASES -->
+<!-- ═══════════════════════════════════════ -->
+<div class="preview-section">
+  <span class="preview-label">✦ Visão Geral</span>
+  <h2 class="preview-heading">Cases</h2>
+  <div class="preview-grid">
+    <div class="preview-card" onclick="document.getElementById('combo-01').scrollIntoView({behavior:'smooth'})">
+      <img src="croco-01.png" alt="Case Croco Noir">
+      <div class="preview-card-label">Croco Noir<em>Jacaré & Dourado</em></div>
+    </div>
+    <div class="preview-card" onclick="document.getElementById('combo-02').scrollIntoView({behavior:'smooth'})">
+      <img src="marmo-01.png" alt="Case Marmo d'Oro">
+      <div class="preview-card-label">Marmo d'Oro<em>Mármore & Dourado</em></div>
+    </div>
+    <div class="preview-card" onclick="document.getElementById('combo-03').scrollIntoView({behavior:'smooth'})">
+      <img src="vetro-01.png" alt="Case Vetro Dorato">
+      <div class="preview-card-label">Vetro Dorato<em>Vidro & Resina</em></div>
+    </div>
+    <div class="preview-card" onclick="document.getElementById('combo-04').scrollIntoView({behavior:'smooth'})">
+      <img src="pelle-01.png" alt="Case Pelle Nera">
+      <div class="preview-card-label">Pelle Nera<em>Minimalismo Total</em></div>
+    </div>
+  </div>
+  <div class="preview-divider"></div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PREVIEW: SKINS -->
+<!-- ═══════════════════════════════════════ -->
+<div class="preview-section">
+  <span class="preview-label">✦ Visão Geral</span>
+  <h2 class="preview-heading">Skins</h2>
+  <div class="preview-grid">
+    <div class="preview-card" onclick="document.getElementById('combo-01').scrollIntoView({behavior:'smooth'})">
+      <div class="preview-card-soon"><span>✦</span><span>Foto em breve</span></div>
+      <div class="preview-card-label">Croco Noir<em>Skin</em></div>
+    </div>
+    <div class="preview-card" onclick="document.getElementById('combo-02').scrollIntoView({behavior:'smooth'})">
+      <div class="preview-card-soon"><span>✦</span><span>Foto em breve</span></div>
+      <div class="preview-card-label">Marmo d'Oro<em>Skin</em></div>
+    </div>
+    <div class="preview-card" onclick="document.getElementById('combo-03').scrollIntoView({behavior:'smooth'})">
+      <div class="preview-card-soon"><span>✦</span><span>Foto em breve</span></div>
+      <div class="preview-card-label">Vetro Dorato<em>Skin</em></div>
+    </div>
+    <div class="preview-card" onclick="document.getElementById('combo-04').scrollIntoView({behavior:'smooth'})">
+      <div class="preview-card-soon"><span>✦</span><span>Foto em breve</span></div>
+      <div class="preview-card-label">Pelle Nera<em>Skin</em></div>
+    </div>
+  </div>
+  <div class="preview-divider"></div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PREVIEW: CONJUNTO -->
+<!-- ═══════════════════════════════════════ -->
+<div class="preview-section">
+  <span class="preview-label">✦ Visão Geral</span>
+  <h2 class="preview-heading">Conjunto</h2>
+  <div class="preview-grid">
+    <div class="preview-card" onclick="document.getElementById('combo-01').scrollIntoView({behavior:'smooth'})">
+      <img src="croco-01.png" alt="Conjunto Croco Noir">
+      <div class="preview-card-label">Croco Noir<em>Case + Skin</em></div>
+    </div>
+    <div class="preview-card" onclick="document.getElementById('combo-02').scrollIntoView({behavior:'smooth'})">
+      <img src="marmo-01.png" alt="Conjunto Marmo d'Oro">
+      <div class="preview-card-label">Marmo d'Oro<em>Case + Skin</em></div>
+    </div>
+    <div class="preview-card" onclick="document.getElementById('combo-03').scrollIntoView({behavior:'smooth'})">
+      <img src="vetro-01.png" alt="Conjunto Vetro Dorato">
+      <div class="preview-card-label">Vetro Dorato<em>Case + Skin</em></div>
+    </div>
+    <div class="preview-card" onclick="document.getElementById('combo-04').scrollIntoView({behavior:'smooth'})">
+      <img src="pelle-01.png" alt="Conjunto Pelle Nera">
+      <div class="preview-card-label">Pelle Nera<em>Case + Skin</em></div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════════════════════════════ -->
