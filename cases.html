@@ -188,6 +188,7 @@
     grid-template-columns: 1fr 1fr;
     position: relative;
     border-top: 1px solid rgba(201,168,76,0.08);
+    scroll-margin-top: 90px;
   }
 
   .combo:nth-child(even) { direction: rtl; }
@@ -910,17 +911,17 @@
 <!-- SELETOR: CASES / SKINS / CONJUNTO -->
 <!-- ═══════════════════════════════════════ -->
 <div class="view-switch">
-  <a href="cases.html" class="view-switch-btn active">
+  <a href="cases.html#combo-01" class="view-switch-btn active">
     <span class="view-switch-num">01</span>
     <span class="view-switch-name">Cases</span>
     <span class="view-switch-desc">As cases premium, isoladamente</span>
   </a>
-  <a href="skins.html" class="view-switch-btn">
+  <a href="skins.html#combo-01" class="view-switch-btn">
     <span class="view-switch-num">02</span>
     <span class="view-switch-name">Skins</span>
     <span class="view-switch-desc">As skins em vinil, isoladamente</span>
   </a>
-  <a href="combos.html" class="view-switch-btn">
+  <a href="combos.html#combo-01" class="view-switch-btn">
     <span class="view-switch-num">03</span>
     <span class="view-switch-name">Conjunto</span>
     <span class="view-switch-desc">Case + Skin, a identidade completa</span>
@@ -1319,6 +1320,7 @@
 <script>
   const carouselState = { '01': 0, '02': 0, '03': 0, '04': 0 };
   const carouselTotal = { '01': 7, '02': 7, '03': 6, '04': 7 };
+  const carouselTimers = {};
 
   function updateCarousel(id) {
     const idx = carouselState[id];
@@ -1334,12 +1336,29 @@
     const total = carouselTotal[id];
     carouselState[id] = (carouselState[id] + dir + total) % total;
     updateCarousel(id);
+    restartAutoplay(id);
   }
 
   function goToSlide(id, idx) {
     carouselState[id] = idx;
     updateCarousel(id);
+    restartAutoplay(id);
   }
+
+  function startAutoplay(id) {
+    carouselTimers[id] = setInterval(() => {
+      const total = carouselTotal[id];
+      carouselState[id] = (carouselState[id] + 1) % total;
+      updateCarousel(id);
+    }, 3500);
+  }
+
+  function restartAutoplay(id) {
+    clearInterval(carouselTimers[id]);
+    startAutoplay(id);
+  }
+
+  Object.keys(carouselTotal).forEach(id => startAutoplay(id));
 
   // Touch swipe support
   document.querySelectorAll('.carousel').forEach(carousel => {

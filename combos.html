@@ -94,14 +94,22 @@
   }
   .view-switch-btn:hover { background: #131311; }
   .view-switch-btn.active {
-    background: linear-gradient(160deg, rgba(201,168,76,0.1), transparent);
+    background: #121210;
+    position: relative;
+  }
+  .view-switch-btn.active::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--dourado);
   }
   .view-switch-num {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 13px;
+    font-size: 20px;
     color: var(--dourado);
-    opacity: 0.6;
+    opacity: 0.7;
   }
   .view-switch-name {
     font-family: 'Cormorant Garamond', serif;
@@ -188,6 +196,7 @@
     grid-template-columns: 1fr 1fr;
     position: relative;
     border-top: 1px solid rgba(201,168,76,0.08);
+    scroll-margin-top: 90px;
   }
 
   .combo:nth-child(even) { direction: rtl; }
@@ -866,7 +875,7 @@
     .preview-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .view-switch { grid-template-columns: 1fr; padding: 0 20px 48px; gap: 1px; }
     .view-switch-btn { padding: 26px 22px; flex-direction: row; align-items: center; gap: 16px; }
-    .view-switch-num { font-size: 11px; }
+    .view-switch-num { font-size: 17px; }
     .view-switch-name { font-size: 20px; min-width: 90px; }
     .view-switch-desc { font-size: 11px; }
     .combo { grid-template-columns: 1fr; direction: ltr !important; min-height: auto; }
@@ -910,17 +919,17 @@
 <!-- SELETOR: CASES / SKINS / CONJUNTO -->
 <!-- ═══════════════════════════════════════ -->
 <div class="view-switch">
-  <a href="cases.html" class="view-switch-btn">
+  <a href="cases.html#combo-01" class="view-switch-btn">
     <span class="view-switch-num">01</span>
     <span class="view-switch-name">Cases</span>
     <span class="view-switch-desc">As cases premium, isoladamente</span>
   </a>
-  <a href="skins.html" class="view-switch-btn">
+  <a href="skins.html#combo-01" class="view-switch-btn">
     <span class="view-switch-num">02</span>
     <span class="view-switch-name">Skins</span>
     <span class="view-switch-desc">As skins em vinil, isoladamente</span>
   </a>
-  <a href="combos.html" class="view-switch-btn active">
+  <a href="combos.html#combo-01" class="view-switch-btn active">
     <span class="view-switch-num">03</span>
     <span class="view-switch-name">Conjunto</span>
     <span class="view-switch-desc">Case + Skin, a identidade completa</span>
@@ -1379,6 +1388,7 @@
 <script>
   const carouselState = { '01': 0, '02': 0, '03': 0, '04': 0 };
   const carouselTotal = { '01': 7, '02': 7, '03': 6, '04': 7 };
+  const carouselTimers = {};
 
   function updateCarousel(id) {
     const idx = carouselState[id];
@@ -1394,12 +1404,29 @@
     const total = carouselTotal[id];
     carouselState[id] = (carouselState[id] + dir + total) % total;
     updateCarousel(id);
+    restartAutoplay(id);
   }
 
   function goToSlide(id, idx) {
     carouselState[id] = idx;
     updateCarousel(id);
+    restartAutoplay(id);
   }
+
+  function startAutoplay(id) {
+    carouselTimers[id] = setInterval(() => {
+      const total = carouselTotal[id];
+      carouselState[id] = (carouselState[id] + 1) % total;
+      updateCarousel(id);
+    }, 3500);
+  }
+
+  function restartAutoplay(id) {
+    clearInterval(carouselTimers[id]);
+    startAutoplay(id);
+  }
+
+  Object.keys(carouselTotal).forEach(id => startAutoplay(id));
 
   // Touch swipe support
   document.querySelectorAll('.carousel').forEach(carousel => {
