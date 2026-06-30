@@ -73,6 +73,39 @@
     opacity: 0.7;
   }
 
+  /* ── MINI SLIDESHOW ── */
+  .mini-slideshow {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 86px;
+    border: 1px solid rgba(201,168,76,0.18);
+  }
+  .mini-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  .mini-slide.active { opacity: 1; }
+  .mini-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .mini-slide-caption {
+    position: absolute;
+    left: 0; right: 0; bottom: -30px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    opacity: 0.8;
+  }
+
   /* ── VIEW SWITCH (Cases / Skins / Conjunto) ── */
   .view-switch {
     display: grid;
@@ -871,6 +904,7 @@
     nav { padding: 14px 20px; flex-wrap: wrap; gap: 10px; }
     .nav-tag { display: none; }
     .hero { height: auto; min-height: 0; padding: 100px 24px 48px; }
+    .mini-slideshow { width: 160px; height: 160px; margin-bottom: 64px; }
     .preview-section { padding: 40px 20px 8px; }
     .preview-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .view-switch { grid-template-columns: 1fr; padding: 0 20px 48px; gap: 1px; }
@@ -916,6 +950,22 @@
 </div>
 
 <!-- ═══════════════════════════════════════ -->
+<!-- MINI SLIDESHOW AUTOMÁTICO -->
+<!-- ═══════════════════════════════════════ -->
+<div class="mini-slideshow">
+  <div class="mini-slide active" data-caption="Case">
+    <img src="croco-01.png" alt="Case Senza Pari">
+  </div>
+  <div class="mini-slide" data-caption="Skin">
+    <img src="marmo-01.png" alt="Skin Senza Pari">
+  </div>
+  <div class="mini-slide" data-caption="Conjunto">
+    <img src="vetro-01.png" alt="Conjunto Senza Pari">
+  </div>
+  <span class="mini-slide-caption" id="miniCaption">Case</span>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
 <!-- SELETOR: CASES / SKINS / CONJUNTO -->
 <!-- ═══════════════════════════════════════ -->
 <div class="view-switch">
@@ -929,12 +979,17 @@
     <span class="view-switch-name">Skins</span>
     <span class="view-switch-desc">As skins em vinil, isoladamente</span>
   </a>
-  <a href="combos.html#combo-01" class="view-switch-btn active">
+  <a href="#" onclick="revealCombos(event)" class="view-switch-btn active">
     <span class="view-switch-num">03</span>
     <span class="view-switch-name">Conjunto</span>
     <span class="view-switch-desc">Case + Skin, a identidade completa</span>
   </a>
 </div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- DETALHE: COMBOS (oculto até clicar em "Conjunto") -->
+<!-- ═══════════════════════════════════════ -->
+<div id="combosDetail" style="display:none;">
 
 <!-- ═══════════════════════════════════════ -->
 <!-- COMBO 01 — COURO DE JACARÉ -->
@@ -1378,6 +1433,8 @@
   <a href="https://wa.me/55SEUNUMERO" class="closing-btn" target="_blank">Falar no WhatsApp</a>
 </div>
 
+</div><!-- /#combosDetail -->
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo"><span>✦</span> &nbsp; Atelier Senza Pari</div>
@@ -1427,6 +1484,29 @@
   }
 
   Object.keys(carouselTotal).forEach(id => startAutoplay(id));
+
+  // Revela os combos detalhados (Conjunto) e rola até eles
+  function revealCombos(e) {
+    if (e) e.preventDefault();
+    const detail = document.getElementById('combosDetail');
+    if (detail) {
+      detail.style.display = '';
+      document.getElementById('combo-01').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  // Mini slideshow (hero) — Case / Skin / Conjunto
+  const miniSlides = document.querySelectorAll('.mini-slide');
+  const miniCaption = document.getElementById('miniCaption');
+  let miniIdx = 0;
+  if (miniSlides.length) {
+    setInterval(() => {
+      miniSlides[miniIdx].classList.remove('active');
+      miniIdx = (miniIdx + 1) % miniSlides.length;
+      miniSlides[miniIdx].classList.add('active');
+      miniCaption.textContent = miniSlides[miniIdx].dataset.caption;
+    }, 2200);
+  }
 
   // Touch swipe support
   document.querySelectorAll('.carousel').forEach(carousel => {
