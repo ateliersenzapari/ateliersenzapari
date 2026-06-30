@@ -967,16 +967,17 @@
     <span class="combo-num">02 / 04</span>
     <div class="carousel" id="carousel-02">
       <div class="carousel-track" id="track-02">
-        <div class="carousel-slide"><div class="carousel-placeholder bg-marmore"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 1 · Frente do produto</span></div></div>
-        <div class="carousel-slide"><div class="carousel-placeholder bg-marmore"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 2 · Veios dourados</span></div></div>
-        <div class="carousel-slide"><div class="carousel-placeholder bg-marmore"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 3 · Detalhe mármore</span></div></div>
-        <div class="carousel-slide"><div class="carousel-placeholder bg-marmore"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 4 · Lateral</span></div></div>
-        <div class="carousel-slide"><div class="carousel-placeholder bg-marmore"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 5 · Conjunto completo</span></div></div>
-        <div class="carousel-slide"><div class="carousel-placeholder bg-marmore"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 6 · Lifestyle</span></div></div>
+        <div class="carousel-slide"><img src="marmo-01.png" alt="Marmo d'Oro - vista diagonal com logo Senza Pari ao fundo"></div>
+        <div class="carousel-slide"><img src="marmo-02.png" alt="Marmo d'Oro - vista frontal veios dourados"></div>
+        <div class="carousel-slide"><img src="marmo-03.png" alt="Marmo d'Oro - ângulo lateral detalhe câmera"></div>
+        <div class="carousel-slide"><img src="marmo-04.png" alt="Marmo d'Oro - vista reta centralizada"></div>
+        <div class="carousel-slide"><img src="marmo-05.png" alt="Marmo d'Oro - ângulo diagonal lateral dourada"></div>
+        <div class="carousel-slide"><img src="marmo-06.png" alt="Marmo d'Oro - detalhe conector e base"></div>
+        <div class="carousel-slide"><img src="marmo-07.png" alt="Marmo d'Oro - campanha com logo Senza Pari"></div>
       </div>
       <button class="carousel-btn prev" onclick="moveCarousel('02',-1)">‹</button>
       <button class="carousel-btn next" onclick="moveCarousel('02',1)">›</button>
-      <span class="slide-counter" id="counter-02">1 / 6</span>
+      <span class="slide-counter" id="counter-02">1 / 7</span>
     </div>
     <div class="carousel-dots" id="dots-02">
       <button class="carousel-dot active" onclick="goToSlide('02',0)"></button>
@@ -985,6 +986,7 @@
       <button class="carousel-dot" onclick="goToSlide('02',3)"></button>
       <button class="carousel-dot" onclick="goToSlide('02',4)"></button>
       <button class="carousel-dot" onclick="goToSlide('02',5)"></button>
+      <button class="carousel-dot" onclick="goToSlide('02',6)"></button>
     </div>
   </div>
 
@@ -1288,7 +1290,7 @@
 
 <script>
   const carouselState = { '01': 0, '02': 0, '03': 0, '04': 0 };
-  const carouselTotal = { '01': 7, '02': 6, '03': 6, '04': 7 };
+  const carouselTotal = { '01': 7, '02': 7, '03': 6, '04': 7 };
 
   function updateCarousel(id) {
     const idx = carouselState[id];
