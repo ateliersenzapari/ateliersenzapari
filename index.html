@@ -125,6 +125,88 @@
     .nav-links li a:hover { color: var(--gold); }
     .nav-links li a:hover::after { transform: scaleX(1); }
 
+    /* ─── MOBILE MENU TOGGLE ─── */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      width: 28px;
+      height: 22px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 210;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: var(--gold);
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── MOBILE MENU OVERLAY ─── */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(-12px);
+      transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .mobile-menu-star {
+      color: var(--gold);
+      font-size: 18px;
+      margin-bottom: 40px;
+      opacity: 0.8;
+    }
+    .mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+    .mobile-menu ul a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ivory);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .mobile-menu ul a:hover,
+    .mobile-menu ul a:active { color: var(--gold); }
+    .mobile-menu-sub {
+      margin-top: 44px;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.6;
+    }
+
     /* ─── SECTIONS ─── */
     .section { display: none; }
     .section.active { display: block; }
@@ -187,7 +269,7 @@
       letter-spacing: 0.4em;
     }
     .hero-divider {
-      width: 60px;
+      width: 120px;
       height: 1px;
       background: var(--gold);
       margin: 32px auto;
@@ -554,6 +636,81 @@
       gap: 1px;
       background: rgba(201,168,76,0.08);
     }
+
+    /* ─── FOUNDER ─── */
+    .founder {
+      padding: 100px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .founder-img-block {
+      position: relative;
+      aspect-ratio: 4/5;
+      background: var(--graphite);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .founder-img-block::before {
+      content: '✦';
+      font-size: 64px;
+      color: rgba(201,168,76,0.1);
+    }
+    .founder-img-block::after {
+      content: '';
+      position: absolute;
+      top: -16px; left: -16px;
+      width: 50%;
+      height: 50%;
+      border: 1px solid rgba(201,168,76,0.2);
+      z-index: -1;
+    }
+    .founder-img-placeholder {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.25);
+      text-align: center;
+    }
+    .founder-text-block .section-label { display: block; margin-bottom: 18px; }
+    .founder-text-block h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+      margin-bottom: 28px;
+    }
+    .founder-text-block h2 em { font-style: italic; color: var(--gold); }
+    .founder-text-block p {
+      font-size: 15px;
+      color: var(--ivory-dim);
+      line-height: 2;
+      margin-bottom: 18px;
+    }
+    .founder-signature {
+      margin-top: 32px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+    .founder-role {
+      margin-top: 4px;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ivory-dim);
+      opacity: 0.6;
+    }
     .pillar {
       padding: 52px 32px;
       background: var(--black);
@@ -737,11 +894,17 @@
     @media (max-width: 900px) {
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
-      .hero-cta { flex-direction: column; align-items: center; }
+      .nav-toggle { display: flex; }
+      .hero-cta { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; margin-left: auto; margin-right: auto; gap: 14px; }
+      .hero-cta .btn-primary, .hero-cta .btn-ghost { width: 100%; box-sizing: border-box; padding: 16px 24px; }
+      .hero-scroll { display: none; }
+      .hero { padding-bottom: 60px; }
       .product-grid { grid-template-columns: repeat(2,1fr); }
       .catalog-grid { grid-template-columns: repeat(2,1fr); }
       .values { grid-template-columns: 1fr; }
       .about-hero { grid-template-columns: 1fr; padding-top: 120px; }
+      .founder { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+      .founder-img-block { max-width: 280px; margin: 0 auto; }
       .about-pillars { grid-template-columns: repeat(2,1fr); }
       .contact-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 24px; text-align: center; }
@@ -787,7 +950,33 @@
       <span data-lang="pt">Contato</span><span data-lang="en">Contact</span>
     </a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-menu-star">✦</span>
+  <ul>
+    <li><a href="#" onclick="navigateMobile('home')">
+      <span data-lang="pt">Início</span><span data-lang="en">Home</span>
+    </a></li>
+    <li><a href="#" onclick="navigateMobile('catalog')">
+      <span data-lang="pt">Catálogo</span><span data-lang="en">Catalog</span>
+    </a></li>
+    <li><a href="#" onclick="navigateMobile('about')">
+      <span data-lang="pt">A Marca</span><span data-lang="en">The Brand</span>
+    </a></li>
+    <li><a href="combos.html">
+      <span data-lang="pt">Combos</span><span data-lang="en">Combos</span>
+    </a></li>
+    <li><a href="#" onclick="navigateMobile('contact')">
+      <span data-lang="pt">Contato</span><span data-lang="en">Contact</span>
+    </a></li>
+  </ul>
+  <span class="mobile-menu-sub">Cases & Skins Premium · iPhone</span>
+</div>
 
 <!-- ════════════════════ HOME ════════════════════ -->
 <section class="section active" id="section-home">
@@ -811,7 +1000,7 @@
         <span data-lang="pt">Ver Coleção</span>
         <span data-lang="en">Explore Collection</span>
       </button>
-      <a href="combos.html" class="btn-ghost" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:14px 36px;font-family:Cormorant Garamond,serif;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#F5F0E8;border:1px solid rgba(245,240,232,0.35);">
+      <a href="combos.html" class="btn-ghost" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">
         <span data-lang="pt">✦ Combos</span>
         <span data-lang="en">✦ Combos</span>
       </a>
@@ -951,12 +1140,13 @@
   </div>
 
   <div class="catalog-filters">
-    <button class="filter-btn active" data-lang="pt">Todos</button>
-    <button class="filter-btn active" data-lang="en">All</button>
-    <button class="filter-btn" data-lang="pt">Cases</button>
-    <button class="filter-btn" data-lang="en">Cases</button>
+    <button class="filter-btn active" data-lang="pt">Cases</button>
+    <button class="filter-btn active" data-lang="en">Cases</button>
     <button class="filter-btn" data-lang="pt">Skins</button>
     <button class="filter-btn" data-lang="en">Skins</button>
+    <a href="combos.html" class="filter-btn" style="text-decoration:none;display:inline-flex;align-items:center;">
+      <span data-lang="pt">Combos</span><span data-lang="en">Combos</span>
+    </a>
     <button class="filter-btn" data-lang="pt">Edição Limitada</button>
     <button class="filter-btn" data-lang="en">Limited Edition</button>
   </div>
@@ -1139,6 +1329,25 @@
     <p class="manifesto-attr">— Atelier Senza Pari</p>
   </div>
 
+  <div class="founder">
+    <div class="founder-img-block">
+      <div class="founder-img-placeholder" data-lang="pt">Foto do criador · em breve</div>
+      <div class="founder-img-placeholder" data-lang="en">Founder photo · coming soon</div>
+    </div>
+    <div class="founder-text-block">
+      <span class="section-label">✦ <span data-lang="pt">O Criador</span><span data-lang="en">The Founder</span></span>
+      <h2 data-lang="pt">Por trás de cada peça,<br><em>uma visão.</em></h2>
+      <h2 data-lang="en">Behind every piece,<br><em>a vision.</em></h2>
+      <p data-lang="pt">Atelier Senza Pari é a expressão direta de Luciano Fontes — fundador e diretor criativo da marca. Cada material, cada acabamento, cada detalhe que chega às mãos do cliente passa pelo seu olhar antes de receber o nome Senza Pari.</p>
+      <p data-lang="en">Atelier Senza Pari is the direct expression of Luciano Fontes — founder and creative director of the brand. Every material, every finish, every detail that reaches the client passes through his eye before earning the Senza Pari name.</p>
+      <p data-lang="pt">Sua convicção é simples: peças que carregam estilo não deveriam ser produzidas em massa. Deveriam ser criadas com a mesma exigência de uma maison — e é essa exigência que guia cada coleção do atelier.</p>
+      <p data-lang="en">His conviction is simple: pieces that carry style should not be mass produced. They should be created with the same rigor as a maison — and that rigor guides every collection from the atelier.</p>
+      <p class="founder-signature">Luciano Fontes</p>
+      <p class="founder-role" data-lang="pt">Fundador & Diretor Criativo</p>
+      <p class="founder-role" data-lang="en">Founder & Creative Director</p>
+    </div>
+  </div>
+
   <div class="about-pillars">
     <div class="pillar">
       <div class="pillar-num">I</div>
@@ -1244,6 +1453,19 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const toggle = document.getElementById('navToggle');
+    const isOpen = menu.classList.toggle('open');
+    toggle.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+
+  function navigateMobile(name) {
+    showSection(name);
+    toggleMobileMenu();
+  }
+
   function setLang(lang) {
     document.body.classList.toggle('lang-en', lang === 'en');
     document.getElementById('btn-pt').classList.toggle('active', lang === 'pt');
@@ -1258,8 +1480,8 @@
     });
   });
 
-  // Nav link active states
-  document.querySelectorAll('.nav-links a').forEach(a => {
+  // Nav link active states (não bloqueia links reais como Combos)
+  document.querySelectorAll('.nav-links a[href="#"]').forEach(a => {
     a.addEventListener('click', e => e.preventDefault());
   });
 </script>
