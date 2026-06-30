@@ -849,45 +849,30 @@
     <div class="carousel" id="carousel-01">
       <div class="carousel-track" id="track-01">
         <div class="carousel-slide">
-          <div class="carousel-placeholder bg-jacare">
-            <span class="placeholder-icon">✦</span>
-            <span class="placeholder-label">Foto 1 · Frente do produto</span>
-          </div>
+          <img src="croco-01.png" alt="Croco Noir - textura jacaré com logo">
         </div>
         <div class="carousel-slide">
-          <div class="carousel-placeholder bg-jacare">
-            <span class="placeholder-icon">✦</span>
-            <span class="placeholder-label">Foto 2 · Detalhe da textura</span>
-          </div>
+          <img src="croco-02.png" alt="Croco Noir - vista frontal">
         </div>
         <div class="carousel-slide">
-          <div class="carousel-placeholder bg-jacare">
-            <span class="placeholder-icon">✦</span>
-            <span class="placeholder-label">Foto 3 · Lateral do produto</span>
-          </div>
+          <img src="croco-03.png" alt="Croco Noir - lateral dourada">
         </div>
         <div class="carousel-slide">
-          <div class="carousel-placeholder bg-jacare">
-            <span class="placeholder-icon">✦</span>
-            <span class="placeholder-label">Foto 4 · Costura dourada</span>
-          </div>
+          <img src="croco-04.png" alt="Croco Noir - ângulo diagonal">
         </div>
         <div class="carousel-slide">
-          <div class="carousel-placeholder bg-jacare">
-            <span class="placeholder-icon">✦</span>
-            <span class="placeholder-label">Foto 5 · Conjunto completo</span>
-          </div>
+          <img src="croco-05.png" alt="Croco Noir - detalhe câmera">
         </div>
         <div class="carousel-slide">
-          <div class="carousel-placeholder bg-jacare">
-            <span class="placeholder-icon">✦</span>
-            <span class="placeholder-label">Foto 6 · Lifestyle</span>
-          </div>
+          <img src="croco-06.png" alt="Croco Noir - vista inferior">
+        </div>
+        <div class="carousel-slide">
+          <img src="croco-07.png" alt="Croco Noir - campanha com logo">
         </div>
       </div>
       <button class="carousel-btn prev" onclick="moveCarousel('01',-1)">‹</button>
       <button class="carousel-btn next" onclick="moveCarousel('01',1)">›</button>
-      <span class="slide-counter" id="counter-01">1 / 6</span>
+      <span class="slide-counter" id="counter-01">1 / 7</span>
     </div>
     <div class="carousel-dots" id="dots-01">
       <button class="carousel-dot active" onclick="goToSlide('01',0)"></button>
@@ -896,6 +881,7 @@
       <button class="carousel-dot" onclick="goToSlide('01',3)"></button>
       <button class="carousel-dot" onclick="goToSlide('01',4)"></button>
       <button class="carousel-dot" onclick="goToSlide('01',5)"></button>
+      <button class="carousel-dot" onclick="goToSlide('01',6)"></button>
     </div>
   </div>
 
@@ -1300,7 +1286,7 @@
 
 <script>
   const carouselState = { '01': 0, '02': 0, '03': 0, '04': 0 };
-  const carouselTotal = { '01': 6, '02': 6, '03': 6, '04': 6 };
+  const carouselTotal = { '01': 7, '02': 6, '03': 6, '04': 6 };
 
   function updateCarousel(id) {
     const idx = carouselState[id];
