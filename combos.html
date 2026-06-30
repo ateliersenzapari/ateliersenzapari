@@ -1172,16 +1172,17 @@
     <span class="combo-num">04 / 04</span>
     <div class="carousel" id="carousel-04">
       <div class="carousel-track" id="track-04">
-        <div class="carousel-slide"><div class="carousel-placeholder bg-couro"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 1 · Frente do produto</span></div></div>
-        <div class="carousel-slide"><div class="carousel-placeholder bg-couro"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 2 · Textura couro matte</span></div></div>
-        <div class="carousel-slide"><div class="carousel-placeholder bg-couro"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 3 · Detalhe acabamento</span></div></div>
-        <div class="carousel-slide"><div class="carousel-placeholder bg-couro"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 4 · Lateral</span></div></div>
-        <div class="carousel-slide"><div class="carousel-placeholder bg-couro"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 5 · Conjunto completo</span></div></div>
-        <div class="carousel-slide"><div class="carousel-placeholder bg-couro"><span class="placeholder-icon">✦</span><span class="placeholder-label">Foto 6 · Lifestyle</span></div></div>
+        <div class="carousel-slide"><img src="pelle-01.png" alt="Pelle Nera - flatlay editorial"></div>
+        <div class="carousel-slide"><img src="pelle-02.png" alt="Pelle Nera - vista frontal sobre pedestal"></div>
+        <div class="carousel-slide"><img src="pelle-03.png" alt="Pelle Nera - vista reta centralizada"></div>
+        <div class="carousel-slide"><img src="pelle-04.png" alt="Pelle Nera - detalhe câmera"></div>
+        <div class="carousel-slide"><img src="pelle-05.png" alt="Pelle Nera - lifestyle encostado"></div>
+        <div class="carousel-slide"><img src="pelle-06.png" alt="Pelle Nera - campanha com logo"></div>
+        <div class="carousel-slide"><img src="pelle-07.png" alt="Pelle Nera - ângulo editorial sobre pedestal"></div>
       </div>
       <button class="carousel-btn prev" onclick="moveCarousel('04',-1)">‹</button>
       <button class="carousel-btn next" onclick="moveCarousel('04',1)">›</button>
-      <span class="slide-counter" id="counter-04">1 / 6</span>
+      <span class="slide-counter" id="counter-04">1 / 7</span>
     </div>
     <div class="carousel-dots" id="dots-04">
       <button class="carousel-dot active" onclick="goToSlide('04',0)"></button>
@@ -1190,6 +1191,7 @@
       <button class="carousel-dot" onclick="goToSlide('04',3)"></button>
       <button class="carousel-dot" onclick="goToSlide('04',4)"></button>
       <button class="carousel-dot" onclick="goToSlide('04',5)"></button>
+      <button class="carousel-dot" onclick="goToSlide('04',6)"></button>
     </div>
   </div>
 
@@ -1286,7 +1288,7 @@
 
 <script>
   const carouselState = { '01': 0, '02': 0, '03': 0, '04': 0 };
-  const carouselTotal = { '01': 7, '02': 6, '03': 6, '04': 6 };
+  const carouselTotal = { '01': 7, '02': 6, '03': 6, '04': 7 };
 
   function updateCarousel(id) {
     const idx = carouselState[id];
