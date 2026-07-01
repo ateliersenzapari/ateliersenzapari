@@ -65,6 +65,148 @@
   }
   .nav-back:hover { border-color: var(--dourado); color: var(--dourado); }
 
+  /* ── BOTÃO FLUTUANTE (abre gaveta) ── */
+  .drawer-toggle {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 300;
+    background: var(--grafite);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-left: none;
+    color: var(--dourado);
+    width: 32px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    writing-mode: vertical-rl;
+    font-family: 'Inter', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    transition: background 0.3s, width 0.3s;
+  }
+  .drawer-toggle:hover { background: #222; width: 36px; }
+  .drawer-toggle.hidden { opacity: 0; pointer-events: none; }
+
+  /* ── GAVETA LATERAL ── */
+  .drawer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    background: rgba(0,0,0,0.6);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s, visibility 0.35s;
+  }
+  .drawer-overlay.open { opacity: 1; visibility: visible; }
+
+  .drawer {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 500;
+    width: 300px;
+    background: #0e0e0c;
+    border-right: 1px solid rgba(201,168,76,0.12);
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 40px;
+    overflow-y: auto;
+  }
+  .drawer.open { transform: translateX(0); }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 28px 24px;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .drawer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+  .drawer-close {
+    background: none;
+    border: none;
+    color: var(--marfim-dim);
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .drawer-close:hover { color: var(--dourado); }
+
+  .drawer-section {
+    padding: 28px 28px 0;
+  }
+  .drawer-section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--marfim-dim);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .drawer-collection {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .drawer-collection-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+  }
+  .drawer-collection-btn:hover,
+  .drawer-collection-btn.active {
+    border-color: rgba(201,168,76,0.2);
+    background: rgba(201,168,76,0.04);
+  }
+  .drawer-collection-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: var(--dourado);
+    opacity: 0.6;
+    min-width: 20px;
+  }
+  .drawer-collection-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--marfim);
+    letter-spacing: 0.04em;
+  }
+  .drawer-collection-btn.active .drawer-collection-name { color: var(--dourado); }
+  .drawer-collection-sub {
+    font-size: 10px;
+    color: var(--marfim-dim);
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+  }
+  .drawer-divider {
+    height: 1px;
+    background: rgba(201,168,76,0.08);
+    margin: 24px 28px;
+  }
+
   .nav-tag {
     font-size: 9px;
     letter-spacing: 0.3em;
@@ -893,8 +1035,57 @@
 <nav>
   <a href="index.html" class="nav-logo"><b>✦</b> &nbsp;Atelier Senza Pari</a>
   <a href="index.html" class="nav-back">← Voltar ao site</a>
-  <span class="nav-tag">Coleção I — Combos</span>
+  <span class="nav-tag">Coleção I — Skins</span>
 </nav>
+
+<!-- BOTÃO FLUTUANTE -->
+<button class="drawer-toggle" id="drawerToggle" onclick="openDrawer()">Menu</button>
+
+<!-- OVERLAY -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+<!-- GAVETA LATERAL -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">✦ Senza Pari</span>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+
+  <div class="drawer-section">
+    <span class="drawer-section-title">Coleções · Skins</span>
+    <div class="drawer-collection">
+      <a href="skins.html" class="drawer-collection-btn active">
+        <span class="drawer-collection-num">I</span>
+        <div>
+          <div class="drawer-collection-name">Combo 2026</div>
+          <div class="drawer-collection-sub">5 skins · Coleção atual</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="drawer-divider"></div>
+
+  <div class="drawer-section">
+    <span class="drawer-section-title">Navegar</span>
+    <div class="drawer-collection">
+      <a href="cases.html" class="drawer-collection-btn">
+        <span class="drawer-collection-num">→</span>
+        <div>
+          <div class="drawer-collection-name">Cases</div>
+          <div class="drawer-collection-sub">Ver todas as cases</div>
+        </div>
+      </a>
+      <a href="combos.html" class="drawer-collection-btn">
+        <span class="drawer-collection-num">→</span>
+        <div>
+          <div class="drawer-collection-name">Conjunto</div>
+          <div class="drawer-collection-sub">Case + Skin</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -907,89 +1098,39 @@
   <p class="hero-desc">As skins em vinil texturizado da coleção — proteção discreta com a mesma identidade visual.</p>
 </div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- SELETOR: CASES / SKINS / CONJUNTO -->
-<!-- ═══════════════════════════════════════ -->
-<div class="view-switch">
-  <a href="cases.html#combo-01" class="view-switch-btn">
-    <span class="view-switch-num">01</span>
-    <span class="view-switch-name">Cases</span>
-    <span class="view-switch-desc">As cases premium, isoladamente</span>
-  </a>
-  <a href="skins.html#combo-01" class="view-switch-btn active">
-    <span class="view-switch-num">02</span>
-    <span class="view-switch-name">Skins</span>
-    <span class="view-switch-desc">As skins em vinil, isoladamente</span>
-  </a>
-  <a href="combos.html#combo-01" class="view-switch-btn">
-    <span class="view-switch-num">03</span>
-    <span class="view-switch-name">Conjunto</span>
-    <span class="view-switch-desc">Case + Skin, a identidade completa</span>
-  </a>
-</div>
 
 <!-- ═══════════════════════════════════════ -->
-<!-- COMBO 01 — COURO DE JACARÉ -->
+<!-- SKIN 01 — CROCO NOIR · JACARÉ DOURADO -->
 <!-- ═══════════════════════════════════════ -->
 <div class="combo" id="combo-01">
-
   <div class="combo-visual bg-jacare">
-    <span class="combo-num">01 / 04</span>
+    <span class="combo-num">01 / 05</span>
     <div class="carousel" id="carousel-01">
       <div class="carousel-track" id="track-01">
-        <div class="carousel-slide">
-          <img src="croco-01.png" alt="Croco Noir - textura jacaré com logo">
-        </div>
-        <div class="carousel-slide">
-          <img src="croco-02.png" alt="Croco Noir - vista frontal">
-        </div>
-        <div class="carousel-slide">
-          <img src="croco-03.png" alt="Croco Noir - lateral dourada">
-        </div>
-        <div class="carousel-slide">
-          <img src="croco-04.png" alt="Croco Noir - ângulo diagonal">
-        </div>
-        <div class="carousel-slide">
-          <img src="croco-05.png" alt="Croco Noir - detalhe câmera">
-        </div>
-        <div class="carousel-slide">
-          <img src="croco-06.png" alt="Croco Noir - vista inferior">
-        </div>
-        <div class="carousel-slide">
-          <img src="croco-07.png" alt="Croco Noir - campanha com logo">
-        </div>
+        <div class="carousel-slide"><img src="skin-croco-gold-01.png" alt="Skin Jacaré Dourado - ângulo diagonal"></div>
+        <div class="carousel-slide"><img src="skin-croco-gold-02.png" alt="Skin Jacaré Dourado - vista frontal"></div>
+        <div class="carousel-slide"><img src="skin-croco-gold-03.png" alt="Skin Jacaré Dourado - lateral"></div>
+        <div class="carousel-slide"><img src="skin-croco-gold-04.png" alt="Skin Jacaré Dourado - detalhe câmera"></div>
       </div>
       <button class="carousel-btn prev" onclick="moveCarousel('01',-1)">‹</button>
       <button class="carousel-btn next" onclick="moveCarousel('01',1)">›</button>
-      <span class="slide-counter" id="counter-01">1 / 7</span>
+      <span class="slide-counter" id="counter-01">1 / 4</span>
     </div>
     <div class="carousel-dots" id="dots-01">
       <button class="carousel-dot active" onclick="goToSlide('01',0)"></button>
       <button class="carousel-dot" onclick="goToSlide('01',1)"></button>
       <button class="carousel-dot" onclick="goToSlide('01',2)"></button>
       <button class="carousel-dot" onclick="goToSlide('01',3)"></button>
-      <button class="carousel-dot" onclick="goToSlide('01',4)"></button>
-      <button class="carousel-dot" onclick="goToSlide('01',5)"></button>
-      <button class="carousel-dot" onclick="goToSlide('01',6)"></button>
     </div>
   </div>
-
   <div class="combo-info">
     <span class="combo-badge">Exclusivo</span>
     <div class="info-eyebrow">Skin · Couro Exótico</div>
-    <h2 class="info-name">
-      <em>Croco Noir</em>
-      Jacaré &<br>Dourado
-    </h2>
+    <h2 class="info-name"><em>Croco Noir</em>Jacaré<br>Dourado</h2>
     <div class="info-rule"></div>
-    <p class="info-desc">
-      Skin em vinil texturizado matte preto, no mesmo padrão escamado da case Croco Noir. Proteção fina, acabamento artesanal em linha dourada.
-    </p>
+    <p class="info-desc">Skin em vinil textura jacaré dourado — escamas precisas, acabamento que transforma o iPhone numa peça de joalheria.</p>
     <div class="specs">
-      <div class="spec-row">
-        <span class="spec-key">Skin · Material</span>
-        <span class="spec-val">Vinil textura couro matte 3M</span>
-      </div>
+      <div class="spec-row"><span class="spec-key">Skin · Material</span><span class="spec-val">Vinil textura jacaré dourado</span></div>
     </div>
     <div class="compat-block">
       <span class="compat-title">Disponível para</span>
@@ -1020,61 +1161,112 @@
     <div class="pricing">
       <div class="price-combo" style="text-align:center;width:100%;">
         <span class="price-combo-label">Skin</span>
-        <span class="price-combo-val">R$ 159</span>
+        <span class="price-combo-val">R$ 119</span>
       </div>
     </div>
     <a href="https://wa.me/55SEUNUMERO" class="combo-btn" target="_blank">Solicitar via WhatsApp ✦</a>
   </div>
-
 </div>
 
 <!-- ═══════════════════════════════════════ -->
-<!-- COMBO 02 — MÁRMORE -->
+<!-- SKIN 02 — CROCO NOIR · PRETO TOTAL -->
 <!-- ═══════════════════════════════════════ -->
 <div class="combo" id="combo-02">
-
-  <div class="combo-visual bg-marmore">
-    <span class="combo-num">02 / 04</span>
+  <div class="combo-visual bg-jacare">
+    <span class="combo-num">02 / 05</span>
     <div class="carousel" id="carousel-02">
       <div class="carousel-track" id="track-02">
-        <div class="carousel-slide"><img src="marmo-01.png" alt="Marmo d'Oro - vista diagonal com logo Senza Pari ao fundo"></div>
-        <div class="carousel-slide"><img src="marmo-02.png" alt="Marmo d'Oro - vista frontal veios dourados"></div>
-        <div class="carousel-slide"><img src="marmo-03.png" alt="Marmo d'Oro - ângulo lateral detalhe câmera"></div>
-        <div class="carousel-slide"><img src="marmo-04.png" alt="Marmo d'Oro - vista reta centralizada"></div>
-        <div class="carousel-slide"><img src="marmo-05.png" alt="Marmo d'Oro - ângulo diagonal lateral dourada"></div>
-        <div class="carousel-slide"><img src="marmo-06.png" alt="Marmo d'Oro - detalhe conector e base"></div>
-        <div class="carousel-slide"><img src="marmo-07.png" alt="Marmo d'Oro - campanha com logo Senza Pari"></div>
+        <div class="carousel-slide"><img src="skin-croco-black-01.png" alt="Skin Preto Total - ângulo lateral"></div>
+        <div class="carousel-slide"><img src="skin-croco-black-02.png" alt="Skin Preto Total - vista frontal"></div>
+        <div class="carousel-slide"><img src="skin-croco-black-03.png" alt="Skin Preto Total - vista reta"></div>
       </div>
       <button class="carousel-btn prev" onclick="moveCarousel('02',-1)">‹</button>
       <button class="carousel-btn next" onclick="moveCarousel('02',1)">›</button>
-      <span class="slide-counter" id="counter-02">1 / 7</span>
+      <span class="slide-counter" id="counter-02">1 / 3</span>
     </div>
     <div class="carousel-dots" id="dots-02">
       <button class="carousel-dot active" onclick="goToSlide('02',0)"></button>
       <button class="carousel-dot" onclick="goToSlide('02',1)"></button>
       <button class="carousel-dot" onclick="goToSlide('02',2)"></button>
-      <button class="carousel-dot" onclick="goToSlide('02',3)"></button>
-      <button class="carousel-dot" onclick="goToSlide('02',4)"></button>
-      <button class="carousel-dot" onclick="goToSlide('02',5)"></button>
-      <button class="carousel-dot" onclick="goToSlide('02',6)"></button>
     </div>
   </div>
-
   <div class="combo-info">
-    <div class="info-eyebrow">Skin · Pedra & Resina</div>
-    <h2 class="info-name">
-      <em>Marmo d'Oro</em>
-      Mármore &<br>Dourado
-    </h2>
+    <span class="combo-badge">Exclusivo</span>
+    <div class="info-eyebrow">Skin · Couro Exótico</div>
+    <h2 class="info-name"><em>Croco Noir</em>Preto<br>Total</h2>
     <div class="info-rule"></div>
-    <p class="info-desc">
-      Skin em vinil mármore preto com reflexo dourado suave — réplica fiel da textura da case Marmo d'Oro. Sofisticação em camada fina.
-    </p>
+    <p class="info-desc">Skin em vinil preto absoluto, textura matte que elimina reflexos e entrega um acabamento sombrio e sofisticado.</p>
     <div class="specs">
-      <div class="spec-row">
-        <span class="spec-key">Skin · Material</span>
-        <span class="spec-val">Vinil mármore com reflexo dourado</span>
+      <div class="spec-row"><span class="spec-key">Skin · Material</span><span class="spec-val">Vinil matte preto profundo</span></div>
+    </div>
+    <div class="compat-block">
+      <span class="compat-title">Disponível para</span>
+      <span class="compat-section-label">Novos — iPhone 17</span>
+      <div class="compat-grid">
+        <span class="compat-item compat-highlight">iPhone 17</span>
+        <span class="compat-item compat-highlight">iPhone 17 Air</span>
+        <span class="compat-item compat-highlight">iPhone 17 Pro</span>
+        <span class="compat-item compat-highlight">iPhone 17 Pro Max</span>
+        <span class="compat-item compat-highlight">iPhone 17e</span>
       </div>
+      <span class="compat-section-label">Anteriores</span>
+      <div class="compat-grid">
+        <span class="compat-item">iPhone 16</span>
+        <span class="compat-item">iPhone 16 Plus</span>
+        <span class="compat-item">iPhone 16 Pro</span>
+        <span class="compat-item">iPhone 16 Pro Max</span>
+        <span class="compat-item">iPhone 15</span>
+        <span class="compat-item">iPhone 15 Plus</span>
+        <span class="compat-item">iPhone 15 Pro</span>
+        <span class="compat-item">iPhone 15 Pro Max</span>
+        <span class="compat-item">iPhone 14</span>
+        <span class="compat-item">iPhone 14 Plus</span>
+        <span class="compat-item">iPhone 14 Pro</span>
+        <span class="compat-item">iPhone 14 Pro Max</span>
+      </div>
+    </div>
+    <div class="pricing">
+      <div class="price-combo" style="text-align:center;width:100%;">
+        <span class="price-combo-label">Skin</span>
+        <span class="price-combo-val">R$ 119</span>
+      </div>
+    </div>
+    <a href="https://wa.me/55SEUNUMERO" class="combo-btn" target="_blank">Solicitar via WhatsApp ✦</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SKIN 03 — VETRO DORATO · OURO ESCOVADO -->
+<!-- ═══════════════════════════════════════ -->
+<div class="combo" id="combo-03">
+  <div class="combo-visual" style="background:#1a1508;">
+    <span class="combo-num">03 / 05</span>
+    <div class="carousel" id="carousel-03">
+      <div class="carousel-track" id="track-03">
+        <div class="carousel-slide"><img src="skin-vetro-01.png" alt="Skin Ouro Escovado - ângulo lateral"></div>
+        <div class="carousel-slide"><img src="skin-vetro-02.png" alt="Skin Ouro Escovado - lateral direita"></div>
+        <div class="carousel-slide"><img src="skin-vetro-03.png" alt="Skin Ouro Escovado - vista frontal"></div>
+        <div class="carousel-slide"><img src="skin-vetro-04.png" alt="Skin Ouro Escovado - diagonal"></div>
+      </div>
+      <button class="carousel-btn prev" onclick="moveCarousel('03',-1)">‹</button>
+      <button class="carousel-btn next" onclick="moveCarousel('03',1)">›</button>
+      <span class="slide-counter" id="counter-03">1 / 4</span>
+    </div>
+    <div class="carousel-dots" id="dots-03">
+      <button class="carousel-dot active" onclick="goToSlide('03',0)"></button>
+      <button class="carousel-dot" onclick="goToSlide('03',1)"></button>
+      <button class="carousel-dot" onclick="goToSlide('03',2)"></button>
+      <button class="carousel-dot" onclick="goToSlide('03',3)"></button>
+    </div>
+  </div>
+  <div class="combo-info">
+    <span class="combo-badge">Exclusivo</span>
+    <div class="info-eyebrow">Skin · Vidro & Resina</div>
+    <h2 class="info-name"><em>Vetro Dorato</em>Ouro<br>Escovado</h2>
+    <div class="info-rule"></div>
+    <p class="info-desc">Skin em ouro escovado — superfície lisa e acetinada, com reflexo metálico suave que dá ao iPhone uma aparência de luxo mineral.</p>
+    <div class="specs">
+      <div class="spec-row"><span class="spec-key">Skin · Material</span><span class="spec-val">Vinil metalizado ouro escovado</span></div>
     </div>
     <div class="compat-block">
       <span class="compat-title">Disponível para</span>
@@ -1110,55 +1302,94 @@
     </div>
     <a href="https://wa.me/55SEUNUMERO" class="combo-btn" target="_blank">Solicitar via WhatsApp ✦</a>
   </div>
-
 </div>
 
 <!-- ═══════════════════════════════════════ -->
-<!-- COMBO 03 — VIDRO / RESINA -->
+<!-- SKIN 04 — MARMO D'ORO · MÁRMORE DOURADO -->
 <!-- ═══════════════════════════════════════ -->
-<div class="combo" id="combo-03">
-
-  <div class="combo-visual bg-vidro">
-    <span class="combo-num">03 / 04</span>
-    <div class="carousel" id="carousel-03">
-      <div class="carousel-track" id="track-03">
-        <div class="carousel-slide"><img src="vetro-01.png" alt="Vetro Dorato - lateral com tecido dourado"></div>
-        <div class="carousel-slide"><img src="vetro-02.png" alt="Vetro Dorato - detalhe veios dourados"></div>
-        <div class="carousel-slide"><img src="vetro-03.png" alt="Vetro Dorato - flatlay com joias"></div>
-        <div class="carousel-slide"><img src="vetro-04.png" alt="Vetro Dorato - ambiente arquitetônico dourado"></div>
-        <div class="carousel-slide"><img src="vetro-05.png" alt="Vetro Dorato - pedestal travertino"></div>
-        <div class="carousel-slide"><img src="vetro-06.png" alt="Vetro Dorato - campanha luzes douradas"></div>
+<div class="combo" id="combo-04">
+  <div class="combo-visual" style="background:#0d0a06;">
+    <span class="combo-num">04 / 05</span>
+    <div class="carousel" id="carousel-04">
+      <div class="carousel-track" id="track-04">
+        <div class="carousel-slide"><img src="skin-marmo-01.png" alt="Skin Mármore Dourado - ângulo lateral"></div>
+        <div class="carousel-slide"><img src="skin-marmo-02.png" alt="Skin Mármore Dourado - vista frontal"></div>
+        <div class="carousel-slide"><img src="skin-marmo-03.png" alt="Skin Mármore Dourado - diagonal"></div>
+        <div class="carousel-slide"><img src="skin-marmo-04.png" alt="Skin Mármore Dourado - lateral direita"></div>
       </div>
-      <button class="carousel-btn prev" onclick="moveCarousel('03',-1)">‹</button>
-      <button class="carousel-btn next" onclick="moveCarousel('03',1)">›</button>
-      <span class="slide-counter" id="counter-03">1 / 6</span>
+      <button class="carousel-btn prev" onclick="moveCarousel('04',-1)">‹</button>
+      <button class="carousel-btn next" onclick="moveCarousel('04',1)">›</button>
+      <span class="slide-counter" id="counter-04">1 / 4</span>
     </div>
-    <div class="carousel-dots" id="dots-03">
-      <button class="carousel-dot active" onclick="goToSlide('03',0)"></button>
-      <button class="carousel-dot" onclick="goToSlide('03',1)"></button>
-      <button class="carousel-dot" onclick="goToSlide('03',2)"></button>
-      <button class="carousel-dot" onclick="goToSlide('03',3)"></button>
-      <button class="carousel-dot" onclick="goToSlide('03',4)"></button>
-      <button class="carousel-dot" onclick="goToSlide('03',5)"></button>
+    <div class="carousel-dots" id="dots-04">
+      <button class="carousel-dot active" onclick="goToSlide('04',0)"></button>
+      <button class="carousel-dot" onclick="goToSlide('04',1)"></button>
+      <button class="carousel-dot" onclick="goToSlide('04',2)"></button>
+      <button class="carousel-dot" onclick="goToSlide('04',3)"></button>
     </div>
   </div>
-
   <div class="combo-info">
-    <span class="combo-badge">Nude & Dourado</span>
-    <div class="info-eyebrow">Skin · Vidro & Resina</div>
-    <h2 class="info-name">
-      <em>Vetro Dorato</em>
-      Vidro &<br>Nude
-    </h2>
+    <span class="combo-badge">Exclusivo</span>
+    <div class="info-eyebrow">Skin · Pedra & Resina</div>
+    <h2 class="info-name"><em>Marmo d'Oro</em>Mármore<br>Dourado</h2>
     <div class="info-rule"></div>
-    <p class="info-desc">
-      Skin nude acetinada com brilho dourado sutil — a versão delicada da linha Vetro Dorato. A skin mais feminina e sofisticada da coleção.
-    </p>
+    <p class="info-desc">Skin em vinil mármore preto com veios dourados — textura mineral única que replica a sofisticação da pedra natural.</p>
     <div class="specs">
-      <div class="spec-row">
-        <span class="spec-key">Skin · Material</span>
-        <span class="spec-val">Vinil nude acetinado com brilho dourado</span>
+      <div class="spec-row"><span class="spec-key">Skin · Material</span><span class="spec-val">Vinil mármore preto com veios dourados</span></div>
+    </div>
+    <div class="compat-block">
+      <span class="compat-title">Disponível para</span>
+      <span class="compat-section-label">Novos — iPhone 17</span>
+      <div class="compat-grid">
+        <span class="compat-item compat-highlight">iPhone 17</span>
+        <span class="compat-item compat-highlight">iPhone 17 Air</span>
+        <span class="compat-item compat-highlight">iPhone 17 Pro</span>
+        <span class="compat-item compat-highlight">iPhone 17 Pro Max</span>
+        <span class="compat-item compat-highlight">iPhone 17e</span>
       </div>
+      <span class="compat-section-label">Anteriores</span>
+      <div class="compat-grid">
+        <span class="compat-item">iPhone 16</span>
+        <span class="compat-item">iPhone 16 Plus</span>
+        <span class="compat-item">iPhone 16 Pro</span>
+        <span class="compat-item">iPhone 16 Pro Max</span>
+        <span class="compat-item">iPhone 15</span>
+        <span class="compat-item">iPhone 15 Plus</span>
+        <span class="compat-item">iPhone 15 Pro</span>
+        <span class="compat-item">iPhone 15 Pro Max</span>
+        <span class="compat-item">iPhone 14</span>
+        <span class="compat-item">iPhone 14 Plus</span>
+        <span class="compat-item">iPhone 14 Pro</span>
+        <span class="compat-item">iPhone 14 Pro Max</span>
+      </div>
+    </div>
+    <div class="pricing">
+      <div class="price-combo" style="text-align:center;width:100%;">
+        <span class="price-combo-label">Skin</span>
+        <span class="price-combo-val">R$ 159</span>
+      </div>
+    </div>
+    <a href="https://wa.me/55SEUNUMERO" class="combo-btn" target="_blank">Solicitar via WhatsApp ✦</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SKIN 05 — PELLE NERA · EM BREVE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="combo" id="combo-05">
+  <div class="combo-visual" style="background:#0a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;">
+    <span class="combo-num">05 / 05</span>
+    <span style="font-size:40px;color:rgba(201,168,76,0.2);">✦</span>
+    <span style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,240,232,0.2);">Foto em breve</span>
+  </div>
+  <div class="combo-info">
+    <span class="combo-badge">Em breve</span>
+    <div class="info-eyebrow">Skin · Minimalismo Total</div>
+    <h2 class="info-name"><em>Pelle Nera</em>Preto<br>Matte</h2>
+    <div class="info-rule"></div>
+    <p class="info-desc">Skin preto matte profundo que elimina reflexos e entrega grip premium — a essência minimalista da Pelle Nera, em camada fina.</p>
+    <div class="specs">
+      <div class="spec-row"><span class="spec-key">Skin · Material</span><span class="spec-val">Vinil matte preto premium</span></div>
     </div>
     <div class="compat-block">
       <span class="compat-title">Disponível para</span>
@@ -1194,98 +1425,7 @@
     </div>
     <a href="https://wa.me/55SEUNUMERO" class="combo-btn" target="_blank">Solicitar via WhatsApp ✦</a>
   </div>
-
 </div>
-
-<!-- ═══════════════════════════════════════ -->
-<!-- COMBO 04 — COURO LISO -->
-<!-- ═══════════════════════════════════════ -->
-<div class="combo" id="combo-04">
-
-  <div class="combo-visual bg-couro">
-    <span class="combo-num">04 / 04</span>
-    <div class="carousel" id="carousel-04">
-      <div class="carousel-track" id="track-04">
-        <div class="carousel-slide"><img src="pelle-01.png" alt="Pelle Nera - flatlay editorial"></div>
-        <div class="carousel-slide"><img src="pelle-02.png" alt="Pelle Nera - vista frontal sobre pedestal"></div>
-        <div class="carousel-slide"><img src="pelle-03.png" alt="Pelle Nera - vista reta centralizada"></div>
-        <div class="carousel-slide"><img src="pelle-04.png" alt="Pelle Nera - detalhe câmera"></div>
-        <div class="carousel-slide"><img src="pelle-05.png" alt="Pelle Nera - lifestyle encostado"></div>
-        <div class="carousel-slide"><img src="pelle-06.png" alt="Pelle Nera - campanha com logo"></div>
-        <div class="carousel-slide"><img src="pelle-07.png" alt="Pelle Nera - ângulo editorial sobre pedestal"></div>
-      </div>
-      <button class="carousel-btn prev" onclick="moveCarousel('04',-1)">‹</button>
-      <button class="carousel-btn next" onclick="moveCarousel('04',1)">›</button>
-      <span class="slide-counter" id="counter-04">1 / 7</span>
-    </div>
-    <div class="carousel-dots" id="dots-04">
-      <button class="carousel-dot active" onclick="goToSlide('04',0)"></button>
-      <button class="carousel-dot" onclick="goToSlide('04',1)"></button>
-      <button class="carousel-dot" onclick="goToSlide('04',2)"></button>
-      <button class="carousel-dot" onclick="goToSlide('04',3)"></button>
-      <button class="carousel-dot" onclick="goToSlide('04',4)"></button>
-      <button class="carousel-dot" onclick="goToSlide('04',5)"></button>
-      <button class="carousel-dot" onclick="goToSlide('04',6)"></button>
-    </div>
-  </div>
-
-  <div class="combo-info">
-    <div class="info-eyebrow">Skin · Minimalismo Total</div>
-    <h2 class="info-name">
-      <em>Pelle Nera</em>
-      Couro Liso &<br>Matte
-    </h2>
-    <div class="info-rule"></div>
-    <p class="info-desc">
-      Skin preto matte profundo que elimina reflexos e entrega grip premium — a essência minimalista da Pelle Nera, em camada fina.
-    </p>
-    <div class="specs">
-      <div class="spec-row">
-        <span class="spec-key">Skin · Material</span>
-        <span class="spec-val">Vinil matte anti-reflexo 3M</span>
-      </div>
-    </div>
-    <div class="compat-block">
-      <span class="compat-title">Disponível para</span>
-      <span class="compat-section-label">Novos — iPhone 17</span>
-      <div class="compat-grid">
-        <span class="compat-item compat-highlight">iPhone 17</span>
-        <span class="compat-item compat-highlight">iPhone 17 Air</span>
-        <span class="compat-item compat-highlight">iPhone 17 Pro</span>
-        <span class="compat-item compat-highlight">iPhone 17 Pro Max</span>
-        <span class="compat-item compat-highlight">iPhone 17e</span>
-      </div>
-      <span class="compat-section-label">Anteriores</span>
-      <div class="compat-grid">
-        <span class="compat-item">iPhone 16</span>
-        <span class="compat-item">iPhone 16 Plus</span>
-        <span class="compat-item">iPhone 16 Pro</span>
-        <span class="compat-item">iPhone 16 Pro Max</span>
-        <span class="compat-item">iPhone 15</span>
-        <span class="compat-item">iPhone 15 Plus</span>
-        <span class="compat-item">iPhone 15 Pro</span>
-        <span class="compat-item">iPhone 15 Pro Max</span>
-        <span class="compat-item">iPhone 14</span>
-        <span class="compat-item">iPhone 14 Plus</span>
-        <span class="compat-item">iPhone 14 Pro</span>
-        <span class="compat-item">iPhone 14 Pro Max</span>
-        <span class="compat-item">iPhone 13</span>
-        <span class="compat-item">iPhone 13 mini</span>
-        <span class="compat-item">iPhone 13 Pro</span>
-        <span class="compat-item">iPhone 13 Pro Max</span>
-      </div>
-    </div>
-    <div class="pricing">
-      <div class="price-combo" style="text-align:center;width:100%;">
-        <span class="price-combo-label">Skin</span>
-        <span class="price-combo-val">R$ 119</span>
-      </div>
-    </div>
-    <a href="https://wa.me/55SEUNUMERO" class="combo-btn" target="_blank">Solicitar via WhatsApp ✦</a>
-  </div>
-
-</div>
-
 <!-- CLOSING -->
 <div class="closing">
   <span class="closing-star">✦ &nbsp; ✦ &nbsp; ✦</span>
@@ -1303,7 +1443,7 @@
 
 <script>
   const carouselState = { '01': 0, '02': 0, '03': 0, '04': 0 };
-  const carouselTotal = { '01': 7, '02': 7, '03': 6, '04': 7 };
+  const carouselTotal = { '01': 4, '02': 3, '03': 4, '04': 4 };
   const carouselTimers = {};
 
   function updateCarousel(id) {
@@ -1354,6 +1494,19 @@
       if (Math.abs(diff) > 40) moveCarousel(id, diff > 0 ? 1 : -1);
     });
   });
+  // ── GAVETA LATERAL ──
+  function openDrawer() {
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawerOverlay').classList.add('open');
+    document.getElementById('drawerToggle').classList.add('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawerOverlay').classList.remove('open');
+    document.getElementById('drawerToggle').classList.remove('hidden');
+    document.body.style.overflow = '';
+  }
 </script>
 </body>
 </html>

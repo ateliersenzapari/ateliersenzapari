@@ -65,6 +65,148 @@
   }
   .nav-back:hover { border-color: var(--dourado); color: var(--dourado); }
 
+/* ── BOTÃO FLUTUANTE (abre gaveta) ── */
+  .drawer-toggle {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 300;
+    background: var(--grafite);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-left: none;
+    color: var(--dourado);
+    width: 32px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    writing-mode: vertical-rl;
+    font-family: 'Inter', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    transition: background 0.3s, width 0.3s;
+  }
+  .drawer-toggle:hover { background: #222; width: 36px; }
+  .drawer-toggle.hidden { opacity: 0; pointer-events: none; }
+
+  /* ── GAVETA LATERAL ── */
+  .drawer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    background: rgba(0,0,0,0.6);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s, visibility 0.35s;
+  }
+  .drawer-overlay.open { opacity: 1; visibility: visible; }
+
+  .drawer {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 500;
+    width: 300px;
+    background: #0e0e0c;
+    border-right: 1px solid rgba(201,168,76,0.12);
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 40px;
+    overflow-y: auto;
+  }
+  .drawer.open { transform: translateX(0); }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 28px 24px;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .drawer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+  .drawer-close {
+    background: none;
+    border: none;
+    color: var(--marfim-dim);
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .drawer-close:hover { color: var(--dourado); }
+
+  .drawer-section {
+    padding: 28px 28px 0;
+  }
+  .drawer-section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--marfim-dim);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .drawer-collection {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .drawer-collection-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+  }
+  .drawer-collection-btn:hover,
+  .drawer-collection-btn.active {
+    border-color: rgba(201,168,76,0.2);
+    background: rgba(201,168,76,0.04);
+  }
+  .drawer-collection-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: var(--dourado);
+    opacity: 0.6;
+    min-width: 20px;
+  }
+  .drawer-collection-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--marfim);
+    letter-spacing: 0.04em;
+  }
+  .drawer-collection-btn.active .drawer-collection-name { color: var(--dourado); }
+  .drawer-collection-sub {
+    font-size: 10px;
+    color: var(--marfim-dim);
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+  }
+  .drawer-divider {
+    height: 1px;
+    background: rgba(201,168,76,0.08);
+    margin: 24px 28px;
+  }
+
   .nav-tag {
     font-size: 9px;
     letter-spacing: 0.3em;
@@ -893,8 +1035,57 @@
 <nav>
   <a href="index.html" class="nav-logo"><b>✦</b> &nbsp;Atelier Senza Pari</a>
   <a href="index.html" class="nav-back">← Voltar ao site</a>
-  <span class="nav-tag">Coleção I — Combos</span>
+  <span class="nav-tag">Coleção I — Cases</span>
 </nav>
+
+<!-- BOTÃO FLUTUANTE -->
+<button class="drawer-toggle" id="drawerToggle" onclick="openDrawer()">Menu</button>
+
+<!-- OVERLAY -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+<!-- GAVETA LATERAL -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">✦ Senza Pari</span>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+
+  <div class="drawer-section">
+    <span class="drawer-section-title">Coleções · Cases</span>
+    <div class="drawer-collection">
+      <a href="cases.html" class="drawer-collection-btn active">
+        <span class="drawer-collection-num">I</span>
+        <div>
+          <div class="drawer-collection-name">Combo 2026</div>
+          <div class="drawer-collection-sub">4 cases · Coleção atual</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="drawer-divider"></div>
+
+  <div class="drawer-section">
+    <span class="drawer-section-title">Navegar</span>
+    <div class="drawer-collection">
+      <a href="skins.html" class="drawer-collection-btn">
+        <span class="drawer-collection-num">→</span>
+        <div>
+          <div class="drawer-collection-name">Skins</div>
+          <div class="drawer-collection-sub">Ver todas as skins</div>
+        </div>
+      </a>
+      <a href="combos.html" class="drawer-collection-btn">
+        <span class="drawer-collection-num">→</span>
+        <div>
+          <div class="drawer-collection-name">Conjunto</div>
+          <div class="drawer-collection-sub">Case + Skin</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -907,26 +1098,6 @@
   <p class="hero-desc">As cases da coleção, isoladamente — cada material, cada textura, em detalhe.</p>
 </div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- SELETOR: CASES / SKINS / CONJUNTO -->
-<!-- ═══════════════════════════════════════ -->
-<div class="view-switch">
-  <a href="cases.html#combo-01" class="view-switch-btn active">
-    <span class="view-switch-num">01</span>
-    <span class="view-switch-name">Cases</span>
-    <span class="view-switch-desc">As cases premium, isoladamente</span>
-  </a>
-  <a href="skins.html#combo-01" class="view-switch-btn">
-    <span class="view-switch-num">02</span>
-    <span class="view-switch-name">Skins</span>
-    <span class="view-switch-desc">As skins em vinil, isoladamente</span>
-  </a>
-  <a href="combos.html#combo-01" class="view-switch-btn">
-    <span class="view-switch-num">03</span>
-    <span class="view-switch-name">Conjunto</span>
-    <span class="view-switch-desc">Case + Skin, a identidade completa</span>
-  </a>
-</div>
 
 <!-- ═══════════════════════════════════════ -->
 <!-- COMBO 01 — COURO DE JACARÉ -->
@@ -1370,6 +1541,19 @@
       if (Math.abs(diff) > 40) moveCarousel(id, diff > 0 ? 1 : -1);
     });
   });
+  // ── GAVETA LATERAL ──
+  function openDrawer() {
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawerOverlay').classList.add('open');
+    document.getElementById('drawerToggle').classList.add('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawerOverlay').classList.remove('open');
+    document.getElementById('drawerToggle').classList.remove('hidden');
+    document.body.style.overflow = '';
+  }
 </script>
 </body>
 </html>
