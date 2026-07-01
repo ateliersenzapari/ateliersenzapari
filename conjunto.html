@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Combos — Atelier Senza Pari</title>
+<title>Conjunto — Atelier Senza Pari</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -215,39 +215,6 @@
     opacity: 0.7;
   }
 
-  /* ── MINI SLIDESHOW ── */
-  .mini-slideshow {
-    position: relative;
-    width: 220px;
-    height: 220px;
-    margin: 0 auto 86px;
-    border: 1px solid rgba(201,168,76,0.18);
-  }
-  .mini-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 1s ease;
-  }
-  .mini-slide.active { opacity: 1; }
-  .mini-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .mini-slide-caption {
-    position: absolute;
-    left: 0; right: 0; bottom: -30px;
-    text-align: center;
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--dourado);
-    opacity: 0.8;
-  }
-
   /* ── VIEW SWITCH (Cases / Skins / Conjunto) ── */
   .view-switch {
     display: grid;
@@ -269,22 +236,14 @@
   }
   .view-switch-btn:hover { background: #131311; }
   .view-switch-btn.active {
-    background: #121210;
-    position: relative;
-  }
-  .view-switch-btn.active::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--dourado);
+    background: linear-gradient(160deg, rgba(201,168,76,0.1), transparent);
   }
   .view-switch-num {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 20px;
+    font-size: 13px;
     color: var(--dourado);
-    opacity: 0.7;
+    opacity: 0.6;
   }
   .view-switch-name {
     font-family: 'Cormorant Garamond', serif;
@@ -1046,12 +1005,11 @@
     nav { padding: 14px 20px; flex-wrap: wrap; gap: 10px; }
     .nav-tag { display: none; }
     .hero { height: auto; min-height: 0; padding: 100px 24px 48px; }
-    .mini-slideshow { width: 160px; height: 160px; margin-bottom: 64px; }
     .preview-section { padding: 40px 20px 8px; }
     .preview-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .view-switch { grid-template-columns: 1fr; padding: 0 20px 48px; gap: 1px; }
     .view-switch-btn { padding: 26px 22px; flex-direction: row; align-items: center; gap: 16px; }
-    .view-switch-num { font-size: 17px; }
+    .view-switch-num { font-size: 11px; }
     .view-switch-name { font-size: 20px; min-width: 90px; }
     .view-switch-desc { font-size: 11px; }
     .combo { grid-template-columns: 1fr; direction: ltr !important; min-height: auto; }
@@ -1080,59 +1038,66 @@
   <span class="nav-tag">Coleção I — Conjunto</span>
 </nav>
 
+<!-- BOTÃO FLUTUANTE -->
+<button class="drawer-toggle" id="drawerToggle" onclick="openDrawer()">Menu</button>
+
+<!-- OVERLAY -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+<!-- GAVETA LATERAL -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">✦ Senza Pari</span>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+
+  <div class="drawer-section">
+    <span class="drawer-section-title">Coleções · Conjunto</span>
+    <div class="drawer-collection">
+      <a href="conjunto.html" class="drawer-collection-btn active">
+        <span class="drawer-collection-num">I</span>
+        <div>
+          <div class="drawer-collection-name">Combo 2026</div>
+          <div class="drawer-collection-sub">4 conjuntos · Coleção atual</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="drawer-divider"></div>
+
+  <div class="drawer-section">
+    <span class="drawer-section-title">Navegar</span>
+    <div class="drawer-collection">
+      <a href="cases.html" class="drawer-collection-btn">
+        <span class="drawer-collection-num">→</span>
+        <div>
+          <div class="drawer-collection-name">Cases</div>
+          <div class="drawer-collection-sub">Ver todas as cases</div>
+        </div>
+      </a>
+      <a href="skins.html" class="drawer-collection-btn">
+        <span class="drawer-collection-num">→</span>
+        <div>
+          <div class="drawer-collection-name">Skins</div>
+          <div class="drawer-collection-sub">Ver todas as skins</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
 
 <!-- HERO -->
 <div class="hero">
   <p class="hero-eyebrow">✦ &nbsp; Atelier Senza Pari &nbsp; ✦</p>
   <h1 class="hero-title">
     <em>Coleção I</em>
-    Combos<br>Premium
+    Conjunto<br>Premium
   </h1>
   <div class="hero-rule"></div>
-  <p class="hero-desc">Cada combo une case e skin da mesma linha — identidade visual completa para o seu iPhone.</p>
+  <p class="hero-desc">Case + Skin da mesma linha — identidade visual completa para o seu iPhone.</p>
 </div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- MINI SLIDESHOW AUTOMÁTICO -->
-<!-- ═══════════════════════════════════════ -->
-<div class="mini-slideshow">
-  <div class="mini-slide active" data-caption="Case">
-    <img src="croco-01.png" alt="Case Senza Pari">
-  </div>
-  <div class="mini-slide" data-caption="Skin">
-    <img src="marmo-01.png" alt="Skin Senza Pari">
-  </div>
-  <div class="mini-slide" data-caption="Conjunto">
-    <img src="vetro-01.png" alt="Conjunto Senza Pari">
-  </div>
-  <span class="mini-slide-caption" id="miniCaption">Case</span>
-</div>
-
-<!-- ═══════════════════════════════════════ -->
-<!-- SELETOR: CASES / SKINS / CONJUNTO -->
-<!-- ═══════════════════════════════════════ -->
-<div class="view-switch" id="viewSwitch">
-  <a href="cases.html" class="view-switch-btn">
-    <span class="view-switch-num">01</span>
-    <span class="view-switch-name">Cases</span>
-    <span class="view-switch-desc">As cases premium, isoladamente</span>
-  </a>
-  <a href="skins.html" class="view-switch-btn">
-    <span class="view-switch-num">02</span>
-    <span class="view-switch-name">Skins</span>
-    <span class="view-switch-desc">As skins em vinil, isoladamente</span>
-  </a>
-  <a href="conjunto.html" class="view-switch-btn active">
-    <span class="view-switch-num">03</span>
-    <span class="view-switch-name">Conjunto</span>
-    <span class="view-switch-desc">Case + Skin, a identidade completa</span>
-  </a>
-</div>
-
-<!-- ═══════════════════════════════════════ -->
-<!-- DETALHE: COMBOS (oculto até clicar em "Conjunto") -->
-<!-- ═══════════════════════════════════════ -->
-<div id="combosDetail" style="display:none;">
 
 <!-- ═══════════════════════════════════════ -->
 <!-- COMBO 01 — COURO DE JACARÉ -->
@@ -1189,7 +1154,7 @@
     </h2>
     <div class="info-rule"></div>
     <p class="info-desc">
-      Case em couro de jacaré sintético premium — textura escamada precisa, costura artesanal em linha dourada. Skin combinando em vinil texturizado matte preto. O conjunto mais ousado da coleção.
+      Case em couro de jacaré sintético premium — textura escamada precisa, costura artesanal em linha dourada. O acabamento mais ousado da coleção.
     </p>
     <div class="specs">
       <div class="spec-row">
@@ -1199,10 +1164,6 @@
       <div class="spec-row">
         <span class="spec-key">Case · Acabamento</span>
         <span class="spec-val">Preto · costura dourada artesanal</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-key">Skin · Material</span>
-        <span class="spec-val">Vinil textura couro matte 3M</span>
       </div>
     </div>
     <div class="compat-block">
@@ -1232,21 +1193,11 @@
       </div>
     </div>
     <div class="pricing">
-      <div class="price-block">
-        <span class="price-label">Case</span>
-        <span class="price-value">R$ 349</span>
-      </div>
+      <div class="price-block"><span class="price-label">Case</span><span class="price-value">R$ 349</span></div>
       <div class="price-sep"></div>
-      <div class="price-block">
-        <span class="price-label">Skin</span>
-        <span class="price-value">R$ 159</span>
-      </div>
+      <div class="price-block"><span class="price-label">Skin</span><span class="price-value">R$ 159</span></div>
       <div class="price-sep"></div>
-      <div class="price-combo">
-        <span class="price-combo-label">Combo</span>
-        <span class="price-combo-val">R$ 449</span>
-        <span class="price-economy">economia de R$ 59</span>
-      </div>
+      <div class="price-combo"><span class="price-combo-label">Combo</span><span class="price-combo-val">R$ 449</span><span class="price-economy">economia de R$ 59</span></div>
     </div>
     <a href="https://wa.me/55SEUNUMERO" class="combo-btn" target="_blank">Solicitar via WhatsApp ✦</a>
   </div>
@@ -1293,7 +1244,7 @@
     </h2>
     <div class="info-rule"></div>
     <p class="info-desc">
-      Case em resina artesanal com efeito mármore negro e veios dourados únicos — nenhuma peça igual à outra. Skin em vinil mármore preto com reflexo dourado suave. Sofisticação que se vê e se sente.
+      Case em resina artesanal com efeito mármore negro e veios dourados únicos — nenhuma peça igual à outra. Sofisticação que se vê e se sente.
     </p>
     <div class="specs">
       <div class="spec-row">
@@ -1303,10 +1254,6 @@
       <div class="spec-row">
         <span class="spec-key">Case · Detalhe</span>
         <span class="spec-val">Cada peça é única — irrepetível</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-key">Skin · Material</span>
-        <span class="spec-val">Vinil mármore com reflexo dourado</span>
       </div>
     </div>
     <div class="compat-block">
@@ -1336,21 +1283,11 @@
       </div>
     </div>
     <div class="pricing">
-      <div class="price-block">
-        <span class="price-label">Case</span>
-        <span class="price-value">R$ 279</span>
-      </div>
+      <div class="price-block"><span class="price-label">Case</span><span class="price-value">R$ 279</span></div>
       <div class="price-sep"></div>
-      <div class="price-block">
-        <span class="price-label">Skin</span>
-        <span class="price-value">R$ 139</span>
-      </div>
+      <div class="price-block"><span class="price-label">Skin</span><span class="price-value">R$ 139</span></div>
       <div class="price-sep"></div>
-      <div class="price-combo">
-        <span class="price-combo-label">Combo</span>
-        <span class="price-combo-val">R$ 369</span>
-        <span class="price-economy">economia de R$ 49</span>
-      </div>
+      <div class="price-combo"><span class="price-combo-label">Combo</span><span class="price-combo-val">R$ 379</span><span class="price-economy">economia de R$ 39</span></div>
     </div>
     <a href="https://wa.me/55SEUNUMERO" class="combo-btn" target="_blank">Solicitar via WhatsApp ✦</a>
   </div>
@@ -1396,7 +1333,7 @@
     </h2>
     <div class="info-rule"></div>
     <p class="info-desc">
-      Case com lâmina de vidro real encapsulada em resina — tom nude rosado com veios dourados delicados. Skin nude acetinada com brilho dourado sutil. A linha mais feminina e sofisticada da coleção.
+      Case com lâmina de vidro real encapsulada em resina — tom nude rosado com veios dourados delicados. A linha mais feminina e sofisticada da coleção.
     </p>
     <div class="specs">
       <div class="spec-row">
@@ -1406,10 +1343,6 @@
       <div class="spec-row">
         <span class="spec-key">Case · Detalhe</span>
         <span class="spec-val">Veios dourados delicados</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-key">Skin · Material</span>
-        <span class="spec-val">Vinil nude acetinado com brilho dourado</span>
       </div>
     </div>
     <div class="compat-block">
@@ -1439,21 +1372,11 @@
       </div>
     </div>
     <div class="pricing">
-      <div class="price-block">
-        <span class="price-label">Case</span>
-        <span class="price-value">R$ 299</span>
-      </div>
+      <div class="price-block"><span class="price-label">Case</span><span class="price-value">R$ 299</span></div>
       <div class="price-sep"></div>
-      <div class="price-block">
-        <span class="price-label">Skin</span>
-        <span class="price-value">R$ 129</span>
-      </div>
+      <div class="price-block"><span class="price-label">Skin</span><span class="price-value">R$ 129</span></div>
       <div class="price-sep"></div>
-      <div class="price-combo">
-        <span class="price-combo-label">Combo</span>
-        <span class="price-combo-val">R$ 389</span>
-        <span class="price-economy">economia de R$ 39</span>
-      </div>
+      <div class="price-combo"><span class="price-combo-label">Combo</span><span class="price-combo-val">R$ 389</span><span class="price-economy">economia de R$ 39</span></div>
     </div>
     <a href="https://wa.me/55SEUNUMERO" class="combo-btn" target="_blank">Solicitar via WhatsApp ✦</a>
   </div>
@@ -1500,7 +1423,7 @@
     </h2>
     <div class="info-rule"></div>
     <p class="info-desc">
-      Case em couro liso preto matte — absolutamente sem brilho, sem costura aparente, sem excessos. Skin preto matte profundo que elimina reflexos e entrega grip premium. O minimalismo levado ao limite.
+      Case em couro liso preto matte — absolutamente sem brilho, sem costura aparente, sem excessos. O minimalismo levado ao limite.
     </p>
     <div class="specs">
       <div class="spec-row">
@@ -1510,10 +1433,6 @@
       <div class="spec-row">
         <span class="spec-key">Case · Acabamento</span>
         <span class="spec-val">Preto total · sem costura aparente</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-key">Skin · Material</span>
-        <span class="spec-val">Vinil matte anti-reflexo 3M</span>
       </div>
     </div>
     <div class="compat-block">
@@ -1547,21 +1466,11 @@
       </div>
     </div>
     <div class="pricing">
-      <div class="price-block">
-        <span class="price-label">Case</span>
-        <span class="price-value">R$ 289</span>
-      </div>
+      <div class="price-block"><span class="price-label">Case</span><span class="price-value">R$ 289</span></div>
       <div class="price-sep"></div>
-      <div class="price-block">
-        <span class="price-label">Skin</span>
-        <span class="price-value">R$ 119</span>
-      </div>
+      <div class="price-block"><span class="price-label">Skin</span><span class="price-value">R$ 119</span></div>
       <div class="price-sep"></div>
-      <div class="price-combo">
-        <span class="price-combo-label">Combo</span>
-        <span class="price-combo-val">R$ 369</span>
-        <span class="price-economy">economia de R$ 39</span>
-      </div>
+      <div class="price-combo"><span class="price-combo-label">Combo</span><span class="price-combo-val">R$ 369</span><span class="price-economy">economia de R$ 39</span></div>
     </div>
     <a href="https://wa.me/55SEUNUMERO" class="combo-btn" target="_blank">Solicitar via WhatsApp ✦</a>
   </div>
@@ -1575,8 +1484,6 @@
   <p class="closing-sub">Pedidos via WhatsApp · Segunda a Domingo · 9h às 22h</p>
   <a href="https://wa.me/55SEUNUMERO" class="closing-btn" target="_blank">Falar no WhatsApp</a>
 </div>
-
-</div><!-- /#combosDetail -->
 
 <!-- FOOTER -->
 <footer>
@@ -1628,35 +1535,6 @@
 
   Object.keys(carouselTotal).forEach(id => startAutoplay(id));
 
-  // Revela os combos detalhados (Conjunto) e rola até eles
-  function revealCombos(e) {
-    if (e) e.preventDefault();
-    const detail = document.getElementById('combosDetail');
-    const switcher = document.getElementById('viewSwitch');
-    const slideshow = document.querySelector('.mini-slideshow');
-    const toggle = document.getElementById('drawerToggle');
-    if (detail) {
-      detail.style.display = '';
-      if (switcher) switcher.style.display = 'none';
-      if (slideshow) slideshow.style.display = 'none';
-      if (toggle) toggle.style.display = 'flex';
-      document.getElementById('combo-01').scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  // Mini slideshow (hero) — Case / Skin / Conjunto
-  const miniSlides = document.querySelectorAll('.mini-slide');
-  const miniCaption = document.getElementById('miniCaption');
-  let miniIdx = 0;
-  if (miniSlides.length) {
-    setInterval(() => {
-      miniSlides[miniIdx].classList.remove('active');
-      miniIdx = (miniIdx + 1) % miniSlides.length;
-      miniSlides[miniIdx].classList.add('active');
-      miniCaption.textContent = miniSlides[miniIdx].dataset.caption;
-    }, 2200);
-  }
-
   // Touch swipe support
   document.querySelectorAll('.carousel').forEach(carousel => {
     let startX = 0;
@@ -1667,7 +1545,19 @@
       if (Math.abs(diff) > 40) moveCarousel(id, diff > 0 ? 1 : -1);
     });
   });
-
+  // ── GAVETA LATERAL ──
+  function openDrawer() {
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawerOverlay').classList.add('open');
+    document.getElementById('drawerToggle').classList.add('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawerOverlay').classList.remove('open');
+    document.getElementById('drawerToggle').classList.remove('hidden');
+    document.body.style.overflow = '';
+  }
 </script>
 </body>
 </html>
