@@ -73,7 +73,7 @@
   /* ---------- HERO (dark, moody — chrome stays light) ---------- */
   .hero{ max-width:1200px; margin:0 auto; padding:0 0 40px; }
   .hero-visual{
-    aspect-ratio:4/5; width:100%;
+    height:44vh; min-height:300px; width:100%;
     background:linear-gradient(150deg,#23262B 0%, var(--dark-hero) 45%, #1a1d21 100%);
     position:relative; overflow:hidden;
   }
@@ -244,7 +244,7 @@
   @media (min-width:860px){
     .header-inner{ padding:18px 40px; }
     .hero{ display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:40px; padding:0 40px 60px; }
-    .hero-visual{ aspect-ratio:3/4; }
+    .hero-visual{ aspect-ratio:3/4; height:auto; }
     .hero-text{ padding:0; order:-1; }
     .section{ padding:60px 40px; }
     .grid{ grid-template-columns:repeat(4,1fr); gap:20px; }
@@ -290,6 +290,22 @@
   </div>
 </section>
 
+<section class="swipe-gallery">
+  <div class="swipe-rail" id="swipeRail">
+    <a class="swipe-card facet sc-1"><span>Cristallo Gelo</span></a>
+    <a class="swipe-card facet sc-2"><span>Cristallo Ônix</span></a>
+    <a class="swipe-card facet sc-3"><span>Cristallo Safira</span></a>
+  </div>
+  <div class="swipe-arrows">
+    <button class="swipe-arrow" id="swipePrev" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="swipe-arrow" id="swipeNext" aria-label="Próximo">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</section>
+
 <section class="section" id="vitrine">
   <div class="section-head"><h2>Mais procurados</h2><a href="#">Ver tudo →</a></div>
   <div class="grid">
@@ -309,22 +325,6 @@
       <div class="card-visual facet tone-gelo"></div>
       <div class="card-info"><p class="card-name">Skin Cristallo — iPhone 15</p><p class="card-price">R$ 229</p></div>
     </article>
-  </div>
-</section>
-
-<section class="swipe-gallery">
-  <div class="swipe-rail" id="swipeRail">
-    <a class="swipe-card facet sc-1"><span>Cristallo Gelo</span></a>
-    <a class="swipe-card facet sc-2"><span>Cristallo Ônix</span></a>
-    <a class="swipe-card facet sc-3"><span>Cristallo Safira</span></a>
-  </div>
-  <div class="swipe-arrows">
-    <button class="swipe-arrow" id="swipePrev" aria-label="Anterior">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
-    </button>
-    <button class="swipe-arrow" id="swipeNext" aria-label="Próximo">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
   </div>
 </section>
 
