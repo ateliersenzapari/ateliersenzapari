@@ -94,16 +94,6 @@
     object-fit:contain; object-position:center;
     background:#0c0d0f;
   }
-  .hero-toggle{
-    position:absolute; bottom:14px; right:14px; z-index:2;
-    width:34px; height:34px; border-radius:50%;
-    background:rgba(255,255,255,0.16); backdrop-filter:blur(6px);
-    display:flex; align-items:center; justify-content:center;
-  }
-  .hero-toggle svg{ width:14px; height:14px; fill:#fff; }
-  .hero-toggle .icon-play{ display:none; }
-  .hero-visual.paused .icon-pause{ display:none; }
-  .hero-visual.paused .icon-play{ display:block; }
   .hero-text{ padding:26px 20px 0; }
   .eyebrow{ font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block; }
   .hero h1{
@@ -280,11 +270,7 @@
 
 <div class="hero-wrap">
   <div class="hero-visual" id="heroVisual" aria-hidden="true">
-    <video class="hero-video" id="heroVideo" src="hero-video.mp4" autoplay muted loop playsinline></video>
-    <button class="hero-toggle" id="heroToggle" aria-label="Pausar vídeo">
-      <svg class="icon-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
-      <svg class="icon-play" viewBox="0 0 24 24"><path d="M7 4l14 8-14 8z"/></svg>
-    </button>
+    <video class="hero-video" id="heroVideo" src="hero-video.mp4" autoplay muted loop playsinline preload="auto" webkit-playsinline="true"></video>
   </div>
 
   <section class="swipe-gallery">
@@ -461,14 +447,14 @@
     btn.addEventListener('click', () => resetPanes());
   });
 
-  // Hero play/pause toggle (controla o <video> de verdade)
-  $('#heroToggle').addEventListener('click', (e) => {
-    e.stopPropagation();
-    const video = $('#heroVideo');
-    const visual = $('#heroVisual');
-    if (video.paused) { video.play(); visual.classList.remove('paused'); }
-    else { video.pause(); visual.classList.add('paused'); }
-  });
+  // Hero: garante que o vídeo sempre tente tocar em loop, mesmo se o autoplay inicial for bloqueado
+  const heroVideo = $('#heroVideo');
+  if (heroVideo) {
+    heroVideo.muted = true;
+    const tryPlay = () => heroVideo.play().catch(() => {});
+    tryPlay();
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) tryPlay(); });
+  }
 
   // Bottom swipe gallery arrows
   const rail = $('#swipeRail');
