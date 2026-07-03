@@ -1,1489 +1,422 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Atelier Senza Pari — Cases & Skins Premium · iPhone</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant:wght@300;400&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENZA PARI — Atelier di Cristallo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B0C10;
+    --surface: #15171C;
+    --surface-2: #1B1E24;
+    --text: #EDEEF0;
+    --muted: #9195A0;
+    --line: #262A32;
+    --accent: #C9D4DE;
+    --prism-1: #8FE3FF;
+    --prism-2: #FF9EEA;
+    --prism-3: #FFD98A;
+    --radius-cut: 18px;
+  }
 
-    :root {
-      --black: #0A0A0A;
-      --gold: #C9A84C;
-      --gold-light: #d9bc7a;
-      --ivory: #F5F0E8;
-      --graphite: #2C2C2C;
-      --graphite-mid: #3a3a3a;
-      --ivory-dim: rgba(245,240,232,0.55);
-    }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; }
+  img,svg{ display:block; }
 
-    html { scroll-behavior: smooth; }
+  ::selection{ background:var(--accent); color:var(--bg); }
 
-    body {
-      background: var(--black);
-      color: var(--ivory);
-      font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-      font-weight: 300;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
+  :focus-visible{
+    outline:2px solid var(--prism-1);
+    outline-offset:3px;
+  }
 
-    /* ─── LANGUAGE TOGGLE ─── */
-    .lang-bar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      display: flex;
-      justify-content: flex-end;
-      padding: 10px 40px;
-      background: var(--black);
-      border-bottom: 1px solid rgba(201,168,76,0.12);
-    }
-    .lang-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.18em;
-      color: var(--ivory-dim);
-      text-transform: uppercase;
-      padding: 2px 8px;
-      transition: color 0.3s;
-    }
-    .lang-btn.active, .lang-btn:hover { color: var(--gold); }
-    .lang-sep { color: rgba(201,168,76,0.3); font-size: 11px; line-height: 1.8; }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
 
-    /* ─── NAV ─── */
-    nav {
-      position: fixed;
-      top: 37px; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 48px;
-      background: var(--black);
-      border-bottom: 1px solid rgba(201,168,76,0.15);
-      transition: padding 0.3s;
-    }
-    .nav-logo {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      cursor: pointer;
-    }
-    .nav-logo-star {
-      color: var(--gold);
-      font-size: 13px;
-      line-height: 1;
-      letter-spacing: 0.1em;
-    }
-    .nav-logo-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 15px;
-      font-weight: 400;
-      letter-spacing: 0.35em;
-      color: var(--ivory);
-      text-transform: uppercase;
-    }
-    .nav-logo-sub {
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      color: var(--gold);
-      text-transform: uppercase;
-      font-weight: 300;
-    }
-    .nav-links {
-      display: flex;
-      gap: 36px;
-      list-style: none;
-    }
-    .nav-links li a {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ivory-dim);
-      text-decoration: none;
-      transition: color 0.3s;
-      position: relative;
-    }
-    .nav-links li a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 0; right: 0;
-      height: 1px;
-      background: var(--gold);
-      transform: scaleX(0);
-      transition: transform 0.3s;
-    }
-    .nav-links li a:hover { color: var(--gold); }
-    .nav-links li a:hover::after { transform: scaleX(1); }
+  .facet{
+    clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  }
 
-    /* ─── MOBILE MENU TOGGLE ─── */
-    .nav-toggle {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 6px;
-      width: 28px;
-      height: 22px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      z-index: 210;
-    }
-    .nav-toggle span {
-      display: block;
-      width: 100%;
-      height: 1px;
-      background: var(--gold);
-      transition: transform 0.35s ease, opacity 0.35s ease;
-    }
-    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle.open span:nth-child(2) { opacity: 0; }
-    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,12,16,0.86);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 20px;
+    max-width:1200px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-size:19px;
+    letter-spacing:0.14em;
+  }
+  .header-icons{ display:flex; align-items:center; gap:18px; }
+  .icon-btn{
+    width:22px; height:22px; color:var(--text); background:none; border:none;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .icon-btn svg{ width:20px; height:20px; }
 
-    /* ─── MOBILE MENU OVERLAY ─── */
-    .mobile-menu {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: var(--black);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transform: translateY(-12px);
-      transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
-    }
-    .mobile-menu.open {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
-    .mobile-menu-star {
-      color: var(--gold);
-      font-size: 18px;
-      margin-bottom: 40px;
-      opacity: 0.8;
-    }
-    .mobile-menu ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-    }
-    .mobile-menu ul a {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 28px;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ivory);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .mobile-menu ul a:hover,
-    .mobile-menu ul a:active { color: var(--gold); }
-    .mobile-menu-sub {
-      margin-top: 44px;
-      font-size: 9px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0.6;
-    }
+  /* ---------- CATEGORY RAIL ---------- */
+  .cat-rail{
+    display:flex; gap:14px;
+    overflow-x:auto;
+    padding:16px 20px 18px;
+    scroll-snap-type:x proximity;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .cat-rail::-webkit-scrollbar{ display:none; }
+  .cat-item{
+    flex:0 0 auto;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    scroll-snap-align:start;
+  }
+  .cat-circle{
+    width:60px; height:60px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+    background:linear-gradient(135deg, var(--surface), var(--surface-2));
+  }
+  .cat-circle svg{ width:24px; height:24px; stroke:var(--accent); }
+  .cat-label{ font-size:11px; color:var(--muted); letter-spacing:0.04em; white-space:nowrap; }
 
-    /* ─── SECTIONS ─── */
-    .section { display: none; }
-    .section.active { display: block; }
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:1200px; margin:0 auto;
+    padding:8px 20px 40px;
+    display:grid; gap:26px;
+  }
+  .hero-visual{
+    aspect-ratio:4/5;
+    width:100%;
+    background:
+      linear-gradient(135deg, #1a2230 0%, #0B0C10 38%, #241a2c 62%, #0B0C10 100%);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-visual::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(115deg, transparent 30%, rgba(143,227,255,0.18) 45%, transparent 55%),
+      linear-gradient(65deg, transparent 55%, rgba(255,158,234,0.14) 68%, transparent 78%);
+    mix-blend-mode:screen;
+  }
+  .hero-visual::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(30deg, rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(150deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(270deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:64px 110px;
+  }
+  .hero-text{ text-align:left; }
+  .eyebrow{
+    font-size:11px; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:14px; display:block;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-weight:300;
+    font-size:clamp(34px, 8vw, 56px);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    margin-bottom:16px;
+  }
+  .hero h1 em{ font-style:italic; color:var(--accent); }
+  .hero p{
+    color:var(--muted); font-size:15px; line-height:1.6; max-width:46ch; margin-bottom:26px;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:14px 26px;
+    background:var(--text); color:var(--bg);
+    font-size:13px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600;
+    border:none;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    transition:opacity 0.2s ease;
+  }
+  .btn:hover{ opacity:0.82; }
+  .btn-outline{
+    background:transparent; color:var(--text); border:1px solid var(--line);
+  }
 
-    /* ─── HERO ─── */
-    .hero {
-      min-height: 100vh;
-      padding-top: 120px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 60%, rgba(201,168,76,0.06) 0%, transparent 70%),
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 79px,
-          rgba(201,168,76,0.04) 80px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent 79px,
-          rgba(201,168,76,0.04) 80px
-        );
-    }
-    .hero-star {
-      font-size: 28px;
-      color: var(--gold);
-      letter-spacing: 0.5em;
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 1s ease 0.2s forwards;
-    }
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(48px, 8vw, 96px);
-      font-weight: 300;
-      letter-spacing: 0.25em;
-      line-height: 1.05;
-      color: var(--ivory);
-      text-transform: uppercase;
-      opacity: 0;
-      animation: fadeUp 1s ease 0.45s forwards;
-    }
-    .hero-title em {
-      display: block;
-      font-style: italic;
-      font-weight: 300;
-      color: var(--gold);
-      font-size: 0.65em;
-      letter-spacing: 0.4em;
-    }
-    .hero-divider {
-      width: 120px;
-      height: 1px;
-      background: var(--gold);
-      margin: 32px auto;
-      opacity: 0;
-      animation: fadeUp 1s ease 0.65s forwards;
-    }
-    .hero-sub {
-      font-size: 12px;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--ivory-dim);
-      opacity: 0;
-      animation: fadeUp 1s ease 0.8s forwards;
-    }
-    .hero-slogan {
-      font-size: clamp(16px, 2.5vw, 22px);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--ivory);
-      margin-top: 48px;
-      max-width: 480px;
-      opacity: 0;
-      animation: fadeUp 1s ease 1s forwards;
-    }
-    .hero-slogan-en {
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      color: var(--ivory-dim);
-      margin-top: 8px;
-      font-style: italic;
-    }
-    .hero-cta {
-      display: flex;
-      gap: 20px;
-      margin-top: 52px;
-      opacity: 0;
-      animation: fadeUp 1s ease 1.15s forwards;
-    }
-    .btn-primary {
-      background: var(--gold);
-      color: var(--black);
-      border: none;
-      padding: 14px 36px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.3s, color 0.3s;
-    }
-    .btn-primary:hover { background: var(--gold-light); }
-    .btn-ghost {
-      background: transparent;
-      color: var(--ivory);
-      border: 1px solid rgba(245,240,232,0.35);
-      padding: 14px 36px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: border-color 0.3s, color 0.3s;
-    }
-    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-    .hero-scroll {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      opacity: 0;
-      animation: fadeUp 1s ease 1.4s forwards;
-    }
-    .hero-scroll span { display: none; }
-    .scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
+  /* ---------- SECTION HEADS ---------- */
+  .section{ max-width:1200px; margin:0 auto; padding:52px 20px; }
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom:26px; gap:16px;
+  }
+  .section-head h2{
+    font-family:'Fraunces', serif; font-weight:400; font-size:26px; letter-spacing:-0.01em;
+  }
+  .section-head a{ font-size:12px; color:var(--muted); letter-spacing:0.04em; white-space:nowrap; }
 
-    /* ─── MARQUEE ─── */
-    .marquee-wrap {
-      border-top: 1px solid rgba(201,168,76,0.2);
-      border-bottom: 1px solid rgba(201,168,76,0.2);
-      padding: 14px 0;
-      overflow: hidden;
-      white-space: nowrap;
-      background: var(--graphite);
-    }
-    .marquee-track {
-      display: inline-flex;
-      gap: 48px;
-      animation: marquee 24s linear infinite;
-    }
-    .marquee-item {
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .marquee-item::after { content: '✦'; color: rgba(201,168,76,0.4); }
+  /* ---------- PRODUCT GRID ---------- */
+  .grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:14px 12px;
+  }
+  .card{ display:flex; flex-direction:column; }
+  .card-visual{
+    aspect-ratio:1/1.15;
+    position:relative;
+    overflow:hidden;
+    background:var(--surface);
+    transition:transform 0.3s ease;
+  }
+  .card-visual::after{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(125deg, transparent 40%, rgba(255,255,255,0.10) 50%, transparent 60%);
+    transform:translateX(-120%);
+    transition:transform 0.6s ease;
+  }
+  .card:hover .card-visual::after{ transform:translateX(120%); }
 
-    /* ─── FEATURED (Home) ─── */
-    .featured {
-      padding: 100px 48px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .section-label {
-      font-size: 9px;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
-      display: block;
-    }
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(32px, 5vw, 52px);
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      color: var(--ivory);
-      line-height: 1.1;
-      margin-bottom: 48px;
-    }
-    .section-title em { font-style: italic; color: var(--gold); }
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-    }
-    .product-card {
-      position: relative;
-      background: var(--graphite);
-      aspect-ratio: 3/4;
-      overflow: hidden;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-    }
-    .product-img {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--graphite) 0%, #1a1a1a 100%);
-      position: relative;
-      overflow: hidden;
-    }
-    .product-img::before {
-      content: '✦';
-      position: absolute;
-      font-size: 48px;
-      color: rgba(201,168,76,0.08);
-    }
-    .product-img-label {
-      font-size: 9px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: rgba(245,240,232,0.3);
-      text-align: center;
-      padding: 16px;
-      position: absolute;
-      bottom: 40px;
-      left: 0; right: 0;
-    }
-    .product-hover {
-      position: absolute;
-      inset: 0;
-      background: rgba(10,10,10,0.85);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .product-card:hover .product-hover { opacity: 1; }
-    .product-info {
-      padding: 20px 24px;
-      background: var(--graphite);
-      border-top: 1px solid rgba(201,168,76,0.12);
-    }
-    .product-name {
-      font-size: 13px;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      color: var(--ivory);
-      margin-bottom: 4px;
-    }
-    .product-price {
-      font-size: 12px;
-      color: var(--gold);
-      letter-spacing: 0.08em;
-    }
+  .tone-gelo{ background:linear-gradient(150deg,#3a4656,#0B0C10 70%); }
+  .tone-onix{ background:linear-gradient(150deg,#2a2c33,#0B0C10 70%); }
+  .tone-champagne{ background:linear-gradient(150deg,#4a3f2e,#0B0C10 70%); }
+  .tone-safira{ background:linear-gradient(150deg,#233a52,#0B0C10 70%); }
 
-    /* ─── HOME VALUES ─── */
-    .values {
-      padding: 80px 48px;
-      background: var(--graphite);
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 1px;
-    }
-    .value-item {
-      padding: 52px 40px;
-      background: var(--graphite);
-      text-align: center;
-    }
-    .value-star {
-      font-size: 22px;
-      color: var(--gold);
-      margin-bottom: 20px;
-      display: block;
-    }
-    .value-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      color: var(--ivory);
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
-    .value-text {
-      font-size: 14px;
-      color: var(--ivory-dim);
-      line-height: 1.8;
-      max-width: 240px;
-      margin: 0 auto;
-    }
+  .card-info{ padding:12px 2px 0; }
+  .card-name{ font-size:13.5px; font-weight:500; margin-bottom:3px; }
+  .card-price{ font-size:13px; color:var(--muted); margin-bottom:9px; }
+  .swatches{ display:flex; gap:7px; }
+  .swatch{
+    width:16px; height:16px; border-radius:50%;
+    border:1px solid rgba(255,255,255,0.25);
+    cursor:pointer;
+  }
+  .swatch.active{ box-shadow:0 0 0 2px var(--bg), 0 0 0 3px var(--accent); }
+  .sw-gelo{ background:linear-gradient(135deg,#c9d8e8,#5a7086); }
+  .sw-onix{ background:linear-gradient(135deg,#4a4d55,#17181c); }
+  .sw-champagne{ background:linear-gradient(135deg,#e8cfa0,#8a6b3d); }
+  .sw-safira{ background:linear-gradient(135deg,#5f8fc9,#1c3350); }
 
-    /* ─── CATALOG PAGE ─── */
-    .catalog-header {
-      padding: 160px 48px 60px;
-      text-align: center;
-      border-bottom: 1px solid rgba(201,168,76,0.12);
-    }
-    .catalog-filters {
-      display: flex;
-      justify-content: center;
-      gap: 4px;
-      padding: 28px 48px;
-      border-bottom: 1px solid rgba(201,168,76,0.12);
-      flex-wrap: wrap;
-    }
-    .filter-btn {
-      background: none;
-      border: 1px solid transparent;
-      color: var(--ivory-dim);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 10px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      padding: 10px 22px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .filter-btn.active, .filter-btn:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-    }
-    .catalog-grid {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 2px;
-      padding: 2px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
+  /* ---------- STORY ---------- */
+  .story{
+    background:var(--surface);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .story-inner{
+    max-width:720px; margin:0 auto; padding:64px 24px; text-align:center;
+  }
+  .story h2{
+    font-family:'Fraunces', serif; font-weight:300; font-style:italic;
+    font-size:clamp(24px,5vw,34px); line-height:1.35; margin-bottom:20px;
+  }
+  .story p{ color:var(--muted); font-size:14px; line-height:1.7; }
 
-    /* ─── ABOUT PAGE ─── */
-    .about-hero {
-      padding: 160px 48px 80px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .about-text-block h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(36px, 5vw, 64px);
-      font-weight: 300;
-      letter-spacing: 0.08em;
-      line-height: 1.1;
-      margin-bottom: 32px;
-    }
-    .about-text-block h1 em { font-style: italic; color: var(--gold); }
-    .about-text-block p {
-      font-size: 16px;
-      color: var(--ivory-dim);
-      line-height: 2;
-      margin-bottom: 20px;
-    }
-    .about-img-block {
-      position: relative;
-      aspect-ratio: 3/4;
-      background: var(--graphite);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .about-img-block::before {
-      content: '✦';
-      font-size: 80px;
-      color: rgba(201,168,76,0.1);
-    }
-    .about-img-placeholder {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 20px;
-      font-size: 9px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: rgba(245,240,232,0.25);
-      text-align: center;
-    }
-    .about-img-block::after {
-      content: '';
-      position: absolute;
-      bottom: -16px; right: -16px;
-      width: 60%;
-      height: 60%;
-      border: 1px solid rgba(201,168,76,0.2);
-      z-index: -1;
-    }
-    .manifesto {
-      padding: 80px 48px;
-      background: var(--graphite);
-      text-align: center;
-    }
-    .manifesto-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(22px, 4vw, 38px);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--ivory);
-      line-height: 1.5;
-      max-width: 780px;
-      margin: 0 auto 16px;
-    }
-    .manifesto-quote em { color: var(--gold); font-style: normal; }
-    .manifesto-attr {
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .about-pillars {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 1px;
-      background: rgba(201,168,76,0.08);
-    }
+  /* ---------- FOOTER ---------- */
+  footer{ padding:52px 20px 40px; max-width:1200px; margin:0 auto; }
+  .footer-top{
+    display:flex; flex-direction:column; gap:28px;
+    padding-bottom:32px; border-bottom:1px solid var(--line); margin-bottom:24px;
+  }
+  .footer-logo{ font-family:'Fraunces', serif; font-size:20px; letter-spacing:0.1em; }
+  .footer-links{ display:flex; flex-direction:column; gap:10px; }
+  .footer-links a{ font-size:13px; color:var(--muted); }
+  .footer-bottom{ display:flex; justify-content:space-between; font-size:11px; color:var(--muted); letter-spacing:0.03em; }
 
-    /* ─── FOUNDER ─── */
-    .founder {
-      padding: 100px 48px;
-      display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 80px;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .founder-img-block {
-      position: relative;
-      aspect-ratio: 4/5;
-      background: var(--graphite);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .founder-img-block::before {
-      content: '✦';
-      font-size: 64px;
-      color: rgba(201,168,76,0.1);
-    }
-    .founder-img-block::after {
-      content: '';
-      position: absolute;
-      top: -16px; left: -16px;
-      width: 50%;
-      height: 50%;
-      border: 1px solid rgba(201,168,76,0.2);
-      z-index: -1;
-    }
-    .founder-img-placeholder {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 20px;
-      font-size: 9px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: rgba(245,240,232,0.25);
-      text-align: center;
-    }
-    .founder-text-block .section-label { display: block; margin-bottom: 18px; }
-    .founder-text-block h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(28px, 4vw, 44px);
-      font-weight: 300;
-      letter-spacing: 0.05em;
-      line-height: 1.2;
-      margin-bottom: 28px;
-    }
-    .founder-text-block h2 em { font-style: italic; color: var(--gold); }
-    .founder-text-block p {
-      font-size: 15px;
-      color: var(--ivory-dim);
-      line-height: 2;
-      margin-bottom: 18px;
-    }
-    .founder-signature {
-      margin-top: 32px;
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 18px;
-      color: var(--gold);
-      letter-spacing: 0.05em;
-    }
-    .founder-role {
-      margin-top: 4px;
-      font-size: 9px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--ivory-dim);
-      opacity: 0.6;
-    }
-    .pillar {
-      padding: 52px 32px;
-      background: var(--black);
-      text-align: center;
-    }
-    .pillar-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 48px;
-      font-weight: 300;
-      color: rgba(201,168,76,0.15);
-      line-height: 1;
-      margin-bottom: 12px;
-    }
-    .pillar-name {
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-    .pillar-desc {
-      font-size: 13px;
-      color: var(--ivory-dim);
-      line-height: 1.8;
-    }
-
-    /* ─── CONTACT PAGE ─── */
-    .contact-page {
-      padding: 160px 48px 80px;
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .contact-page h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(36px, 5vw, 60px);
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .contact-page p {
-      font-size: 15px;
-      color: var(--ivory-dim);
-      margin-bottom: 56px;
-      font-style: italic;
-    }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-      margin-bottom: 60px;
-    }
-    .contact-card {
-      background: var(--graphite);
-      padding: 48px 36px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .contact-card:hover { background: #333; }
-    .contact-icon {
-      width: 48px;
-      height: 48px;
-      border: 1px solid rgba(201,168,76,0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold);
-      font-size: 18px;
-    }
-    .contact-card-title {
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .contact-card-info {
-      font-size: 15px;
-      color: var(--ivory);
-      font-style: italic;
-    }
-    .contact-card-sub {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      color: var(--ivory-dim);
-    }
-    .whatsapp-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      background: var(--gold);
-      color: var(--black);
-      padding: 18px 48px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: background 0.3s;
-      margin-top: 24px;
-    }
-    .whatsapp-cta:hover { background: var(--gold-light); }
-    .contact-hours {
-      margin-top: 56px;
-      padding: 32px;
-      border: 1px solid rgba(201,168,76,0.15);
-    }
-    .contact-hours-label {
-      font-size: 9px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
-      display: block;
-    }
-    .contact-hours p {
-      font-size: 14px;
-      color: var(--ivory-dim);
-      margin-bottom: 0;
-      font-style: normal;
-    }
-
-    /* ─── FOOTER ─── */
-    footer {
-      border-top: 1px solid rgba(201,168,76,0.15);
-      padding: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--black);
-    }
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 13px;
-      font-weight: 400;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--ivory);
-    }
-    .footer-logo span { color: var(--gold); margin-right: 8px; }
-    .footer-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-    .footer-links a {
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ivory-dim);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .footer-links a:hover { color: var(--gold); }
-    .footer-copy {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      color: rgba(245,240,232,0.2);
-    }
-
-    /* ─── ANIMATIONS ─── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      nav { padding: 16px 24px; }
-      .nav-links { display: none; }
-      .nav-toggle { display: flex; }
-      .hero-cta { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; margin-left: auto; margin-right: auto; gap: 14px; }
-      .hero-cta .btn-primary, .hero-cta .btn-ghost { width: 100%; box-sizing: border-box; padding: 16px 24px; }
-      .hero-scroll { display: none; }
-      .hero { padding-bottom: 60px; }
-      .product-grid { grid-template-columns: repeat(2,1fr); }
-      .catalog-grid { grid-template-columns: repeat(2,1fr); }
-      .values { grid-template-columns: 1fr; }
-      .about-hero { grid-template-columns: 1fr; padding-top: 120px; }
-      .founder { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
-      .founder-img-block { max-width: 280px; margin: 0 auto; }
-      .about-pillars { grid-template-columns: repeat(2,1fr); }
-      .contact-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 24px; text-align: center; }
-      .footer-links { flex-wrap: wrap; justify-content: center; }
-    }
-
-    /* ─── LANG CONTENT ─── */
-    [data-lang="en"] { display: none; }
-    body.lang-en [data-lang="pt"] { display: none; }
-    body.lang-en [data-lang="en"] { display: inherit; }
-  </style>
+  /* ---------- DESKTOP ---------- */
+  @media (min-width:860px){
+    .header-inner{ padding:20px 40px; }
+    .hero{ grid-template-columns:1.1fr 0.9fr; align-items:center; padding:20px 40px 70px; }
+    .hero-visual{ order:2; aspect-ratio:3/4; }
+    .hero-text{ order:1; }
+    .section{ padding:70px 40px; }
+    .grid{ grid-template-columns:repeat(4,1fr); gap:22px; }
+    .story-inner{ padding:90px 24px; }
+    .footer-top{ flex-direction:row; justify-content:space-between; }
+    .footer-links{ flex-direction:row; gap:32px; }
+  }
+</style>
 </head>
 <body>
 
-<!-- LANG BAR -->
-<div class="lang-bar">
-  <button class="lang-btn active" onclick="setLang('pt')" id="btn-pt">PT</button>
-  <span class="lang-sep">&nbsp;·&nbsp;</span>
-  <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
-</div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo" onclick="showSection('home')">
-    <span class="nav-logo-star">✦</span>
-    <span class="nav-logo-name">Atelier Senza Pari</span>
-    <span class="nav-logo-sub">Cases & Skins Premium · iPhone</span>
-  </div>
-  <ul class="nav-links">
-    <li><a href="#" onclick="showSection('home')">
-      <span data-lang="pt">Início</span><span data-lang="en">Home</span>
-    </a></li>
-    <li><a href="#" onclick="showSection('catalog')">
-      <span data-lang="pt">Catálogo</span><span data-lang="en">Catalog</span>
-    </a></li>
-    <li><a href="#" onclick="showSection('about')">
-      <span data-lang="pt">A Marca</span><span data-lang="en">The Brand</span>
-    </a></li>
-    <li><a href="combos.html">
-      <span data-lang="pt">Combos</span><span data-lang="en">Combos</span>
-    </a></li>
-    <li><a href="#" onclick="showSection('contact')">
-      <span data-lang="pt">Contato</span><span data-lang="en">Contact</span>
-    </a></li>
-  </ul>
-  <button class="nav-toggle" id="navToggle" onclick="toggleMobileMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- MOBILE MENU OVERLAY -->
-<div class="mobile-menu" id="mobileMenu">
-  <span class="mobile-menu-star">✦</span>
-  <ul>
-    <li><a href="#" onclick="navigateMobile('home')">
-      <span data-lang="pt">Início</span><span data-lang="en">Home</span>
-    </a></li>
-    <li><a href="#" onclick="navigateMobile('catalog')">
-      <span data-lang="pt">Catálogo</span><span data-lang="en">Catalog</span>
-    </a></li>
-    <li><a href="#" onclick="navigateMobile('about')">
-      <span data-lang="pt">A Marca</span><span data-lang="en">The Brand</span>
-    </a></li>
-    <li><a href="combos.html">
-      <span data-lang="pt">Combos</span><span data-lang="en">Combos</span>
-    </a></li>
-    <li><a href="#" onclick="navigateMobile('contact')">
-      <span data-lang="pt">Contato</span><span data-lang="en">Contact</span>
-    </a></li>
-  </ul>
-  <span class="mobile-menu-sub">Cases & Skins Premium · iPhone</span>
-</div>
-
-<!-- ════════════════════ HOME ════════════════════ -->
-<section class="section active" id="section-home">
-
-  <div class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-star">✦</div>
-    <h1 class="hero-title">
-      Atelier<br>
-      <em>Senza Pari</em>
-    </h1>
-    <div class="hero-divider"></div>
-    <p class="hero-sub">Cases &amp; Skins Premium · iPhone</p>
-    <p class="hero-slogan">
-      <span data-lang="pt">"O estilo que você tem, agora no seu iPhone."</span>
-      <span data-lang="en">"The style that defines you, now on your iPhone."</span>
-      <span class="hero-slogan-en" data-lang="pt">— The style that defines you, now on your iPhone.</span>
-    </p>
-    <div class="hero-cta">
-      <button class="btn-primary" onclick="showSection('catalog')">
-        <span data-lang="pt">Ver Coleção</span>
-        <span data-lang="en">Explore Collection</span>
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo" aria-label="SENZA PARI — página inicial">SENZA PARI</a>
+    <div class="header-icons">
+      <button class="icon-btn" aria-label="Pesquisar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       </button>
-      <a href="combos.html" class="btn-ghost" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">
-        <span data-lang="pt">✦ Combos</span>
-        <span data-lang="en">✦ Combos</span>
-      </a>
-      <button class="btn-ghost" onclick="showSection('contact')">
-        <span data-lang="pt">Atendimento</span>
-        <span data-lang="en">Contact</span>
+      <button class="icon-btn" aria-label="Carrinho">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L4 3H2"/></svg>
       </button>
     </div>
-    <div class="hero-scroll">
-      <div class="scroll-line"></div>
-      <span data-lang="pt">Rolar</span>
-      <span data-lang="en">Scroll</span>
-    </div>
   </div>
 
-  <!-- MARQUEE -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <span class="marquee-item">Cases Premium</span>
-      <span class="marquee-item">Skins iPhone</span>
-      <span class="marquee-item">Exclusividade</span>
-      <span class="marquee-item">Sofisticação</span>
-      <span class="marquee-item">Sem Igual</span>
-      <span class="marquee-item">Premium Cases</span>
-      <span class="marquee-item">iPhone Skins</span>
-      <span class="marquee-item">Exclusivity</span>
-      <span class="marquee-item">Sophistication</span>
-      <span class="marquee-item">Without Equal</span>
-      <span class="marquee-item">Cases Premium</span>
-      <span class="marquee-item">Skins iPhone</span>
-      <span class="marquee-item">Exclusividade</span>
-      <span class="marquee-item">Sofisticação</span>
-      <span class="marquee-item">Sem Igual</span>
-      <span class="marquee-item">Premium Cases</span>
-      <span class="marquee-item">iPhone Skins</span>
-      <span class="marquee-item">Exclusivity</span>
-      <span class="marquee-item">Sophistication</span>
-      <span class="marquee-item">Without Equal</span>
-    </div>
-  </div>
-
-  <!-- FEATURED PRODUCTS -->
-  <div class="featured">
-    <span class="section-label" data-lang="pt">Destaques da Coleção</span>
-    <span class="section-label" data-lang="en">Collection Highlights</span>
-    <h2 class="section-title" data-lang="pt">Peças que <em>distinguem.</em></h2>
-    <h2 class="section-title" data-lang="en">Pieces that <em>distinguish.</em></h2>
-    <div class="product-grid">
-      <div class="product-card">
-        <div class="product-img">
-          <span class="product-img-label" data-lang="pt">Foto do produto em breve</span>
-          <span class="product-img-label" data-lang="en">Product photo coming soon</span>
-          <div class="product-hover">
-            <button class="btn-primary" onclick="showSection('contact')">
-              <span data-lang="pt">Encomendar</span>
-              <span data-lang="en">Order Now</span>
-            </button>
-          </div>
-        </div>
-        <div class="product-info">
-          <div class="product-name" data-lang="pt">Case Noir Classique</div>
-          <div class="product-name" data-lang="en">Noir Classique Case</div>
-          <div class="product-price">R$ 289,00</div>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-img">
-          <span class="product-img-label" data-lang="pt">Foto do produto em breve</span>
-          <span class="product-img-label" data-lang="en">Product photo coming soon</span>
-          <div class="product-hover">
-            <button class="btn-primary" onclick="showSection('contact')">
-              <span data-lang="pt">Encomendar</span>
-              <span data-lang="en">Order Now</span>
-            </button>
-          </div>
-        </div>
-        <div class="product-info">
-          <div class="product-name" data-lang="pt">Skin Gold Edition</div>
-          <div class="product-name" data-lang="en">Gold Edition Skin</div>
-          <div class="product-price">R$ 179,00</div>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-img">
-          <span class="product-img-label" data-lang="pt">Foto do produto em breve</span>
-          <span class="product-img-label" data-lang="en">Product photo coming soon</span>
-          <div class="product-hover">
-            <button class="btn-primary" onclick="showSection('contact')">
-              <span data-lang="pt">Encomendar</span>
-              <span data-lang="en">Order Now</span>
-            </button>
-          </div>
-        </div>
-        <div class="product-info">
-          <div class="product-name" data-lang="pt">Case Ivoire Signature</div>
-          <div class="product-name" data-lang="en">Ivoire Signature Case</div>
-          <div class="product-price">R$ 349,00</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- VALUES -->
-  <div class="values">
-    <div class="value-item">
-      <span class="value-star">✦</span>
-      <div class="value-title" data-lang="pt">Exclusividade</div>
-      <div class="value-title" data-lang="en">Exclusivity</div>
-      <p class="value-text" data-lang="pt">Cada peça é criada para quem recusa o comum. Raridade que se sente.</p>
-      <p class="value-text" data-lang="en">Each piece is crafted for those who refuse the ordinary. Rarity you can feel.</p>
-    </div>
-    <div class="value-item">
-      <span class="value-star">✦</span>
-      <div class="value-title" data-lang="pt">Sofisticação</div>
-      <div class="value-title" data-lang="en">Sophistication</div>
-      <p class="value-text" data-lang="pt">Design inspirado nas grandes maisons de luxo. Presença sem esforço.</p>
-      <p class="value-text" data-lang="en">Design inspired by the great luxury maisons. Effortless presence.</p>
-    </div>
-    <div class="value-item">
-      <span class="value-star">✦</span>
-      <div class="value-title" data-lang="pt">Atendimento Único</div>
-      <div class="value-title" data-lang="en">Unique Service</div>
-      <p class="value-text" data-lang="pt">Consultoria personalizada via WhatsApp. Do detalhe à entrega, com cuidado.</p>
-      <p class="value-text" data-lang="en">Personalized consulting via WhatsApp. From detail to delivery, with care.</p>
-    </div>
-  </div>
-
-</section>
-
-<!-- ════════════════════ CATALOG ════════════════════ -->
-<section class="section" id="section-catalog">
-
-  <div class="catalog-header">
-    <span class="section-label">✦ Atelier Senza Pari</span>
-    <h1 class="section-title" data-lang="pt">A <em>Coleção</em></h1>
-    <h1 class="section-title" data-lang="en">The <em>Collection</em></h1>
-  </div>
-
-  <div class="catalog-filters">
-    <button class="filter-btn active" data-lang="pt">Cases</button>
-    <button class="filter-btn active" data-lang="en">Cases</button>
-    <button class="filter-btn" data-lang="pt">Skins</button>
-    <button class="filter-btn" data-lang="en">Skins</button>
-    <a href="combos.html" class="filter-btn" style="text-decoration:none;display:inline-flex;align-items:center;">
-      <span data-lang="pt">Combos</span><span data-lang="en">Combos</span>
+  <nav class="cat-rail" aria-label="Categorias">
+    <a class="cat-item" href="#">
+      <span class="cat-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="7" y="2" width="10" height="20" rx="2"/></svg></span>
+      <span class="cat-label">Capinhas</span>
     </a>
-    <button class="filter-btn" data-lang="pt">Edição Limitada</button>
-    <button class="filter-btn" data-lang="en">Limited Edition</button>
-  </div>
-
-  <div class="catalog-grid">
-    <!-- 8 product cards -->
-    <div class="product-card" style="aspect-ratio:3/4;">
-      <div class="product-img" style="flex:1;">
-        <span class="product-img-label" data-lang="pt">Foto em breve</span>
-        <span class="product-img-label" data-lang="en">Photo coming soon</span>
-        <div class="product-hover">
-          <button class="btn-primary" onclick="showSection('contact')">
-            <span data-lang="pt">Encomendar</span><span data-lang="en">Order</span>
-          </button>
-        </div>
-      </div>
-      <div class="product-info">
-        <div class="product-name">Noir Classique</div>
-        <div class="product-price">R$ 289,00</div>
-      </div>
-    </div>
-    <div class="product-card" style="aspect-ratio:3/4;">
-      <div class="product-img" style="flex:1;">
-        <span class="product-img-label" data-lang="pt">Foto em breve</span>
-        <span class="product-img-label" data-lang="en">Photo coming soon</span>
-        <div class="product-hover">
-          <button class="btn-primary" onclick="showSection('contact')">
-            <span data-lang="pt">Encomendar</span><span data-lang="en">Order</span>
-          </button>
-        </div>
-      </div>
-      <div class="product-info">
-        <div class="product-name">Gold Edition Skin</div>
-        <div class="product-price">R$ 179,00</div>
-      </div>
-    </div>
-    <div class="product-card" style="aspect-ratio:3/4;">
-      <div class="product-img" style="flex:1;">
-        <span class="product-img-label" data-lang="pt">Foto em breve</span>
-        <span class="product-img-label" data-lang="en">Photo coming soon</span>
-        <div class="product-hover">
-          <button class="btn-primary" onclick="showSection('contact')">
-            <span data-lang="pt">Encomendar</span><span data-lang="en">Order</span>
-          </button>
-        </div>
-      </div>
-      <div class="product-info">
-        <div class="product-name">Ivoire Signature</div>
-        <div class="product-price">R$ 349,00</div>
-      </div>
-    </div>
-    <div class="product-card" style="aspect-ratio:3/4;">
-      <div class="product-img" style="flex:1;">
-        <span class="product-img-label" data-lang="pt">Foto em breve</span>
-        <span class="product-img-label" data-lang="en">Photo coming soon</span>
-        <div class="product-hover">
-          <button class="btn-primary" onclick="showSection('contact')">
-            <span data-lang="pt">Encomendar</span><span data-lang="en">Order</span>
-          </button>
-        </div>
-      </div>
-      <div class="product-info">
-        <div class="product-name" data-lang="pt">Champagne Luxe Skin</div>
-        <div class="product-name" data-lang="en">Champagne Luxe Skin</div>
-        <div class="product-price">R$ 199,00</div>
-      </div>
-    </div>
-    <div class="product-card" style="aspect-ratio:3/4;">
-      <div class="product-img" style="flex:1;">
-        <span class="product-img-label" data-lang="pt">Foto em breve</span>
-        <span class="product-img-label" data-lang="en">Photo coming soon</span>
-        <div class="product-hover">
-          <button class="btn-primary" onclick="showSection('contact')">
-            <span data-lang="pt">Encomendar</span><span data-lang="en">Order</span>
-          </button>
-        </div>
-      </div>
-      <div class="product-info">
-        <div class="product-name" data-lang="pt">Édition Minuit</div>
-        <div class="product-name" data-lang="en">Minuit Edition</div>
-        <div class="product-price">R$ 319,00</div>
-      </div>
-    </div>
-    <div class="product-card" style="aspect-ratio:3/4;">
-      <div class="product-img" style="flex:1;">
-        <span class="product-img-label" data-lang="pt">Foto em breve</span>
-        <span class="product-img-label" data-lang="en">Photo coming soon</span>
-        <div class="product-hover">
-          <button class="btn-primary" onclick="showSection('contact')">
-            <span data-lang="pt">Encomendar</span><span data-lang="en">Order</span>
-          </button>
-        </div>
-      </div>
-      <div class="product-info">
-        <div class="product-name">Senza Pari Skin</div>
-        <div class="product-price">R$ 149,00</div>
-      </div>
-    </div>
-    <div class="product-card" style="aspect-ratio:3/4;">
-      <div class="product-img" style="flex:1;">
-        <span class="product-img-label" data-lang="pt">Foto em breve</span>
-        <span class="product-img-label" data-lang="en">Photo coming soon</span>
-        <div class="product-hover">
-          <button class="btn-primary" onclick="showSection('contact')">
-            <span data-lang="pt">Encomendar</span><span data-lang="en">Order</span>
-          </button>
-        </div>
-      </div>
-      <div class="product-info">
-        <div class="product-name" data-lang="pt">Case Grafite Elite</div>
-        <div class="product-name" data-lang="en">Elite Graphite Case</div>
-        <div class="product-price">R$ 269,00</div>
-      </div>
-    </div>
-    <div class="product-card" style="aspect-ratio:3/4;">
-      <div class="product-img" style="flex:1;background:linear-gradient(135deg,#1a1500,#0A0A0A);">
-        <span class="product-img-label" data-lang="pt">✦ Edição Limitada — Em breve</span>
-        <span class="product-img-label" data-lang="en">✦ Limited Edition — Coming Soon</span>
-        <div class="product-hover">
-          <p style="color:var(--gold);font-size:10px;letter-spacing:.3em;text-transform:uppercase;" data-lang="pt">Disponível em breve</p>
-          <p style="color:var(--gold);font-size:10px;letter-spacing:.3em;text-transform:uppercase;" data-lang="en">Available soon</p>
-          <button class="btn-ghost" onclick="showSection('contact')">
-            <span data-lang="pt">Notifique-me</span><span data-lang="en">Notify me</span>
-          </button>
-        </div>
-      </div>
-      <div class="product-info">
-        <div class="product-name" style="color:var(--gold);" data-lang="pt">✦ Or Noir — Ed. Limitada</div>
-        <div class="product-name" style="color:var(--gold);" data-lang="en">✦ Or Noir — Limited Ed.</div>
-        <div class="product-price" data-lang="pt">Em breve</div>
-        <div class="product-price" data-lang="en">Coming soon</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CTA strip -->
-  <div style="text-align:center;padding:72px 48px;background:var(--graphite);">
-    <span class="section-label" style="display:block;margin-bottom:16px;">✦</span>
-    <p style="font-size:clamp(18px,3vw,28px);font-style:italic;color:var(--ivory);max-width:560px;margin:0 auto 32px;" data-lang="pt">
-      Não encontrou o que procura? Criamos peças sob encomenda.
-    </p>
-    <p style="font-size:clamp(18px,3vw,28px);font-style:italic;color:var(--ivory);max-width:560px;margin:0 auto 32px;" data-lang="en">
-      Didn't find what you're looking for? We create custom pieces.
-    </p>
-    <button class="btn-primary" onclick="showSection('contact')">
-      <span data-lang="pt">Falar no WhatsApp</span>
-      <span data-lang="en">Contact via WhatsApp</span>
-    </button>
-  </div>
-
-</section>
-
-<!-- ════════════════════ ABOUT ════════════════════ -->
-<section class="section" id="section-about">
-
-  <div class="about-hero">
-    <div class="about-text-block">
-      <span class="section-label">✦ <span data-lang="pt">A Marca</span><span data-lang="en">The Brand</span></span>
-      <h1 data-lang="pt">Sem igual.<br><em>Senza Pari.</em></h1>
-      <h1 data-lang="en">Without equal.<br><em>Senza Pari.</em></h1>
-      <p data-lang="pt">Atelier Senza Pari nasceu de uma convicção: quem tem estilo próprio merece um iPhone à altura. Não aceitamos o genérico. Não toleramos o comum.</p>
-      <p data-lang="en">Atelier Senza Pari was born from a conviction: those with a personal style deserve an iPhone to match. We do not accept the generic. We do not tolerate the ordinary.</p>
-      <p data-lang="pt">Cada case, cada skin, é uma declaração silenciosa de quem você é — e de como você vive.</p>
-      <p data-lang="en">Each case, each skin, is a silent declaration of who you are — and how you live.</p>
-    </div>
-    <div class="about-img-block">
-      <div class="about-img-placeholder" data-lang="pt">Imagem da marca · em breve</div>
-      <div class="about-img-placeholder" data-lang="en">Brand image · coming soon</div>
-    </div>
-  </div>
-
-  <div class="manifesto">
-    <span class="section-label">✦</span>
-    <p class="manifesto-quote" data-lang="pt">
-      "O luxo não é sobre preço. É sobre <em>presença</em> — a sensação de que cada detalhe foi escolhido, não acidental."
-    </p>
-    <p class="manifesto-quote" data-lang="en">
-      "Luxury is not about price. It is about <em>presence</em> — the feeling that every detail was chosen, not accidental."
-    </p>
-    <p class="manifesto-attr">— Atelier Senza Pari</p>
-  </div>
-
-  <div class="founder">
-    <div class="founder-img-block">
-      <div class="founder-img-placeholder" data-lang="pt">Foto do criador · em breve</div>
-      <div class="founder-img-placeholder" data-lang="en">Founder photo · coming soon</div>
-    </div>
-    <div class="founder-text-block">
-      <span class="section-label">✦ <span data-lang="pt">O Criador</span><span data-lang="en">The Founder</span></span>
-      <h2 data-lang="pt">Por trás de cada peça,<br><em>uma visão.</em></h2>
-      <h2 data-lang="en">Behind every piece,<br><em>a vision.</em></h2>
-      <p data-lang="pt">Atelier Senza Pari é a expressão direta de Luciano Fontes — fundador e diretor criativo da marca. Cada material, cada acabamento, cada detalhe que chega às mãos do cliente passa pelo seu olhar antes de receber o nome Senza Pari.</p>
-      <p data-lang="en">Atelier Senza Pari is the direct expression of Luciano Fontes — founder and creative director of the brand. Every material, every finish, every detail that reaches the client passes through his eye before earning the Senza Pari name.</p>
-      <p data-lang="pt">Sua convicção é simples: peças que carregam estilo não deveriam ser produzidas em massa. Deveriam ser criadas com a mesma exigência de uma maison — e é essa exigência que guia cada coleção do atelier.</p>
-      <p data-lang="en">His conviction is simple: pieces that carry style should not be mass produced. They should be created with the same rigor as a maison — and that rigor guides every collection from the atelier.</p>
-      <p class="founder-signature">Luciano Fontes</p>
-      <p class="founder-role" data-lang="pt">Fundador & Diretor Criativo</p>
-      <p class="founder-role" data-lang="en">Founder & Creative Director</p>
-    </div>
-  </div>
-
-  <div class="about-pillars">
-    <div class="pillar">
-      <div class="pillar-num">I</div>
-      <div class="pillar-name" data-lang="pt">Origem</div>
-      <div class="pillar-name" data-lang="en">Origin</div>
-      <p class="pillar-desc" data-lang="pt">Inspirados nas maisons italianas e francesas, com a alma do design contemporâneo brasileiro.</p>
-      <p class="pillar-desc" data-lang="en">Inspired by Italian and French maisons, with the soul of contemporary Brazilian design.</p>
-    </div>
-    <div class="pillar">
-      <div class="pillar-num">II</div>
-      <div class="pillar-name" data-lang="pt">Materiais</div>
-      <div class="pillar-name" data-lang="en">Materials</div>
-      <p class="pillar-desc" data-lang="pt">Selecionados pela textura, durabilidade e como envelhecem com dignidade.</p>
-      <p class="pillar-desc" data-lang="en">Selected for texture, durability, and how they age with dignity.</p>
-    </div>
-    <div class="pillar">
-      <div class="pillar-num">III</div>
-      <div class="pillar-name" data-lang="pt">Design</div>
-      <div class="pillar-name" data-lang="en">Design</div>
-      <p class="pillar-desc" data-lang="pt">Minimalista. Sem excesso. O detalhe que faz toda a diferença, no lugar certo.</p>
-      <p class="pillar-desc" data-lang="en">Minimalist. No excess. The detail that makes all the difference, in the right place.</p>
-    </div>
-    <div class="pillar">
-      <div class="pillar-num">IV</div>
-      <div class="pillar-name" data-lang="pt">Exclusividade</div>
-      <div class="pillar-name" data-lang="en">Exclusivity</div>
-      <p class="pillar-desc" data-lang="pt">Produção limitada. Atendimento individual. Cada cliente, único.</p>
-      <p class="pillar-desc" data-lang="en">Limited production. Individual service. Every client, unique.</p>
-    </div>
-  </div>
-
-</section>
-
-<!-- ════════════════════ CONTACT ════════════════════ -->
-<section class="section" id="section-contact">
-
-  <div class="contact-page">
-    <span class="section-label">✦ Atelier Senza Pari</span>
-    <h1 data-lang="pt">Atendimento<br>Exclusivo</h1>
-    <h1 data-lang="en">Exclusive<br>Service</h1>
-    <p data-lang="pt">Cada cliente merece atenção singular. Fale diretamente com nossa equipe.</p>
-    <p data-lang="en">Every client deserves singular attention. Speak directly with our team.</p>
-
-    <div class="contact-grid">
-      <a class="contact-card" href="https://wa.me/55SEUNUMERO" target="_blank">
-        <div class="contact-icon">✦</div>
-        <span class="contact-card-title">WhatsApp</span>
-        <span class="contact-card-info" data-lang="pt">Atendimento Direto</span>
-        <span class="contact-card-info" data-lang="en">Direct Service</span>
-        <span class="contact-card-sub" data-lang="pt">Resposta em até 1h · Seg–Dom</span>
-        <span class="contact-card-sub" data-lang="en">Response within 1h · Mon–Sun</span>
-      </a>
-      <a class="contact-card" href="https://instagram.com/ateliersenzapari" target="_blank">
-        <div class="contact-icon" style="font-size:14px;font-family:'Cormorant Garamond';letter-spacing:.1em;">IG</div>
-        <span class="contact-card-title">Instagram</span>
-        <span class="contact-card-info">@ateliersenzapari</span>
-        <span class="contact-card-sub" data-lang="pt">Siga para novidades e lançamentos</span>
-        <span class="contact-card-sub" data-lang="en">Follow for news and launches</span>
-      </a>
-    </div>
-
-    <a class="whatsapp-cta" href="https://wa.me/55SEUNUMERO" target="_blank">
-      <span>✦</span>
-      <span data-lang="pt">Iniciar Atendimento no WhatsApp</span>
-      <span data-lang="en">Start WhatsApp Service</span>
+    <a class="cat-item" href="#">
+      <span class="cat-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 4h16v16H4z"/><path d="M4 4l16 16M20 4L4 20"/></svg></span>
+      <span class="cat-label">Skins</span>
     </a>
+    <a class="cat-item" href="#">
+      <span class="cat-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.4"/></svg></span>
+      <span class="cat-label">Correntes</span>
+    </a>
+    <a class="cat-item" href="#">
+      <span class="cat-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12c2-4 6-6 8-6s6 2 8 6-6 6-8 6-6-2-8-6z"/></svg></span>
+      <span class="cat-label">Cabos</span>
+    </a>
+    <a class="cat-item" href="#">
+      <span class="cat-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2l2.4 7.2H22l-6 4.4 2.4 7.2L12 16.4 5.6 20.8 8 13.6 2 9.2h7.6z"/></svg></span>
+      <span class="cat-label">Novidades</span>
+    </a>
+  </nav>
+</header>
 
-    <div class="contact-hours">
-      <span class="contact-hours-label" data-lang="pt">Horário de Atendimento</span>
-      <span class="contact-hours-label" data-lang="en">Service Hours</span>
-      <p data-lang="pt">Segunda a domingo · Das 9h às 22h</p>
-      <p data-lang="en">Monday to Sunday · 9am to 10pm</p>
-    </div>
+<section class="hero">
+  <div class="hero-visual facet" aria-hidden="true"></div>
+  <div class="hero-text">
+    <span class="eyebrow">Coleção Cristallo</span>
+    <h1>A proteção que <em>brilha</em><br>como sua jóia.</h1>
+    <p>Skins e capinhas facetadas à mão, inspiradas no corte de pedras preciosas. Cada peça, única — como você.</p>
+    <a href="#vitrine" class="btn">Ver coleção</a>
   </div>
-
 </section>
 
-<!-- FOOTER -->
+<section class="section" id="vitrine">
+  <div class="section-head">
+    <h2>Mais procurados</h2>
+    <a href="#">Ver tudo →</a>
+  </div>
+
+  <div class="grid">
+
+    <article class="card">
+      <div class="card-visual facet tone-gelo" data-visual="1" aria-hidden="true"></div>
+      <div class="card-info">
+        <p class="card-name">Skin Cristallo — iPhone 16 Pro</p>
+        <p class="card-price">R$ 249</p>
+        <div class="swatches" data-card="1">
+          <button class="swatch sw-gelo active" aria-label="Gelo" data-tone="gelo"></button>
+          <button class="swatch sw-onix" aria-label="Ônix" data-tone="onix"></button>
+          <button class="swatch sw-safira" aria-label="Safira" data-tone="safira"></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-visual facet tone-onix" data-visual="2" aria-hidden="true"></div>
+      <div class="card-info">
+        <p class="card-name">Capa Facetada — iPhone 16</p>
+        <p class="card-price">R$ 319</p>
+        <div class="swatches" data-card="2">
+          <button class="swatch sw-onix active" aria-label="Ônix" data-tone="onix"></button>
+          <button class="swatch sw-champagne" aria-label="Champagne" data-tone="champagne"></button>
+          <button class="swatch sw-gelo" aria-label="Gelo" data-tone="gelo"></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-visual facet tone-champagne" data-visual="3" aria-hidden="true"></div>
+      <div class="card-info">
+        <p class="card-name">Corrente Prisma</p>
+        <p class="card-price">R$ 189</p>
+        <div class="swatches" data-card="3">
+          <button class="swatch sw-champagne active" aria-label="Champagne" data-tone="champagne"></button>
+          <button class="swatch sw-safira" aria-label="Safira" data-tone="safira"></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-visual facet tone-safira" data-visual="4" aria-hidden="true"></div>
+      <div class="card-info">
+        <p class="card-name">Skin Cristallo — iPhone 15</p>
+        <p class="card-price">R$ 229</p>
+        <div class="swatches" data-card="4">
+          <button class="swatch sw-safira active" aria-label="Safira" data-tone="safira"></button>
+          <button class="swatch sw-onix" aria-label="Ônix" data-tone="onix"></button>
+          <button class="swatch sw-gelo" aria-label="Gelo" data-tone="gelo"></button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="story">
+  <div class="story-inner">
+    <h2>"Cada faceta é cortada para capturar a luz — e quem segura o telefone, também."</h2>
+    <p>SENZA PARI nasce do encontro entre a joalheria e a tecnologia. Peças desenhadas para quem entende que os detalhes é que fazem a diferença.</p>
+  </div>
+</section>
+
 <footer>
-  <div class="footer-logo">
-    <span>✦</span>Atelier Senza Pari
+  <div class="footer-top">
+    <span class="footer-logo">SENZA PARI</span>
+    <nav class="footer-links">
+      <a href="#">Coleções</a>
+      <a href="#">Sobre o Atelier</a>
+      <a href="#">Trocas e devoluções</a>
+      <a href="#">Fale conosco</a>
+    </nav>
   </div>
-  <ul class="footer-links">
-    <li><a href="#" onclick="showSection('home')">Home</a></li>
-    <li><a href="#" onclick="showSection('catalog')">
-      <span data-lang="pt">Catálogo</span><span data-lang="en">Catalog</span>
-    </a></li>
-    <li><a href="#" onclick="showSection('about')">
-      <span data-lang="pt">A Marca</span><span data-lang="en">The Brand</span>
-    </a></li>
-    <li><a href="#" onclick="showSection('contact')">
-      <span data-lang="pt">Contato</span><span data-lang="en">Contact</span>
-    </a></li>
-    <li><a href="https://instagram.com/ateliersenzapari" target="_blank">Instagram</a></li>
-  </ul>
-  <span class="footer-copy">© 2025 Atelier Senza Pari. <span data-lang="pt">Todos os direitos reservados.</span><span data-lang="en">All rights reserved.</span></span>
+  <div class="footer-bottom">
+    <span>© 2026 Senza Pari Atelier</span>
+    <span>Recife, Brasil</span>
+  </div>
 </footer>
 
 <script>
-  function showSection(name) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById('section-' + name).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  // Category rail: enable smooth drag-scroll with mouse (touch works natively)
+  const rail = document.querySelector('.cat-rail');
+  let isDown = false, startX, scrollLeft;
+  rail.addEventListener('mousedown', (e) => {
+    isDown = true; startX = e.pageX - rail.offsetLeft; scrollLeft = rail.scrollLeft;
+  });
+  rail.addEventListener('mouseleave', () => isDown = false);
+  rail.addEventListener('mouseup', () => isDown = false);
+  rail.addEventListener('mousemove', (e) => {
+    if(!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - rail.offsetLeft;
+    rail.scrollLeft = scrollLeft - (x - startX) * 1.2;
+  });
 
-  function toggleMobileMenu() {
-    const menu = document.getElementById('mobileMenu');
-    const toggle = document.getElementById('navToggle');
-    const isOpen = menu.classList.toggle('open');
-    toggle.classList.toggle('open', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  }
-
-  function navigateMobile(name) {
-    showSection(name);
-    toggleMobileMenu();
-  }
-
-  function setLang(lang) {
-    document.body.classList.toggle('lang-en', lang === 'en');
-    document.getElementById('btn-pt').classList.toggle('active', lang === 'pt');
-    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-  }
-
-  // Filter buttons (visual only for prototype)
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  // Swatch → swaps the visual tone class on the matching card image
+  document.querySelectorAll('.swatches').forEach(group => {
+    const cardId = group.dataset.card;
+    const visual = document.querySelector('.card-visual[data-visual="' + cardId + '"]');
+    group.querySelectorAll('.swatch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('.swatch').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        visual.className = 'card-visual facet tone-' + btn.dataset.tone;
+      });
     });
   });
-
-  // Nav link active states (não bloqueia links reais como Combos)
-  document.querySelectorAll('.nav-links a[href="#"]').forEach(a => {
-    a.addEventListener('click', e => e.preventDefault());
-  });
 </script>
+
 </body>
 </html>
