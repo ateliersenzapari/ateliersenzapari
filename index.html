@@ -81,7 +81,23 @@
     content:""; position:absolute; inset:0;
     background:linear-gradient(120deg, transparent 35%, rgba(220,230,214,0.14) 48%, transparent 58%);
     mix-blend-mode:screen;
+    animation:heroSweep 7s ease-in-out infinite;
   }
+  .hero-visual.paused::before{ animation-play-state:paused; }
+  @keyframes heroSweep{
+    0%,100%{ transform:translateX(-8%); }
+    50%{ transform:translateX(8%); }
+  }
+  .hero-toggle{
+    position:absolute; bottom:14px; right:14px; z-index:2;
+    width:34px; height:34px; border-radius:50%;
+    background:rgba(255,255,255,0.16); backdrop-filter:blur(6px);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-toggle svg{ width:14px; height:14px; fill:#fff; }
+  .hero-toggle .icon-play{ display:none; }
+  .hero-visual.paused .icon-pause{ display:none; }
+  .hero-visual.paused .icon-play{ display:block; }
   .hero-text{ padding:26px 20px 0; }
   .eyebrow{ font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block; }
   .hero h1{
@@ -114,21 +130,27 @@
   .card-price{ font-size:13px; color:var(--muted); }
 
   /* ---------- BOTTOM SWIPE GALLERY (home) ---------- */
-  .swipe-gallery{ padding:8px 0 44px; }
+  .swipe-gallery{ padding:8px 0 44px; position:relative; }
   .swipe-rail{
-    display:flex; gap:12px; overflow-x:auto; padding:0 20px;
+    display:flex; gap:10px; overflow-x:auto; padding:0 20px;
     scroll-snap-type:x mandatory; -ms-overflow-style:none; scrollbar-width:none;
   }
   .swipe-rail::-webkit-scrollbar{ display:none; }
   .swipe-card{
-    flex:0 0 78%; scroll-snap-align:start;
+    flex:0 0 58%; scroll-snap-align:start;
     aspect-ratio:3/4; position:relative; overflow:hidden;
-    display:flex; align-items:flex-end; padding:18px;
+    display:flex; align-items:flex-end; padding:16px;
   }
-  .swipe-card span{ position:relative; color:#fff; font-family:'Fraunces',serif; font-size:19px; letter-spacing:0.02em; }
+  .swipe-card span{ position:relative; color:#fff; font-family:'Fraunces',serif; font-size:17px; letter-spacing:0.02em; }
   .sc-1{ background:linear-gradient(155deg,#2b3430,#12140f); }
   .sc-2{ background:linear-gradient(155deg,#302b28,#141312); }
   .sc-3{ background:linear-gradient(155deg,#25302c,#0f1512); }
+  .swipe-arrows{ display:flex; gap:8px; justify-content:flex-end; padding:12px 20px 0; }
+  .swipe-arrow{
+    width:32px; height:32px; border-radius:50%; border:1px solid var(--line);
+    background:var(--panel); display:flex; align-items:center; justify-content:center;
+  }
+  .swipe-arrow svg{ width:14px; height:14px; stroke:var(--ink); }
 
   /* ---------- FOOTER ---------- */
   footer{ padding:44px 20px 40px; max-width:1200px; margin:0 auto; border-top:1px solid var(--line); }
@@ -137,16 +159,24 @@
   .footer-links a{ font-size:13px; color:var(--muted); }
   .footer-bottom{ display:flex; justify-content:space-between; font-size:11px; color:var(--muted); }
 
-  /* ================= SEARCH OVERLAY ================= */
-  .overlay{
-    position:fixed; inset:0; z-index:100; background:var(--bg);
-    display:flex; flex-direction:column;
-    transform:translateY(-100%); transition:transform 0.32s cubic-bezier(.4,0,.2,1);
+  /* ================= SEARCH DROPDOWN ================= */
+  .scrim{
+    position:fixed; inset:0; z-index:95; background:rgba(10,11,10,0.35);
+    opacity:0; pointer-events:none; transition:opacity 0.28s ease;
   }
-  .overlay.open{ transform:translateY(0); }
-  .overlay-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--line); }
+  .scrim.open{ opacity:1; pointer-events:all; }
+
+  .search-panel{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:var(--bg);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 12px 28px rgba(20,22,18,0.10);
+    transform:translateY(-100%);
+    transition:transform 0.36s cubic-bezier(.4,0,.2,1);
+  }
+  .search-panel.open{ transform:translateY(0); }
   .search-field{
-    margin:18px; display:flex; align-items:center; gap:10px;
+    margin:16px 18px 20px; display:flex; align-items:center; gap:10px;
     background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;
   }
   .search-field input{ border:none; outline:none; flex:1; font-size:15px; background:none; color:var(--ink); font-family:inherit; }
@@ -159,29 +189,34 @@
     display:flex; flex-direction:column; overflow:hidden;
   }
   .menu-overlay.open{ transform:translateX(0); }
+  .menu-overlay .overlay-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--line); transition:opacity 0.2s ease; }
+  .menu-overlay.sub-open .overlay-top{ opacity:0; pointer-events:none; position:absolute; }
   .menu-panes{ position:relative; flex:1; overflow:hidden; }
   .menu-pane{
     position:absolute; inset:0; overflow-y:auto;
     padding:18px 18px 60px;
     transform:translateX(0); transition:transform 0.3s cubic-bezier(.4,0,.2,1);
+    background:var(--bg);
   }
-  .menu-pane.pane-sub{ transform:translateX(100%); }
+  .menu-pane.pane-sub{ transform:translateX(100%); z-index:2; }
   .menu-pane.pane-sub.active{ transform:translateX(0); }
-  .menu-pane.pane-main.pushed{ transform:translateX(-30%); opacity:0.4; }
+  .menu-pane.pane-main.pushed{ transform:translateX(-100%); }
 
   .menu-row{
     display:flex; align-items:center; justify-content:space-between;
+    width:100%; box-sizing:border-box;
     background:var(--panel); border:1px solid var(--line); border-radius:14px;
     padding:16px 18px; margin-bottom:11px;
+    font-size:15px; text-align:left;
   }
   .menu-row .label{ font-size:15px; font-weight:500; }
-  .menu-row svg{ width:16px; height:16px; stroke:var(--muted); }
+  .menu-row svg{ width:16px; height:16px; stroke:var(--muted); flex:0 0 auto; }
   .menu-row.shop-all{ justify-content:center; text-align:center; font-weight:600; margin-top:6px; }
 
-  .sub-head{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .sub-head{ display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-top:2px; }
   .back-btn{
     width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
-    display:flex; align-items:center; justify-content:center; background:var(--panel);
+    display:flex; align-items:center; justify-content:center; background:var(--panel); flex:0 0 auto;
   }
   .back-btn svg{ width:16px; height:16px; stroke:var(--ink); }
   .sub-title{ font-size:16px; font-weight:600; }
@@ -241,7 +276,12 @@
 </header>
 
 <section class="hero">
-  <div class="hero-visual facet" aria-hidden="true"></div>
+  <div class="hero-visual facet" id="heroVisual" aria-hidden="true">
+    <button class="hero-toggle" id="heroToggle" aria-label="Pausar animação">
+      <svg class="icon-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+      <svg class="icon-play" viewBox="0 0 24 24"><path d="M7 4l14 8-14 8z"/></svg>
+    </button>
+  </div>
   <div class="hero-text">
     <span class="eyebrow">Coleção Cristallo</span>
     <h1>A proteção que <em>brilha</em> como sua jóia.</h1>
@@ -273,10 +313,18 @@
 </section>
 
 <section class="swipe-gallery">
-  <div class="swipe-rail">
+  <div class="swipe-rail" id="swipeRail">
     <a class="swipe-card facet sc-1"><span>Cristallo Gelo</span></a>
     <a class="swipe-card facet sc-2"><span>Cristallo Ônix</span></a>
     <a class="swipe-card facet sc-3"><span>Cristallo Safira</span></a>
+  </div>
+  <div class="swipe-arrows">
+    <button class="swipe-arrow" id="swipePrev" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="swipe-arrow" id="swipeNext" aria-label="Próximo">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
   </div>
 </section>
 
@@ -291,14 +339,9 @@
   <div class="footer-bottom"><span>© 2026 Senza Pari Atelier</span><span>Recife, Brasil</span></div>
 </footer>
 
-<!-- SEARCH OVERLAY -->
-<div class="overlay" id="searchOverlay">
-  <div class="overlay-top">
-    <span class="logo">SENZA PARI</span>
-    <button class="icon-btn" id="searchClose" aria-label="Fechar busca">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
-  </div>
+<!-- SEARCH SCRIM + DROPDOWN -->
+<div class="scrim" id="searchScrim"></div>
+<div class="search-panel" id="searchPanel">
   <div class="search-field">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
     <input type="text" placeholder="Buscar produtos..." id="searchInput">
@@ -366,12 +409,18 @@
 <script>
   const $ = (sel) => document.querySelector(sel);
 
-  // Search overlay
-  $('#searchBtn').addEventListener('click', () => {
-    $('#searchOverlay').classList.add('open');
-    setTimeout(() => $('#searchInput').focus(), 300);
-  });
-  $('#searchClose').addEventListener('click', () => $('#searchOverlay').classList.remove('open'));
+  // Search dropdown
+  function openSearch(){
+    $('#searchPanel').classList.add('open');
+    $('#searchScrim').classList.add('open');
+    setTimeout(() => $('#searchInput').focus(), 320);
+  }
+  function closeSearch(){
+    $('#searchPanel').classList.remove('open');
+    $('#searchScrim').classList.remove('open');
+  }
+  $('#searchBtn').addEventListener('click', openSearch);
+  $('#searchScrim').addEventListener('click', closeSearch);
 
   // Menu overlay
   $('#menuBtn').addEventListener('click', () => $('#menuOverlay').classList.add('open'));
@@ -383,6 +432,7 @@
   function resetPanes(){
     $('#paneMain').classList.remove('pushed');
     $('#paneCases').classList.remove('active');
+    $('#menuOverlay').classList.remove('sub-open');
   }
 
   document.querySelectorAll('[data-open-sub]').forEach(btn => {
@@ -390,18 +440,31 @@
       const target = btn.dataset.openSub;
       $('#paneMain').classList.add('pushed');
       $('#pane' + target.charAt(0).toUpperCase() + target.slice(1)).classList.add('active');
+      $('#menuOverlay').classList.add('sub-open');
     });
   });
   document.querySelectorAll('[data-back]').forEach(btn => {
     btn.addEventListener('click', () => resetPanes());
   });
 
+  // Hero play/pause toggle
+  $('#heroToggle').addEventListener('click', (e) => {
+    e.stopPropagation();
+    $('#heroVisual').classList.toggle('paused');
+  });
+
+  // Bottom swipe gallery arrows
+  const rail = $('#swipeRail');
+  const cardWidth = () => rail.querySelector('.swipe-card').offsetWidth + 10;
+  $('#swipeNext').addEventListener('click', () => rail.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
+  $('#swipePrev').addEventListener('click', () => rail.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
+
   // Logo click → splash transition → back to top / close overlays
   $('#logoBtn').addEventListener('click', () => {
     const splash = $('#splash');
     splash.classList.add('show');
     $('#menuOverlay').classList.remove('open');
-    $('#searchOverlay').classList.remove('open');
+    closeSearch();
     resetPanes();
     window.scrollTo({ top: 0, behavior: 'auto' });
     setTimeout(() => splash.classList.remove('show'), 850);
