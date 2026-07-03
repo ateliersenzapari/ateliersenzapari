@@ -6,7 +6,7 @@
 <title>SENZA PARI — Atelier di Cristallo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #FAFAF8;
@@ -25,7 +25,7 @@
   body{
     background:var(--bg);
     color:var(--ink);
-    font-family:'Inter', -apple-system, sans-serif;
+    font-family:'Manrope', -apple-system, sans-serif;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
@@ -60,7 +60,7 @@
   .brand-mark{ width:17px; height:17px; flex:0 0 auto; }
   .brand-mark path{ fill:var(--ink); }
   .logo{
-    font-family:'Fraunces', serif;
+    font-family:'Bodoni Moda', serif;
     font-weight:500;
     font-size:17px;
     letter-spacing:0.1em;
@@ -69,6 +69,18 @@
   .header-icons{ display:flex; align-items:center; gap:17px; }
   .icon-btn{ width:22px; height:22px; display:flex; align-items:center; justify-content:center; position:relative; }
   .icon-btn svg{ width:20px; height:20px; stroke:var(--ink); }
+
+  .search-panel{
+    max-height:0; overflow:hidden;
+    transition:max-height 0.32s cubic-bezier(.4,0,.2,1);
+  }
+  .search-panel.open{ max-height:86px; }
+  .search-field{
+    margin:14px 18px 16px; display:flex; align-items:center; gap:10px;
+    background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;
+  }
+  .search-field input{ border:none; outline:none; flex:1; font-size:15px; background:none; color:var(--ink); font-family:inherit; }
+  .search-field svg{ width:18px; height:18px; stroke:var(--muted); flex:0 0 auto; }
 
   /* ---------- HERO (dark, moody — chrome stays light) ---------- */
   .hero-wrap{ max-width:1200px; margin:0 auto; padding:0 0 40px; }
@@ -101,7 +113,7 @@
   .hero-text{ padding:26px 20px 0; }
   .eyebrow{ font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block; }
   .hero h1{
-    font-family:'Fraunces', serif; font-weight:400; font-size:clamp(30px,7.5vw,48px);
+    font-family:'Bodoni Moda', serif; font-weight:400; font-size:clamp(30px,7.5vw,48px);
     line-height:1.1; letter-spacing:-0.01em; margin-bottom:14px;
   }
   .hero h1 em{ font-style:italic; color:var(--sage-deep); }
@@ -116,7 +128,7 @@
   /* ---------- SECTIONS ---------- */
   .section{ max-width:1200px; margin:0 auto; padding:44px 20px; }
   .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:22px; gap:16px; }
-  .section-head h2{ font-family:'Fraunces', serif; font-weight:500; font-size:24px; }
+  .section-head h2{ font-family:'Bodoni Moda', serif; font-weight:500; font-size:24px; }
   .section-head a{ font-size:12px; color:var(--muted); white-space:nowrap; }
 
   .grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px 14px; }
@@ -129,25 +141,33 @@
   .card-price{ font-size:13px; color:var(--muted); }
 
   /* ---------- BOTTOM SWIPE GALLERY (home) ---------- */
-  .swipe-gallery{ padding:26px 0 40px; background:var(--panel); }
+  .swipe-gallery{ padding:32px 0 40px; background:#F1F2EE; }
+  .swipe-title{
+    font-family:'Bodoni Moda', serif; font-weight:600; font-size:clamp(26px,7vw,34px);
+    padding:0 20px 20px; letter-spacing:-0.01em;
+  }
   .swipe-rail{
-    display:flex; gap:22px; overflow-x:auto; padding:0 20px;
+    display:flex; gap:14px; overflow-x:auto; padding:0 20px;
     scroll-snap-type:x mandatory; -ms-overflow-style:none; scrollbar-width:none;
   }
   .swipe-rail::-webkit-scrollbar{ display:none; }
   .swipe-card{
-    flex:0 0 27%; scroll-snap-align:start;
-    display:flex; flex-direction:column; align-items:center; gap:10px;
+    flex:0 0 66%; scroll-snap-align:start;
+    display:flex; flex-direction:column;
+    background:var(--panel); border-radius:18px; overflow:hidden;
+    box-shadow:0 4px 18px rgba(20,22,18,0.07);
   }
   .swipe-card-img{
-    width:100%; aspect-ratio:1/1; background:var(--sage);
-    border:1px solid var(--line);
+    width:100%; aspect-ratio:1/1;
+    background:var(--sage);
   }
-  .swipe-card span{ font-size:12.5px; font-weight:600; letter-spacing:0.02em; text-align:center; text-decoration:underline; text-underline-offset:3px; }
+  .swipe-card-text{ padding:14px 16px 18px; }
+  .swipe-card-name{ font-size:15px; font-weight:700; margin-bottom:3px; }
+  .swipe-card-sub{ font-size:12.5px; color:var(--muted); }
   .sc-1 .swipe-card-img{ background:linear-gradient(150deg,#E7ECE3,#C7D2C1 75%); }
   .sc-2 .swipe-card-img{ background:linear-gradient(150deg,#2E3230,#181A19 75%); }
   .sc-3 .swipe-card-img{ background:linear-gradient(150deg,#EFE4CF,#CBB98F 75%); }
-  .swipe-arrows{ display:flex; gap:8px; justify-content:flex-end; padding:14px 20px 0; }
+  .swipe-arrows{ display:flex; gap:8px; justify-content:flex-end; padding:16px 20px 0; }
   .swipe-arrow{
     width:32px; height:32px; border-radius:50%; border:1px solid var(--line);
     background:var(--panel); display:flex; align-items:center; justify-content:center;
@@ -156,33 +176,10 @@
 
   /* ---------- FOOTER ---------- */
   footer{ padding:44px 20px 40px; max-width:1200px; margin:0 auto; border-top:1px solid var(--line); }
-  .footer-logo{ font-family:'Fraunces', serif; font-size:18px; letter-spacing:0.08em; margin-bottom:16px; }
+  .footer-logo{ font-family:'Bodoni Moda', serif; font-size:18px; letter-spacing:0.08em; margin-bottom:16px; }
   .footer-links{ display:flex; flex-direction:column; gap:9px; margin-bottom:24px; }
   .footer-links a{ font-size:13px; color:var(--muted); }
   .footer-bottom{ display:flex; justify-content:space-between; font-size:11px; color:var(--muted); }
-
-  /* ================= SEARCH DROPDOWN ================= */
-  .scrim{
-    position:fixed; inset:0; z-index:95; background:rgba(10,11,10,0.35);
-    opacity:0; pointer-events:none; transition:opacity 0.28s ease;
-  }
-  .scrim.open{ opacity:1; pointer-events:all; }
-
-  .search-panel{
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    background:var(--bg);
-    border-bottom:1px solid var(--line);
-    box-shadow:0 12px 28px rgba(20,22,18,0.10);
-    transform:translateY(-100%);
-    transition:transform 0.36s cubic-bezier(.4,0,.2,1);
-  }
-  .search-panel.open{ transform:translateY(0); }
-  .search-field{
-    margin:16px 18px 20px; display:flex; align-items:center; gap:10px;
-    background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;
-  }
-  .search-field input{ border:none; outline:none; flex:1; font-size:15px; background:none; color:var(--ink); font-family:inherit; }
-  .search-field svg{ width:18px; height:18px; stroke:var(--muted); flex:0 0 auto; }
 
   /* ================= MENU OVERLAY ================= */
   .menu-overlay{
@@ -231,7 +228,7 @@
   }
   .splash.show{ opacity:1; pointer-events:all; transition:opacity 0.15s ease; }
   .splash span{
-    font-family:'Fraunces', serif; font-weight:400; font-size:26px; letter-spacing:0.16em;
+    font-family:'Bodoni Moda', serif; font-weight:400; font-size:26px; letter-spacing:0.16em;
     opacity:0; transform:translateY(6px) scale(0.98);
   }
   .splash.show span{ animation:splashIn 0.85s cubic-bezier(.2,.7,.3,1) forwards; }
@@ -279,6 +276,12 @@
       </button>
     </div>
   </div>
+  <div class="search-panel" id="searchPanel">
+    <div class="search-field">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" placeholder="Buscar produtos..." id="searchInput">
+    </div>
+  </div>
 </header>
 
 <div class="hero-wrap">
@@ -290,10 +293,29 @@
   </div>
 
   <section class="swipe-gallery">
+    <h2 class="swipe-title">Peças que você vai amar</h2>
     <div class="swipe-rail" id="swipeRail">
-      <a class="swipe-card sc-1"><span class="swipe-card-img"></span><span>Cristallo Gelo</span></a>
-      <a class="swipe-card sc-2"><span class="swipe-card-img"></span><span>Cristallo Ônix</span></a>
-      <a class="swipe-card sc-3"><span class="swipe-card-img"></span><span>Cristallo Safira</span></a>
+      <a class="swipe-card sc-1">
+        <span class="swipe-card-img"></span>
+        <span class="swipe-card-text">
+          <span class="swipe-card-name">Cristallo Gelo</span>
+          <span class="swipe-card-sub">Acabamento espelhado</span>
+        </span>
+      </a>
+      <a class="swipe-card sc-2">
+        <span class="swipe-card-img"></span>
+        <span class="swipe-card-text">
+          <span class="swipe-card-name">Cristallo Ônix</span>
+          <span class="swipe-card-sub">Preto profundo facetado</span>
+        </span>
+      </a>
+      <a class="swipe-card sc-3">
+        <span class="swipe-card-img"></span>
+        <span class="swipe-card-text">
+          <span class="swipe-card-name">Cristallo Safira</span>
+          <span class="swipe-card-sub">Tons dourados</span>
+        </span>
+      </a>
     </div>
     <div class="swipe-arrows">
       <button class="swipe-arrow" id="swipePrev" aria-label="Anterior">
@@ -345,15 +367,6 @@
   </nav>
   <div class="footer-bottom"><span>© 2026 Senza Pari Atelier</span><span>Recife, Brasil</span></div>
 </footer>
-
-<!-- SEARCH SCRIM + DROPDOWN -->
-<div class="scrim" id="searchScrim"></div>
-<div class="search-panel" id="searchPanel">
-  <div class="search-field">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-    <input type="text" placeholder="Buscar produtos..." id="searchInput">
-  </div>
-</div>
 
 <!-- MENU OVERLAY -->
 <div class="menu-overlay" id="menuOverlay">
@@ -416,18 +429,17 @@
 <script>
   const $ = (sel) => document.querySelector(sel);
 
-  // Search dropdown
+  // Search accordion (embutido no header)
   function openSearch(){
     $('#searchPanel').classList.add('open');
-    $('#searchScrim').classList.add('open');
     setTimeout(() => $('#searchInput').focus(), 320);
   }
   function closeSearch(){
     $('#searchPanel').classList.remove('open');
-    $('#searchScrim').classList.remove('open');
   }
-  $('#searchBtn').addEventListener('click', openSearch);
-  $('#searchScrim').addEventListener('click', closeSearch);
+  $('#searchBtn').addEventListener('click', () => {
+    $('#searchPanel').classList.contains('open') ? closeSearch() : openSearch();
+  });
 
   // Menu overlay
   $('#menuBtn').addEventListener('click', () => $('#menuOverlay').classList.add('open'));
