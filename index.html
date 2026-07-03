@@ -6,41 +6,34 @@
 <title>SENZA PARI — Atelier di Cristallo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #0B0C10;
-    --surface: #15171C;
-    --surface-2: #1B1E24;
-    --text: #EDEEF0;
-    --muted: #9195A0;
-    --line: #262A32;
-    --accent: #C9D4DE;
-    --prism-1: #8FE3FF;
-    --prism-2: #FF9EEA;
-    --prism-3: #FFD98A;
-    --radius-cut: 18px;
+    --bg: #FAFAF8;
+    --panel: #FFFFFF;
+    --ink: #16181A;
+    --muted: #6B7268;
+    --line: #E4E6E0;
+    --sage: #D7DFD3;
+    --sage-deep: #AEBBA6;
+    --dark-hero: #101214;
+    --radius-cut: 16px;
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
   html{ scroll-behavior:smooth; }
   body{
     background:var(--bg);
-    color:var(--text);
+    color:var(--ink);
     font-family:'Inter', -apple-system, sans-serif;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
   a{ color:inherit; text-decoration:none; }
-  button{ font-family:inherit; cursor:pointer; }
+  button{ font-family:inherit; cursor:pointer; background:none; border:none; color:inherit; }
   img,svg{ display:block; }
-
-  ::selection{ background:var(--accent); color:var(--bg); }
-
-  :focus-visible{
-    outline:2px solid var(--prism-1);
-    outline-offset:3px;
-  }
+  ::selection{ background:var(--sage-deep); color:#0B0C0A; }
+  :focus-visible{ outline:2px solid var(--sage-deep); outline-offset:3px; }
 
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
@@ -52,205 +45,176 @@
 
   /* ---------- HEADER ---------- */
   header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(11,12,16,0.86);
+    position:sticky; top:0; z-index:60;
+    background:rgba(250,250,248,0.92);
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
   }
   .header-inner{
     display:flex; align-items:center; justify-content:space-between;
-    padding:16px 20px;
+    padding:14px 18px;
     max-width:1200px; margin:0 auto;
   }
+  .brand{ display:flex; align-items:center; gap:9px; }
+  .brand-mark{ width:17px; height:17px; flex:0 0 auto; }
+  .brand-mark path{ fill:var(--ink); }
   .logo{
     font-family:'Fraunces', serif;
-    font-weight:400;
-    font-size:19px;
-    letter-spacing:0.14em;
+    font-weight:500;
+    font-size:17px;
+    letter-spacing:0.1em;
+    color:var(--ink);
   }
-  .header-icons{ display:flex; align-items:center; gap:18px; }
-  .icon-btn{
-    width:22px; height:22px; color:var(--text); background:none; border:none;
-    display:flex; align-items:center; justify-content:center;
-  }
-  .icon-btn svg{ width:20px; height:20px; }
+  .header-icons{ display:flex; align-items:center; gap:17px; }
+  .icon-btn{ width:22px; height:22px; display:flex; align-items:center; justify-content:center; position:relative; }
+  .icon-btn svg{ width:20px; height:20px; stroke:var(--ink); }
 
-  /* ---------- CATEGORY RAIL ---------- */
-  .cat-rail{
-    display:flex; gap:14px;
-    overflow-x:auto;
-    padding:16px 20px 18px;
-    scroll-snap-type:x proximity;
-    -ms-overflow-style:none; scrollbar-width:none;
-  }
-  .cat-rail::-webkit-scrollbar{ display:none; }
-  .cat-item{
-    flex:0 0 auto;
-    display:flex; flex-direction:column; align-items:center; gap:8px;
-    scroll-snap-align:start;
-  }
-  .cat-circle{
-    width:60px; height:60px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    border:1px solid var(--line);
-    background:linear-gradient(135deg, var(--surface), var(--surface-2));
-  }
-  .cat-circle svg{ width:24px; height:24px; stroke:var(--accent); }
-  .cat-label{ font-size:11px; color:var(--muted); letter-spacing:0.04em; white-space:nowrap; }
-
-  /* ---------- HERO ---------- */
-  .hero{
-    max-width:1200px; margin:0 auto;
-    padding:8px 20px 40px;
-    display:grid; gap:26px;
-  }
+  /* ---------- HERO (dark, moody — chrome stays light) ---------- */
+  .hero{ max-width:1200px; margin:0 auto; padding:0 0 40px; }
   .hero-visual{
-    aspect-ratio:4/5;
-    width:100%;
-    background:
-      linear-gradient(135deg, #1a2230 0%, #0B0C10 38%, #241a2c 62%, #0B0C10 100%);
-    position:relative;
-    overflow:hidden;
+    aspect-ratio:4/5; width:100%;
+    background:linear-gradient(150deg,#23262B 0%, var(--dark-hero) 45%, #1a1d21 100%);
+    position:relative; overflow:hidden;
   }
   .hero-visual::before{
-    content:"";
-    position:absolute; inset:0;
-    background:
-      linear-gradient(115deg, transparent 30%, rgba(143,227,255,0.18) 45%, transparent 55%),
-      linear-gradient(65deg, transparent 55%, rgba(255,158,234,0.14) 68%, transparent 78%);
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(120deg, transparent 35%, rgba(220,230,214,0.14) 48%, transparent 58%);
     mix-blend-mode:screen;
   }
-  .hero-visual::after{
-    content:"";
-    position:absolute; inset:0;
-    background-image:
-      linear-gradient(30deg, rgba(255,255,255,0.05) 1px, transparent 1px),
-      linear-gradient(150deg, rgba(255,255,255,0.04) 1px, transparent 1px),
-      linear-gradient(270deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size:64px 110px;
-  }
-  .hero-text{ text-align:left; }
-  .eyebrow{
-    font-size:11px; letter-spacing:0.22em; text-transform:uppercase;
-    color:var(--muted); margin-bottom:14px; display:block;
-  }
+  .hero-text{ padding:26px 20px 0; }
+  .eyebrow{ font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block; }
   .hero h1{
-    font-family:'Fraunces', serif;
-    font-weight:300;
-    font-size:clamp(34px, 8vw, 56px);
-    line-height:1.08;
-    letter-spacing:-0.01em;
-    margin-bottom:16px;
+    font-family:'Fraunces', serif; font-weight:400; font-size:clamp(30px,7.5vw,48px);
+    line-height:1.1; letter-spacing:-0.01em; margin-bottom:14px;
   }
-  .hero h1 em{ font-style:italic; color:var(--accent); }
-  .hero p{
-    color:var(--muted); font-size:15px; line-height:1.6; max-width:46ch; margin-bottom:26px;
-  }
+  .hero h1 em{ font-style:italic; color:var(--sage-deep); }
+  .hero p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:46ch; margin-bottom:22px; }
   .btn{
-    display:inline-flex; align-items:center; gap:10px;
-    padding:14px 26px;
-    background:var(--text); color:var(--bg);
-    font-size:13px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600;
-    border:none;
+    display:inline-flex; align-items:center; gap:10px; padding:14px 26px;
+    background:var(--ink); color:#fff; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600;
     clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
     transition:opacity 0.2s ease;
   }
-  .btn:hover{ opacity:0.82; }
-  .btn-outline{
-    background:transparent; color:var(--text); border:1px solid var(--line);
-  }
+  .btn:hover{ opacity:0.8; }
 
-  /* ---------- SECTION HEADS ---------- */
-  .section{ max-width:1200px; margin:0 auto; padding:52px 20px; }
-  .section-head{
-    display:flex; align-items:baseline; justify-content:space-between;
-    margin-bottom:26px; gap:16px;
-  }
-  .section-head h2{
-    font-family:'Fraunces', serif; font-weight:400; font-size:26px; letter-spacing:-0.01em;
-  }
-  .section-head a{ font-size:12px; color:var(--muted); letter-spacing:0.04em; white-space:nowrap; }
+  /* ---------- SECTIONS ---------- */
+  .section{ max-width:1200px; margin:0 auto; padding:44px 20px; }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:22px; gap:16px; }
+  .section-head h2{ font-family:'Fraunces', serif; font-weight:500; font-size:24px; }
+  .section-head a{ font-size:12px; color:var(--muted); white-space:nowrap; }
 
-  /* ---------- PRODUCT GRID ---------- */
-  .grid{
-    display:grid; grid-template-columns:1fr 1fr; gap:14px 12px;
-  }
-  .card{ display:flex; flex-direction:column; }
-  .card-visual{
-    aspect-ratio:1/1.15;
-    position:relative;
-    overflow:hidden;
-    background:var(--surface);
-    transition:transform 0.3s ease;
-  }
-  .card-visual::after{
-    content:"";
-    position:absolute; inset:0;
-    background:
-      linear-gradient(125deg, transparent 40%, rgba(255,255,255,0.10) 50%, transparent 60%);
-    transform:translateX(-120%);
-    transition:transform 0.6s ease;
-  }
-  .card:hover .card-visual::after{ transform:translateX(120%); }
-
-  .tone-gelo{ background:linear-gradient(150deg,#3a4656,#0B0C10 70%); }
-  .tone-onix{ background:linear-gradient(150deg,#2a2c33,#0B0C10 70%); }
-  .tone-champagne{ background:linear-gradient(150deg,#4a3f2e,#0B0C10 70%); }
-  .tone-safira{ background:linear-gradient(150deg,#233a52,#0B0C10 70%); }
-
-  .card-info{ padding:12px 2px 0; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px 12px; }
+  .card-visual{ aspect-ratio:1/1.15; background:var(--sage); position:relative; overflow:hidden; }
+  .tone-gelo{ background:linear-gradient(150deg,#E7ECE3,#C7D2C1 75%); }
+  .tone-onix{ background:linear-gradient(150deg,#2E3230,#181A19 75%); }
+  .tone-champagne{ background:linear-gradient(150deg,#EFE4CF,#CBB98F 75%); }
+  .card-info{ padding:11px 2px 0; }
   .card-name{ font-size:13.5px; font-weight:500; margin-bottom:3px; }
-  .card-price{ font-size:13px; color:var(--muted); margin-bottom:9px; }
-  .swatches{ display:flex; gap:7px; }
-  .swatch{
-    width:16px; height:16px; border-radius:50%;
-    border:1px solid rgba(255,255,255,0.25);
-    cursor:pointer;
-  }
-  .swatch.active{ box-shadow:0 0 0 2px var(--bg), 0 0 0 3px var(--accent); }
-  .sw-gelo{ background:linear-gradient(135deg,#c9d8e8,#5a7086); }
-  .sw-onix{ background:linear-gradient(135deg,#4a4d55,#17181c); }
-  .sw-champagne{ background:linear-gradient(135deg,#e8cfa0,#8a6b3d); }
-  .sw-safira{ background:linear-gradient(135deg,#5f8fc9,#1c3350); }
+  .card-price{ font-size:13px; color:var(--muted); }
 
-  /* ---------- STORY ---------- */
-  .story{
-    background:var(--surface);
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
+  /* ---------- BOTTOM SWIPE GALLERY (home) ---------- */
+  .swipe-gallery{ padding:8px 0 44px; }
+  .swipe-rail{
+    display:flex; gap:12px; overflow-x:auto; padding:0 20px;
+    scroll-snap-type:x mandatory; -ms-overflow-style:none; scrollbar-width:none;
   }
-  .story-inner{
-    max-width:720px; margin:0 auto; padding:64px 24px; text-align:center;
+  .swipe-rail::-webkit-scrollbar{ display:none; }
+  .swipe-card{
+    flex:0 0 78%; scroll-snap-align:start;
+    aspect-ratio:3/4; position:relative; overflow:hidden;
+    display:flex; align-items:flex-end; padding:18px;
   }
-  .story h2{
-    font-family:'Fraunces', serif; font-weight:300; font-style:italic;
-    font-size:clamp(24px,5vw,34px); line-height:1.35; margin-bottom:20px;
-  }
-  .story p{ color:var(--muted); font-size:14px; line-height:1.7; }
+  .swipe-card span{ position:relative; color:#fff; font-family:'Fraunces',serif; font-size:19px; letter-spacing:0.02em; }
+  .sc-1{ background:linear-gradient(155deg,#2b3430,#12140f); }
+  .sc-2{ background:linear-gradient(155deg,#302b28,#141312); }
+  .sc-3{ background:linear-gradient(155deg,#25302c,#0f1512); }
 
   /* ---------- FOOTER ---------- */
-  footer{ padding:52px 20px 40px; max-width:1200px; margin:0 auto; }
-  .footer-top{
-    display:flex; flex-direction:column; gap:28px;
-    padding-bottom:32px; border-bottom:1px solid var(--line); margin-bottom:24px;
-  }
-  .footer-logo{ font-family:'Fraunces', serif; font-size:20px; letter-spacing:0.1em; }
-  .footer-links{ display:flex; flex-direction:column; gap:10px; }
+  footer{ padding:44px 20px 40px; max-width:1200px; margin:0 auto; border-top:1px solid var(--line); }
+  .footer-logo{ font-family:'Fraunces', serif; font-size:18px; letter-spacing:0.08em; margin-bottom:16px; }
+  .footer-links{ display:flex; flex-direction:column; gap:9px; margin-bottom:24px; }
   .footer-links a{ font-size:13px; color:var(--muted); }
-  .footer-bottom{ display:flex; justify-content:space-between; font-size:11px; color:var(--muted); letter-spacing:0.03em; }
+  .footer-bottom{ display:flex; justify-content:space-between; font-size:11px; color:var(--muted); }
+
+  /* ================= SEARCH OVERLAY ================= */
+  .overlay{
+    position:fixed; inset:0; z-index:100; background:var(--bg);
+    display:flex; flex-direction:column;
+    transform:translateY(-100%); transition:transform 0.32s cubic-bezier(.4,0,.2,1);
+  }
+  .overlay.open{ transform:translateY(0); }
+  .overlay-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--line); }
+  .search-field{
+    margin:18px; display:flex; align-items:center; gap:10px;
+    background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;
+  }
+  .search-field input{ border:none; outline:none; flex:1; font-size:15px; background:none; color:var(--ink); font-family:inherit; }
+  .search-field svg{ width:18px; height:18px; stroke:var(--muted); flex:0 0 auto; }
+
+  /* ================= MENU OVERLAY ================= */
+  .menu-overlay{
+    position:fixed; inset:0; z-index:90; background:var(--bg);
+    transform:translateX(100%); transition:transform 0.34s cubic-bezier(.4,0,.2,1);
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .menu-overlay.open{ transform:translateX(0); }
+  .menu-panes{ position:relative; flex:1; overflow:hidden; }
+  .menu-pane{
+    position:absolute; inset:0; overflow-y:auto;
+    padding:18px 18px 60px;
+    transform:translateX(0); transition:transform 0.3s cubic-bezier(.4,0,.2,1);
+  }
+  .menu-pane.pane-sub{ transform:translateX(100%); }
+  .menu-pane.pane-sub.active{ transform:translateX(0); }
+  .menu-pane.pane-main.pushed{ transform:translateX(-30%); opacity:0.4; }
+
+  .menu-row{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:16px 18px; margin-bottom:11px;
+  }
+  .menu-row .label{ font-size:15px; font-weight:500; }
+  .menu-row svg{ width:16px; height:16px; stroke:var(--muted); }
+  .menu-row.shop-all{ justify-content:center; text-align:center; font-weight:600; margin-top:6px; }
+
+  .sub-head{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .back-btn{
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; background:var(--panel);
+  }
+  .back-btn svg{ width:16px; height:16px; stroke:var(--ink); }
+  .sub-title{ font-size:16px; font-weight:600; }
+
+  /* ================= LOGO TRANSITION SPLASH ================= */
+  .splash{
+    position:fixed; inset:0; z-index:200; background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none;
+  }
+  .splash.show{ opacity:1; pointer-events:all; transition:opacity 0.15s ease; }
+  .splash span{
+    font-family:'Fraunces', serif; font-weight:400; font-size:26px; letter-spacing:0.16em;
+    opacity:0; transform:translateY(6px) scale(0.98);
+  }
+  .splash.show span{ animation:splashIn 0.85s cubic-bezier(.2,.7,.3,1) forwards; }
+  @keyframes splashIn{
+    0%{ opacity:0; transform:translateY(6px) scale(0.98); }
+    35%{ opacity:1; transform:translateY(0) scale(1); }
+    80%{ opacity:1; }
+    100%{ opacity:0; }
+  }
 
   /* ---------- DESKTOP ---------- */
   @media (min-width:860px){
-    .header-inner{ padding:20px 40px; }
-    .hero{ grid-template-columns:1.1fr 0.9fr; align-items:center; padding:20px 40px 70px; }
-    .hero-visual{ order:2; aspect-ratio:3/4; }
-    .hero-text{ order:1; }
-    .section{ padding:70px 40px; }
-    .grid{ grid-template-columns:repeat(4,1fr); gap:22px; }
-    .story-inner{ padding:90px 24px; }
-    .footer-top{ flex-direction:row; justify-content:space-between; }
-    .footer-links{ flex-direction:row; gap:32px; }
+    .header-inner{ padding:18px 40px; }
+    .hero{ display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:40px; padding:0 40px 60px; }
+    .hero-visual{ aspect-ratio:3/4; }
+    .hero-text{ padding:0; order:-1; }
+    .section{ padding:60px 40px; }
+    .grid{ grid-template-columns:repeat(4,1fr); gap:20px; }
+    .swipe-card{ flex:0 0 32%; }
+    .menu-pane{ max-width:420px; }
   }
 </style>
 </head>
@@ -258,163 +222,189 @@
 
 <header>
   <div class="header-inner">
-    <a href="#" class="logo" aria-label="SENZA PARI — página inicial">SENZA PARI</a>
+    <button class="brand" id="logoBtn" aria-label="SENZA PARI — voltar à página inicial">
+      <svg class="brand-mark" viewBox="0 0 24 24"><path d="M12 2l6 7-6 13-6-13z"/></svg>
+      <span class="logo">SENZA PARI</span>
+    </button>
     <div class="header-icons">
-      <button class="icon-btn" aria-label="Pesquisar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <button class="icon-btn" id="searchBtn" aria-label="Pesquisar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       </button>
       <button class="icon-btn" aria-label="Carrinho">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L4 3H2"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L4 3H2"/></svg>
+      </button>
+      <button class="icon-btn" id="menuBtn" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
   </div>
-
-  <nav class="cat-rail" aria-label="Categorias">
-    <a class="cat-item" href="#">
-      <span class="cat-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="7" y="2" width="10" height="20" rx="2"/></svg></span>
-      <span class="cat-label">Capinhas</span>
-    </a>
-    <a class="cat-item" href="#">
-      <span class="cat-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 4h16v16H4z"/><path d="M4 4l16 16M20 4L4 20"/></svg></span>
-      <span class="cat-label">Skins</span>
-    </a>
-    <a class="cat-item" href="#">
-      <span class="cat-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.4"/></svg></span>
-      <span class="cat-label">Correntes</span>
-    </a>
-    <a class="cat-item" href="#">
-      <span class="cat-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12c2-4 6-6 8-6s6 2 8 6-6 6-8 6-6-2-8-6z"/></svg></span>
-      <span class="cat-label">Cabos</span>
-    </a>
-    <a class="cat-item" href="#">
-      <span class="cat-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2l2.4 7.2H22l-6 4.4 2.4 7.2L12 16.4 5.6 20.8 8 13.6 2 9.2h7.6z"/></svg></span>
-      <span class="cat-label">Novidades</span>
-    </a>
-  </nav>
 </header>
 
 <section class="hero">
   <div class="hero-visual facet" aria-hidden="true"></div>
   <div class="hero-text">
     <span class="eyebrow">Coleção Cristallo</span>
-    <h1>A proteção que <em>brilha</em><br>como sua jóia.</h1>
-    <p>Skins e capinhas facetadas à mão, inspiradas no corte de pedras preciosas. Cada peça, única — como você.</p>
+    <h1>A proteção que <em>brilha</em> como sua jóia.</h1>
+    <p>Skins e capinhas facetadas à mão, inspiradas no corte de pedras preciosas.</p>
     <a href="#vitrine" class="btn">Ver coleção</a>
   </div>
 </section>
 
 <section class="section" id="vitrine">
-  <div class="section-head">
-    <h2>Mais procurados</h2>
-    <a href="#">Ver tudo →</a>
-  </div>
-
+  <div class="section-head"><h2>Mais procurados</h2><a href="#">Ver tudo →</a></div>
   <div class="grid">
-
     <article class="card">
-      <div class="card-visual facet tone-gelo" data-visual="1" aria-hidden="true"></div>
-      <div class="card-info">
-        <p class="card-name">Skin Cristallo — iPhone 16 Pro</p>
-        <p class="card-price">R$ 249</p>
-        <div class="swatches" data-card="1">
-          <button class="swatch sw-gelo active" aria-label="Gelo" data-tone="gelo"></button>
-          <button class="swatch sw-onix" aria-label="Ônix" data-tone="onix"></button>
-          <button class="swatch sw-safira" aria-label="Safira" data-tone="safira"></button>
-        </div>
-      </div>
+      <div class="card-visual facet tone-gelo"></div>
+      <div class="card-info"><p class="card-name">Skin Cristallo — iPhone 16 Pro</p><p class="card-price">R$ 249</p></div>
     </article>
-
     <article class="card">
-      <div class="card-visual facet tone-onix" data-visual="2" aria-hidden="true"></div>
-      <div class="card-info">
-        <p class="card-name">Capa Facetada — iPhone 16</p>
-        <p class="card-price">R$ 319</p>
-        <div class="swatches" data-card="2">
-          <button class="swatch sw-onix active" aria-label="Ônix" data-tone="onix"></button>
-          <button class="swatch sw-champagne" aria-label="Champagne" data-tone="champagne"></button>
-          <button class="swatch sw-gelo" aria-label="Gelo" data-tone="gelo"></button>
-        </div>
-      </div>
+      <div class="card-visual facet tone-onix"></div>
+      <div class="card-info"><p class="card-name">Capa Facetada — iPhone 16</p><p class="card-price">R$ 319</p></div>
     </article>
-
     <article class="card">
-      <div class="card-visual facet tone-champagne" data-visual="3" aria-hidden="true"></div>
-      <div class="card-info">
-        <p class="card-name">Corrente Prisma</p>
-        <p class="card-price">R$ 189</p>
-        <div class="swatches" data-card="3">
-          <button class="swatch sw-champagne active" aria-label="Champagne" data-tone="champagne"></button>
-          <button class="swatch sw-safira" aria-label="Safira" data-tone="safira"></button>
-        </div>
-      </div>
+      <div class="card-visual facet tone-champagne"></div>
+      <div class="card-info"><p class="card-name">Corrente Prisma</p><p class="card-price">R$ 189</p></div>
     </article>
-
     <article class="card">
-      <div class="card-visual facet tone-safira" data-visual="4" aria-hidden="true"></div>
-      <div class="card-info">
-        <p class="card-name">Skin Cristallo — iPhone 15</p>
-        <p class="card-price">R$ 229</p>
-        <div class="swatches" data-card="4">
-          <button class="swatch sw-safira active" aria-label="Safira" data-tone="safira"></button>
-          <button class="swatch sw-onix" aria-label="Ônix" data-tone="onix"></button>
-          <button class="swatch sw-gelo" aria-label="Gelo" data-tone="gelo"></button>
-        </div>
-      </div>
+      <div class="card-visual facet tone-gelo"></div>
+      <div class="card-info"><p class="card-name">Skin Cristallo — iPhone 15</p><p class="card-price">R$ 229</p></div>
     </article>
-
   </div>
 </section>
 
-<section class="story">
-  <div class="story-inner">
-    <h2>"Cada faceta é cortada para capturar a luz — e quem segura o telefone, também."</h2>
-    <p>SENZA PARI nasce do encontro entre a joalheria e a tecnologia. Peças desenhadas para quem entende que os detalhes é que fazem a diferença.</p>
+<section class="swipe-gallery">
+  <div class="swipe-rail">
+    <a class="swipe-card facet sc-1"><span>Cristallo Gelo</span></a>
+    <a class="swipe-card facet sc-2"><span>Cristallo Ônix</span></a>
+    <a class="swipe-card facet sc-3"><span>Cristallo Safira</span></a>
   </div>
 </section>
 
 <footer>
-  <div class="footer-top">
-    <span class="footer-logo">SENZA PARI</span>
-    <nav class="footer-links">
-      <a href="#">Coleções</a>
-      <a href="#">Sobre o Atelier</a>
-      <a href="#">Trocas e devoluções</a>
-      <a href="#">Fale conosco</a>
-    </nav>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 Senza Pari Atelier</span>
-    <span>Recife, Brasil</span>
-  </div>
+  <span class="footer-logo">SENZA PARI</span>
+  <nav class="footer-links">
+    <a href="#">Coleções</a>
+    <a href="#">Sobre o Atelier</a>
+    <a href="#">Trocas e devoluções</a>
+    <a href="#">Fale conosco</a>
+  </nav>
+  <div class="footer-bottom"><span>© 2026 Senza Pari Atelier</span><span>Recife, Brasil</span></div>
 </footer>
 
+<!-- SEARCH OVERLAY -->
+<div class="overlay" id="searchOverlay">
+  <div class="overlay-top">
+    <span class="logo">SENZA PARI</span>
+    <button class="icon-btn" id="searchClose" aria-label="Fechar busca">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="search-field">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input type="text" placeholder="Buscar produtos..." id="searchInput">
+  </div>
+</div>
+
+<!-- MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="overlay-top">
+    <span class="logo">SENZA PARI</span>
+    <div class="header-icons">
+      <button class="icon-btn" aria-label="Carrinho">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L4 3H2"/></svg>
+      </button>
+      <button class="icon-btn" id="menuClose" aria-label="Fechar menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="menu-panes">
+    <div class="menu-pane pane-main" id="paneMain">
+      <button class="menu-row" data-open-sub="cases">
+        <span class="label">Cases</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <a class="menu-row" href="#">
+        <span class="label">Watch Bands</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#">
+        <span class="label">Wallets</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#">
+        <span class="label">AirTag Accessories</span>
+      </a>
+      <a class="menu-row" href="#">
+        <span class="label">Lifestyle Gear</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+    </div>
+
+    <div class="menu-pane pane-sub" id="paneCases">
+      <div class="sub-head">
+        <button class="back-btn" data-back>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Cases</span>
+      </div>
+      <a class="menu-row" href="#"><span class="label">iPhone</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#"><span class="label">iPad</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row shop-all" href="#">Ver todas as Cases</a>
+    </div>
+  </div>
+</div>
+
+<!-- LOGO TRANSITION SPLASH -->
+<div class="splash" id="splash"><span>SENZA PARI</span></div>
+
 <script>
-  // Category rail: enable smooth drag-scroll with mouse (touch works natively)
-  const rail = document.querySelector('.cat-rail');
-  let isDown = false, startX, scrollLeft;
-  rail.addEventListener('mousedown', (e) => {
-    isDown = true; startX = e.pageX - rail.offsetLeft; scrollLeft = rail.scrollLeft;
+  const $ = (sel) => document.querySelector(sel);
+
+  // Search overlay
+  $('#searchBtn').addEventListener('click', () => {
+    $('#searchOverlay').classList.add('open');
+    setTimeout(() => $('#searchInput').focus(), 300);
   });
-  rail.addEventListener('mouseleave', () => isDown = false);
-  rail.addEventListener('mouseup', () => isDown = false);
-  rail.addEventListener('mousemove', (e) => {
-    if(!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - rail.offsetLeft;
-    rail.scrollLeft = scrollLeft - (x - startX) * 1.2;
+  $('#searchClose').addEventListener('click', () => $('#searchOverlay').classList.remove('open'));
+
+  // Menu overlay
+  $('#menuBtn').addEventListener('click', () => $('#menuOverlay').classList.add('open'));
+  $('#menuClose').addEventListener('click', () => {
+    $('#menuOverlay').classList.remove('open');
+    resetPanes();
   });
 
-  // Swatch → swaps the visual tone class on the matching card image
-  document.querySelectorAll('.swatches').forEach(group => {
-    const cardId = group.dataset.card;
-    const visual = document.querySelector('.card-visual[data-visual="' + cardId + '"]');
-    group.querySelectorAll('.swatch').forEach(btn => {
-      btn.addEventListener('click', () => {
-        group.querySelectorAll('.swatch').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        visual.className = 'card-visual facet tone-' + btn.dataset.tone;
-      });
+  function resetPanes(){
+    $('#paneMain').classList.remove('pushed');
+    $('#paneCases').classList.remove('active');
+  }
+
+  document.querySelectorAll('[data-open-sub]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.openSub;
+      $('#paneMain').classList.add('pushed');
+      $('#pane' + target.charAt(0).toUpperCase() + target.slice(1)).classList.add('active');
     });
+  });
+  document.querySelectorAll('[data-back]').forEach(btn => {
+    btn.addEventListener('click', () => resetPanes());
+  });
+
+  // Logo click → splash transition → back to top / close overlays
+  $('#logoBtn').addEventListener('click', () => {
+    const splash = $('#splash');
+    splash.classList.add('show');
+    $('#menuOverlay').classList.remove('open');
+    $('#searchOverlay').classList.remove('open');
+    resetPanes();
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    setTimeout(() => splash.classList.remove('show'), 850);
   });
 </script>
 
