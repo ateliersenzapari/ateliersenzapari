@@ -85,13 +85,14 @@
   /* ---------- HERO (dark, moody — chrome stays light) ---------- */
   .hero-wrap{ max-width:1200px; margin:0 auto; padding:0 0 40px; }
   .hero-visual{
-    height:34vh; min-height:230px; width:100%;
+    height:40vh; min-height:270px; width:100%;
     background:linear-gradient(150deg,#23262B 0%, var(--dark-hero) 45%, #1a1d21 100%);
     position:relative; overflow:hidden; border-radius:2px;
   }
   .hero-video{
     position:absolute; inset:0; width:100%; height:100%;
-    object-fit:cover; object-position:center;
+    object-fit:contain; object-position:center;
+    background:#0c0d0f;
   }
   .hero-toggle{
     position:absolute; bottom:14px; right:14px; z-index:2;
@@ -279,7 +280,7 @@
 
 <div class="hero-wrap">
   <div class="hero-visual" id="heroVisual" aria-hidden="true">
-    <video class="hero-video" id="heroVideo" src="assets/hero-video.mp4" autoplay muted loop playsinline></video>
+    <video class="hero-video" id="heroVideo" src="hero-video.mp4" autoplay muted loop playsinline></video>
     <button class="hero-toggle" id="heroToggle" aria-label="Pausar vídeo">
       <svg class="icon-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
       <svg class="icon-play" viewBox="0 0 24 24"><path d="M7 4l14 8-14 8z"/></svg>
@@ -365,7 +366,7 @@
 <!-- MENU OVERLAY -->
 <div class="menu-overlay" id="menuOverlay">
   <div class="overlay-top">
-    <span class="logo">SENZA PARI</span>
+    <button class="logo" id="logoBtnMenu" aria-label="SENZA PARI — voltar à página inicial" style="background:none;border:none;padding:0;">SENZA PARI</button>
     <div class="header-icons">
       <button class="icon-btn" aria-label="Carrinho">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L4 3H2"/></svg>
@@ -476,7 +477,7 @@
   $('#swipePrev').addEventListener('click', () => rail.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
 
   // Logo click → splash transition → back to top / close overlays
-  $('#logoBtn').addEventListener('click', () => {
+  function goHome(){
     const splash = $('#splash');
     splash.classList.add('show');
     $('#menuOverlay').classList.remove('open');
@@ -484,7 +485,9 @@
     resetPanes();
     window.scrollTo({ top: 0, behavior: 'auto' });
     setTimeout(() => splash.classList.remove('show'), 850);
-  });
+  }
+  $('#logoBtn').addEventListener('click', goHome);
+  $('#logoBtnMenu').addEventListener('click', goHome);
 </script>
 
 </body>
