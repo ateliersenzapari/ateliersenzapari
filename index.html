@@ -91,8 +91,19 @@
   }
   .hero-video{
     position:absolute; inset:0; width:100%; height:100%;
-    object-fit:cover; object-position:center 40%;
+    object-fit:cover; object-position:center;
   }
+  .hero-sound-btn{
+    position:absolute; bottom:14px; right:14px; z-index:2;
+    width:36px; height:36px; border-radius:50%;
+    background:rgba(0,0,0,0.35); backdrop-filter:blur(6px);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-sound-btn svg{ width:16px; height:16px; stroke:#fff; }
+  .hero-sound-btn .icon-muted{ display:block; }
+  .hero-sound-btn .icon-on{ display:none; }
+  .hero-sound-btn.on .icon-muted{ display:none; }
+  .hero-sound-btn.on .icon-on{ display:block; }
   .hero-text{ padding:26px 20px 0; }
   .eyebrow{ font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block; }
   .hero h1{
@@ -276,8 +287,12 @@
 </header>
 
 <div class="hero-wrap">
-  <div class="hero-visual" id="heroVisual" aria-hidden="true">
+  <div class="hero-visual" id="heroVisual">
     <video class="hero-video" id="heroVideo" src="hero-video.mp4" autoplay muted loop playsinline preload="auto" webkit-playsinline="true"></video>
+    <button class="hero-sound-btn" id="soundBtn" aria-label="Ativar som">
+      <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
+      <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 6a9 9 0 010 12"/></svg>
+    </button>
   </div>
 
   <section class="swipe-gallery">
@@ -491,6 +506,12 @@
     const tryPlay = () => heroVideo.play().catch(() => {});
     tryPlay();
     document.addEventListener('visibilitychange', () => { if (!document.hidden) tryPlay(); });
+
+    $('#soundBtn').addEventListener('click', () => {
+      heroVideo.muted = !heroVideo.muted;
+      $('#soundBtn').classList.toggle('on', !heroVideo.muted);
+      tryPlay();
+    });
   }
 
   // Bottom swipe gallery arrows
