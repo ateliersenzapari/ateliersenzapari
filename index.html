@@ -188,10 +188,17 @@
     display:flex; align-items:center; justify-content:space-between;
     width:100%; box-sizing:border-box;
     background:var(--panel); border:1px solid var(--line); border-radius:14px;
-    padding:16px 18px; margin-bottom:11px;
+    padding:12px 18px 12px 12px; margin-bottom:12px;
     font-size:15px; text-align:left;
   }
-  .menu-row .label{ font-size:15px; font-weight:500; }
+  .menu-row-main{ display:flex; align-items:center; gap:16px; }
+  .menu-row-thumb{
+    width:84px; height:84px; border-radius:12px; object-fit:cover;
+    background:var(--sage); flex:0 0 auto;
+  }
+  .menu-row-text{ display:flex; flex-direction:column; gap:2px; }
+  .menu-row .label{ font-size:16px; font-weight:600; }
+  .menu-row .sub{ font-size:13px; color:var(--muted); }
   .menu-row svg{ width:16px; height:16px; stroke:var(--muted); flex:0 0 auto; }
   .menu-row.shop-all{ justify-content:center; text-align:center; font-weight:600; margin-top:6px; }
 
@@ -365,22 +372,52 @@
   <div class="menu-panes">
     <div class="menu-pane pane-main" id="paneMain">
       <button class="menu-row" data-open-sub="cases">
-        <span class="label">Cases</span>
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" src="thumb-case.jpg" alt="Cases">
+          <span class="menu-row-text">
+            <span class="label">Cases</span>
+            <span class="sub">iPhone 17 & Mais</span>
+          </span>
+        </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <a class="menu-row" href="#">
-        <span class="label">Watch Bands</span>
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" src="thumb-skin.jpg" alt="Skins">
+          <span class="menu-row-text">
+            <span class="label">Skins</span>
+            <span class="sub">Acabamento facetado</span>
+          </span>
+        </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
       <a class="menu-row" href="#">
-        <span class="label">Wallets</span>
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" src="thumb-wallet.jpg" alt="Wallets">
+          <span class="menu-row-text">
+            <span class="label">Wallets</span>
+            <span class="sub">MagSafe Card Holder</span>
+          </span>
+        </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
       <a class="menu-row" href="#">
-        <span class="label">AirTag Accessories</span>
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" src="thumb-airtag.jpg" alt="AirTag Accessories">
+          <span class="menu-row-text">
+            <span class="label">AirTag Accessories</span>
+          </span>
+        </span>
       </a>
       <a class="menu-row" href="#">
-        <span class="label">Lifestyle Gear</span>
+        <span class="menu-row-main">
+          <span class="menu-row-thumb" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#2E3230,#181A19 75%);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.2" width="34" height="34"><path d="M4 12c2-4 6-6 8-6s6 2 8 6-6 6-8 6-6-2-8-6z"/></svg>
+          </span>
+          <span class="menu-row-text">
+            <span class="label">Lifestyle Gear</span>
+          </span>
+        </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
     </div>
