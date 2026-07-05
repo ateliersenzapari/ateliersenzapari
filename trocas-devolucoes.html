@@ -187,27 +187,37 @@
   }
   .product-overlay.open{ opacity:1; pointer-events:all; }
   .product-sheet{
-    background:var(--bg); width:100%; max-width:480px; max-height:88vh; overflow-y:auto;
-    border-radius:20px 20px 0 0; padding:20px 20px 28px;
+    background:var(--bg); width:100%; max-width:520px; max-height:94vh; overflow-y:auto;
+    border-radius:20px 20px 0 0;
     transform:translateY(100%); transition:transform 0.3s cubic-bezier(.4,0,.2,1);
   }
   .product-overlay.open .product-sheet{ transform:translateY(0); }
-  .product-sheet-top{ display:flex; justify-content:flex-end; margin-bottom:6px; }
+  .product-sheet-top{
+    position:sticky; top:0; z-index:2; display:flex; justify-content:space-between; align-items:center;
+    padding:14px 18px; background:rgba(250,250,248,0.95); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); border-radius:20px 20px 0 0;
+  }
+  .product-back-label{ font-size:13px; font-weight:600; color:var(--muted); }
   .product-close{ width:32px; height:32px; border-radius:50%; border:1px solid var(--line); background:var(--panel); display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
   .product-close svg{ width:14px; height:14px; stroke:var(--ink); }
-  .product-preview{ width:100%; aspect-ratio:3/4; background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:16px; display:flex; align-items:center; justify-content:center; }
+  .product-body{ padding:18px 20px 28px; }
+  .product-preview{ width:100%; aspect-ratio:3/4; background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:12px; display:flex; align-items:center; justify-content:center; }
   .product-preview img{ width:100%; height:100%; object-fit:contain; }
-  .product-title{ font-family:'Bodoni Moda',serif; font-size:20px; font-weight:500; margin-bottom:4px; }
-  .product-sub{ font-size:13px; color:var(--muted); margin-bottom:18px; }
-  .swatch-label{ font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--muted); margin-bottom:10px; }
-  .swatch-row{ display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap; }
-  .swatch{
-    width:52px; height:52px; border-radius:50%; border:2px solid transparent;
-    padding:2px; background:var(--panel); box-shadow:0 0 0 1px var(--line);
-    display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+  .product-head-row{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:16px; margin-bottom:4px; }
+  .product-title{ font-family:'Bodoni Moda',serif; font-size:21px; font-weight:500; }
+  .product-price{ font-size:14px; color:var(--muted); white-space:nowrap; }
+  .product-sub{ font-size:13px; color:var(--muted); margin-bottom:16px; }
+  .product-desc{ font-size:14px; color:var(--ink); line-height:1.65; margin-bottom:22px; }
+  .swatch-label{ font-size:13px; font-weight:600; color:var(--ink); margin-bottom:10px; }
+  .swatch-label span{ font-weight:400; color:var(--muted); }
+  .thumb-row{ display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; }
+  .thumb{
+    width:56px; height:56px; border-radius:10px; border:2px solid transparent;
+    padding:4px; background:var(--panel); box-shadow:0 0 0 1px var(--line);
+    display:flex; align-items:center; justify-content:center; flex:0 0 auto; box-sizing:border-box;
   }
-  .swatch img{ width:100%; height:100%; object-fit:contain; border-radius:50%; }
-  .swatch.selected{ border-color:var(--sage-deep); box-shadow:0 0 0 1px var(--sage-deep); }
+  .thumb img{ width:100%; height:100%; object-fit:contain; border-radius:4px; }
+  .thumb.selected{ border-color:var(--sage-deep); box-shadow:0 0 0 1px var(--sage-deep); }
   .product-qty{ display:flex; align-items:center; gap:16px; margin-bottom:20px; }
   .qty-btn{ width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:var(--panel); display:flex; align-items:center; justify-content:center; font-size:16px; }
   .qty-value{ font-size:15px; font-weight:600; min-width:20px; text-align:center; }
@@ -217,6 +227,33 @@
   .product-add-btn:active{ opacity:0.85; }
   .add-confirm{ font-size:13px; color:var(--sage-deep); font-weight:600; text-align:center; margin-top:12px; opacity:0; transition:opacity 0.2s ease; }
   .add-confirm.show{ opacity:1; }
+  .product-ship-note{ display:flex; align-items:center; justify-content:center; gap:7px; font-size:12px; color:var(--muted); margin-top:16px; text-align:center; }
+  .product-ship-note svg{ flex:0 0 auto; stroke:var(--muted); }
+  .product-ship-note a{ color:var(--muted); text-decoration:underline; }
+
+  .product-accordion{ border-top:1px solid var(--line); margin-top:26px; }
+  .accordion-item{ border-bottom:1px solid var(--line); }
+  .accordion-head{
+    width:100%; display:flex; justify-content:space-between; align-items:center;
+    padding:16px 0; font-size:14px; font-weight:600; text-align:left;
+  }
+  .accordion-head svg{ width:14px; height:14px; stroke:var(--ink); transition:transform 0.2s ease; flex:0 0 auto; }
+  .accordion-item.open .accordion-head svg{ transform:rotate(180deg); }
+  .accordion-panel{ max-height:0; overflow:hidden; transition:max-height 0.25s ease; }
+  .accordion-item.open .accordion-panel{ max-height:320px; }
+  .accordion-panel ul{ padding:0 0 16px 18px; color:var(--muted); font-size:13.5px; line-height:1.8; }
+
+  .related-section{ margin-top:30px; }
+  .related-title{ font-family:'Bodoni Moda',serif; font-size:16px; font-weight:500; margin-bottom:12px; }
+  .related-row{ display:flex; gap:12px; overflow-x:auto; padding-bottom:4px; }
+  .related-card{
+    flex:0 0 42%; background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden;
+  }
+  .related-card-img{ width:100%; aspect-ratio:1/1; background:var(--sage); }
+  .related-card-img img{ width:100%; height:100%; object-fit:cover; }
+  .related-card-info{ padding:8px 10px 12px; }
+  .related-card-name{ font-size:12.5px; font-weight:600; margin-bottom:2px; }
+  .related-card-sub{ font-size:11px; color:var(--muted); }
 
   /* ================= CART DRAWER ================= */
   .cart-overlay{
@@ -639,24 +676,57 @@
 <div class="product-overlay" id="productOverlay">
   <div class="product-sheet">
     <div class="product-sheet-top">
+      <span class="product-back-label" id="productBackLabel">Cuir Suprême</span>
       <button class="product-close" id="productClose" aria-label="Fechar">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
-    <div class="product-preview">
-      <img id="productPreviewImg" src="" alt="">
+    <div class="product-body">
+      <div class="product-preview">
+        <img id="productPreviewImg" src="" alt="">
+      </div>
+      <div class="thumb-row" id="productSwatches"></div>
+      <div class="product-head-row">
+        <p class="product-title" id="productTitle">Case iPhone — Cuir Suprême</p>
+        <span class="product-price">Sob consulta</span>
+      </div>
+      <p class="product-sub" id="productSub">Couro premium, acabamento liso</p>
+      <p class="product-desc">Couro legítimo com acabamento liso e toque macio, cortado e costurado à mão — pensado pra unir proteção e sofisticação ao seu iPhone.</p>
+      <p class="swatch-label">Cor: <span id="colorLabelText">—</span></p>
+      <div class="product-qty">
+        <button class="qty-btn" id="qtyMinus" aria-label="Diminuir quantidade">−</button>
+        <span class="qty-value" id="qtyValue">1</span>
+        <button class="qty-btn" id="qtyPlus" aria-label="Aumentar quantidade">+</button>
+      </div>
+      <button class="product-add-btn" id="productAddBtn">Adicionar ao carrinho</button>
+      <p class="add-confirm" id="addConfirm">Adicionado ao carrinho ✓</p>
+      <p class="product-ship-note">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke-width="1.6"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></svg>
+        Confira nossa <a href="trocas-devolucoes.html">política de trocas e devoluções</a>
+      </p>
+
+      <div class="product-accordion">
+        <div class="accordion-item" data-accordion>
+          <button class="accordion-head" data-accordion-toggle>
+            Detalhes
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="accordion-panel">
+            <ul>
+              <li>Couro legítimo, corte e costura artesanais</li>
+              <li>Acabamento exclusivo com a assinatura Senza Pari</li>
+              <li>Encaixe preciso, sem interferir em botões ou câmeras</li>
+              <li>Peça produzida sob encomenda</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="related-section">
+        <p class="related-title">Você também pode gostar</p>
+        <div class="related-row" id="relatedRow"></div>
+      </div>
     </div>
-    <p class="product-title" id="productTitle">Case iPhone — Cuir Suprême</p>
-    <p class="product-sub" id="productSub">Couro premium, acabamento liso</p>
-    <p class="swatch-label">Cor</p>
-    <div class="swatch-row" id="productSwatches"></div>
-    <div class="product-qty">
-      <button class="qty-btn" id="qtyMinus" aria-label="Diminuir quantidade">−</button>
-      <span class="qty-value" id="qtyValue">1</span>
-      <button class="qty-btn" id="qtyPlus" aria-label="Aumentar quantidade">+</button>
-    </div>
-    <button class="product-add-btn" id="productAddBtn">Adicionar ao carrinho</button>
-    <p class="add-confirm" id="addConfirm">Adicionado ao carrinho ✓</p>
   </div>
 </div>
 
@@ -848,24 +918,34 @@
     { id:'roxo', label:'Roxo', img:'cuir-supreme-roxo.png' },
     { id:'limao', label:'Verde Limão', img:'cuir-supreme-limao.png' },
   ];
+  const RELATED_ITEMS = [
+    { name:"Watch Band", sub:"Preto & Ouro", img:"lor-phenomenal-watchband.jpg" },
+    { name:"AirPods", sub:"Preto & Ouro", img:"lor-phenomenal-airpods.jpg" },
+    { name:"AirTag", sub:"Preto & Ouro", img:"lor-phenomenal-airtag.jpg" },
+    { name:"Case iPhone", sub:"Ouro Total", img:"lor-phenomenal-case-ouro-total.jpg" },
+  ];
   let currentProduct = null;
 
   function openProduct(model){
     $('#menuOverlay').classList.remove('open');
     resetPanes();
     currentProduct = { model, colorIndex: 0, qty: 1 };
+    $('#productBackLabel').textContent = 'Cuir Suprême';
     $('#productTitle').textContent = `Case iPhone ${model} — Cuir Suprême`;
     $('#qtyValue').textContent = '1';
     renderSwatches();
     updateProductPreview();
+    renderRelated();
     $('#addConfirm').classList.remove('show');
+    document.querySelectorAll('.accordion-item').forEach(item => item.classList.remove('open'));
     $('#productOverlay').classList.add('open');
+    $('.product-sheet').scrollTop = 0;
   }
   function closeProduct(){ $('#productOverlay').classList.remove('open'); }
   function renderSwatches(){
     const row = $('#productSwatches');
     row.innerHTML = CUIR_SUPREME_COLORS.map((c, idx) => `
-      <button class="swatch${idx === currentProduct.colorIndex ? ' selected' : ''}" data-color-idx="${idx}" aria-label="${c.label}">
+      <button class="thumb${idx === currentProduct.colorIndex ? ' selected' : ''}" data-color-idx="${idx}" aria-label="${c.label}">
         <img src="${c.img}" alt="${c.label}">
       </button>
     `).join('');
@@ -881,7 +961,24 @@
     const color = CUIR_SUPREME_COLORS[currentProduct.colorIndex];
     $('#productPreviewImg').src = color.img;
     $('#productPreviewImg').alt = color.label;
+    $('#colorLabelText').textContent = color.label;
   }
+  function renderRelated(){
+    $('#relatedRow').innerHTML = RELATED_ITEMS.map(item => `
+      <a class="related-card" href="colecao-lor-phenomenal.html">
+        <div class="related-card-img"><img src="${item.img}" alt="${item.name}"></div>
+        <div class="related-card-info">
+          <p class="related-card-name">${item.name}</p>
+          <p class="related-card-sub">${item.sub}</p>
+        </div>
+      </a>
+    `).join('');
+  }
+  document.querySelectorAll('[data-accordion-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.closest('[data-accordion]').classList.toggle('open');
+    });
+  });
   $('#productClose').addEventListener('click', closeProduct);
   $('#productOverlay').addEventListener('click', (e) => { if (e.target.id === 'productOverlay') closeProduct(); });
   $('#qtyMinus').addEventListener('click', () => {
