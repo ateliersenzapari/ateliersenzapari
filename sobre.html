@@ -580,7 +580,7 @@
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <a class="menu-row shop-all" href="#">Ver todas as Cases</a>
+      <a class="menu-row shop-all" href="linha-cuir-supreme.html">Ver todas as Cases</a>
     </div>
 
     <div class="menu-pane pane-subsub" id="paneCasesCuir">
@@ -599,7 +599,7 @@
       <button class="menu-row" data-open-product="15"><span class="label">iPhone 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <a class="menu-row shop-all" href="#">Ver todas — Cuir Suprême</a>
+      <a class="menu-row shop-all" href="linha-cuir-supreme.html">Ver todas — Cuir Suprême</a>
     </div>
 
     <div class="menu-pane pane-subsub" id="paneCasesMetal">
@@ -1010,10 +1010,10 @@
   ];
   let currentProduct = null;
 
-  function openProduct(model){
+  function openProduct(model, colorIndex){
     $('#menuOverlay').classList.remove('open');
     resetPanes();
-    currentProduct = { model, colorIndex: 0, qty: 1 };
+    currentProduct = { model, colorIndex: colorIndex || 0, qty: 1 };
     $('#productBackLabel').textContent = 'Cuir Suprême';
     $('#productTitle').textContent = `Case iPhone ${model} — Cuir Suprême`;
     $('#qtyValue').textContent = '1';
@@ -1086,7 +1086,10 @@
     setTimeout(() => { $('#addConfirm').classList.remove('show'); }, 1800);
   });
   document.querySelectorAll('[data-open-product]').forEach(btn => {
-    btn.addEventListener('click', () => openProduct(btn.dataset.openProduct));
+    btn.addEventListener('click', () => {
+      const colorIdx = btn.dataset.colorIdx !== undefined ? parseInt(btn.dataset.colorIdx, 10) : 0;
+      openProduct(btn.dataset.openProduct, colorIdx);
+    });
   });
 </script>
 
