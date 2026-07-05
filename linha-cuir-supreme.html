@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SENZA PARI — Atelier di Cristallo</title>
+<title>Cuir Suprême — SENZA PARI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -82,43 +82,6 @@
   .search-field input{ border:none; outline:none; flex:1; font-size:15px; background:none; color:var(--ink); font-family:inherit; }
   .search-field svg{ width:18px; height:18px; stroke:var(--muted); flex:0 0 auto; }
 
-  /* ---------- HERO (dark, moody — chrome stays light) ---------- */
-  .hero-wrap{ max-width:1200px; margin:0 auto; padding:0 0 40px; }
-  .hero-visual{
-    height:26vh; min-height:180px; width:100%;
-    background:linear-gradient(150deg,#23262B 0%, var(--dark-hero) 45%, #1a1d21 100%);
-    position:relative; overflow:hidden; border-radius:2px;
-  }
-  .hero-video{
-    position:absolute; inset:0; width:100%; height:100%;
-    object-fit:cover; object-position:center;
-  }
-  .hero-sound-btn{
-    position:absolute; bottom:14px; right:14px; z-index:2;
-    width:36px; height:36px; border-radius:50%;
-    background:rgba(0,0,0,0.35); backdrop-filter:blur(6px);
-    display:flex; align-items:center; justify-content:center;
-  }
-  .hero-sound-btn svg{ width:16px; height:16px; stroke:#fff; }
-  .hero-sound-btn .icon-muted{ display:block; }
-  .hero-sound-btn .icon-on{ display:none; }
-  .hero-sound-btn.on .icon-muted{ display:none; }
-  .hero-sound-btn.on .icon-on{ display:block; }
-  .hero-text{ padding:26px 20px 0; }
-  .eyebrow{ font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block; }
-  .hero h1{
-    font-family:'Bodoni Moda', serif; font-weight:400; font-size:clamp(30px,7.5vw,48px);
-    line-height:1.1; letter-spacing:-0.01em; margin-bottom:14px;
-  }
-  .hero h1 em{ font-style:italic; color:var(--sage-deep); }
-  .hero p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:46ch; margin-bottom:22px; }
-  .btn{
-    display:inline-flex; align-items:center; gap:10px; padding:14px 26px;
-    background:var(--ink); color:#fff; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600;
-    transition:opacity 0.2s ease;
-  }
-  .btn:hover{ opacity:0.8; }
-
   /* ---------- SECTIONS ---------- */
   .section{ max-width:1200px; margin:0 auto; padding:44px 20px; }
   .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:22px; gap:16px; }
@@ -127,47 +90,9 @@
 
   .grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px 14px; }
   .card-visual{ aspect-ratio:1/1.5; background:var(--sage); position:relative; overflow:hidden; }
-  .tone-gelo{ background:linear-gradient(150deg,#E7ECE3,#C7D2C1 75%); }
-  .tone-onix{ background:linear-gradient(150deg,#2E3230,#181A19 75%); }
-  .tone-champagne{ background:linear-gradient(150deg,#EFE4CF,#CBB98F 75%); }
   .card-info{ padding:11px 2px 0; }
   .card-name{ font-size:13.5px; font-weight:500; margin-bottom:3px; }
   .card-price{ font-size:13px; color:var(--muted); }
-
-  /* ---------- BOTTOM SWIPE GALLERY (home) ---------- */
-  .swipe-gallery{ padding:16px 0 28px; background:#F1F2EE; }
-  .swipe-title{
-    font-family:'Bodoni Moda', serif; font-weight:600; font-size:clamp(22px,6vw,30px);
-    padding:0 20px 14px; letter-spacing:-0.01em;
-  }
-  .swipe-rail{
-    display:flex; gap:12px; overflow-x:auto; padding:0 20px;
-    scroll-snap-type:x mandatory; -ms-overflow-style:none; scrollbar-width:none;
-  }
-  .swipe-rail::-webkit-scrollbar{ display:none; }
-  .swipe-card{
-    flex:0 0 58%; scroll-snap-align:start;
-    display:flex; flex-direction:column;
-    background:var(--panel); border-radius:16px; overflow:hidden;
-    box-shadow:0 4px 18px rgba(20,22,18,0.07);
-  }
-  .swipe-card-img{
-    width:100%; aspect-ratio:4/3;
-    background:var(--sage);
-  }
-  .swipe-card-text{ padding:10px 14px 14px; }
-  .swipe-card-name{ font-size:14px; font-weight:700; margin-bottom:2px; }
-  .swipe-card-sub{ font-size:12px; color:var(--muted); }
-  .sc-1 .swipe-card-img{ background:linear-gradient(150deg,#3a2f1a,#0f0d09 45%,#5c4a22 100%); }
-  .sc-blank .swipe-card-img{ background:#EEEFEA; }
-  .sc-blank .swipe-card-name{ color:var(--muted); font-weight:600; }
-  .sc-blank{ opacity:0.6; }
-  .swipe-arrows{ display:flex; gap:8px; justify-content:flex-end; padding:12px 20px 0; }
-  .swipe-arrow{
-    width:32px; height:32px; border-radius:50%; border:1px solid var(--line);
-    background:var(--panel); display:flex; align-items:center; justify-content:center;
-  }
-  .swipe-arrow svg{ width:14px; height:14px; stroke:var(--ink); }
 
   /* ---------- FOOTER ---------- */
   footer{ padding:44px 20px 40px; max-width:1200px; margin:0 auto; border-top:1px solid var(--line); }
@@ -248,19 +173,25 @@
   /* ---------- DESKTOP ---------- */
   @media (min-width:860px){
     .header-inner{ padding:18px 40px; }
-    .hero-wrap{
-      display:grid; grid-template-columns:1fr 1fr; grid-template-areas:"text visual" "gallery gallery";
-      align-items:center; gap:16px 40px; padding:0 40px 60px;
-    }
-    .hero-visual{ grid-area:visual; aspect-ratio:3/4; height:auto; }
-    .hero-text{ grid-area:text; padding:0; }
-    .swipe-gallery{ grid-area:gallery; }
     .section{ padding:60px 40px; }
     .grid{ grid-template-columns:repeat(4,1fr); gap:20px; }
-    .swipe-card{ flex:0 0 32%; }
     .menu-pane{ max-width:420px; }
   }
-
+  /* ---------- LINHA PAGE ---------- */
+  .linha-hero{ max-width:1200px; margin:0 auto; padding:14px 20px 0; }
+  .back-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); font-weight:600; }
+  .back-link svg{ width:14px; height:14px; stroke:var(--muted); }
+  .linha-intro{ padding:24px 0 0; }
+  .linha-intro h1{
+    font-family:'Bodoni Moda', serif; font-weight:400; font-size:clamp(28px,7vw,44px);
+    line-height:1.1; letter-spacing:-0.01em; margin-bottom:14px;
+  }
+  .linha-intro h1 em{ font-style:italic; color:var(--sage-deep); }
+  .linha-intro p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:50ch; }
+  .color-card{ display:block; text-align:left; width:100%; }
+  .color-dots{ display:flex; gap:5px; margin-top:8px; }
+  .color-dot{ width:9px; height:9px; border-radius:50%; border:1px solid rgba(0,0,0,0.1); flex:0 0 auto; }
+  .color-dot.active{ box-shadow:0 0 0 2px var(--bg), 0 0 0 3px var(--ink); }
   /* ================= PRODUCT QUICK VIEW ================= */
   .product-overlay{
     position:fixed; inset:0; z-index:110; background:rgba(10,10,8,0.4);
@@ -407,76 +338,109 @@
   </div>
 </header>
 
-<div class="hero-wrap">
-  <div class="hero-visual" id="heroVisual">
-    <video class="hero-video" id="heroVideo" src="hero-video.mp4" autoplay muted loop playsinline preload="auto" webkit-playsinline="true"></video>
-    <button class="hero-sound-btn" id="soundBtn" aria-label="Ativar som">
-      <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
-      <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 6a9 9 0 010 12"/></svg>
-    </button>
-  </div>
-
-  <section class="swipe-gallery">
-    <h2 class="swipe-title">Coleções</h2>
-    <div class="swipe-rail" id="swipeRail">
-      <a class="swipe-card sc-1" href="colecao-lor-phenomenal.html">
-        <span class="swipe-card-img" style="background-image:url('collection-lor-phenomenal.jpg');background-size:cover;background-position:center;"></span>
-        <span class="swipe-card-text">
-          <span class="swipe-card-name">L'Or Phénoménal</span>
-          <span class="swipe-card-sub">Couro de crocodilo dourado</span>
-        </span>
-      </a>
-      <a class="swipe-card sc-blank">
-        <span class="swipe-card-img"></span>
-        <span class="swipe-card-text">
-          <span class="swipe-card-name">Em breve</span>
-        </span>
-      </a>
-      <a class="swipe-card sc-blank">
-        <span class="swipe-card-img"></span>
-        <span class="swipe-card-text">
-          <span class="swipe-card-name">Em breve</span>
-        </span>
-      </a>
-    </div>
-    <div class="swipe-arrows">
-      <button class="swipe-arrow" id="swipePrev" aria-label="Anterior">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button class="swipe-arrow" id="swipeNext" aria-label="Próximo">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-    </div>
-  </section>
-
-  <div class="hero-text">
-    <span class="eyebrow">Atelier de Lumière</span>
-    <h1>A proteção que <em>brilha</em> como sua jóia.</h1>
-    <p>Skins e capinhas facetadas à mão, inspiradas no corte de pedras preciosas.</p>
-    <a href="#vitrine" class="btn">Ver coleção</a>
+<div class="linha-hero">
+  <a href="index.html" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+    Voltar
+  </a>
+  <div class="linha-intro">
+    <span class="eyebrow" style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block;">Cases — Linha</span>
+    <h1>Cuir <em>Suprême</em></h1>
+    <p>Couro legítimo com acabamento liso, em cinco cores. Escolha a sua e veja os modelos de iPhone disponíveis.</p>
   </div>
 </div>
 
-<section class="section" id="vitrine">
-  <div class="section-head"><h2>Mais procurados</h2><a href="#">Ver tudo →</a></div>
-  <div class="grid">
+<section class="section" id="produtos-linha">
+  <div class="section-head"><h2>Cores disponíveis</h2></div>
+  <div class="grid" id="linhaGrid">
     <article class="card">
-      <div class="card-visual tone-gelo"></div>
-      <div class="card-info"><p class="card-name">Skin Cristallo — iPhone 16 Pro</p><p class="card-price">R$ 249</p></div>
+      <button class="card-visual color-card" style="background:#EFF1EC;" data-open-product="17" data-color-idx="0">
+        <img src="cuir-supreme-verde-militar.png" alt="Verde Militar" style="width:100%;height:100%;object-fit:contain;">
+      </button>
+      <div class="card-info">
+        <p class="card-name">Cuir Suprême — Verde Militar</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot active" style="background:#4B5A3A;"></span>
+          <span class="color-dot" style="background:#8A5A2E;"></span>
+          <span class="color-dot" style="background:#C98A7A;"></span>
+          <span class="color-dot" style="background:#5B2A73;"></span>
+          <span class="color-dot" style="background:#9ACD32;"></span>
+        </div>
+      </div>
     </article>
     <article class="card">
-      <div class="card-visual tone-onix"></div>
-      <div class="card-info"><p class="card-name">Capa Facetada — iPhone 16</p><p class="card-price">R$ 319</p></div>
+      <button class="card-visual color-card" style="background:#EFF1EC;" data-open-product="17" data-color-idx="1">
+        <img src="cuir-supreme-caramelo.png" alt="Caramelo" style="width:100%;height:100%;object-fit:contain;">
+      </button>
+      <div class="card-info">
+        <p class="card-name">Cuir Suprême — Caramelo</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot" style="background:#4B5A3A;"></span>
+          <span class="color-dot active" style="background:#8A5A2E;"></span>
+          <span class="color-dot" style="background:#C98A7A;"></span>
+          <span class="color-dot" style="background:#5B2A73;"></span>
+          <span class="color-dot" style="background:#9ACD32;"></span>
+        </div>
+      </div>
     </article>
     <article class="card">
-      <div class="card-visual tone-champagne"></div>
-      <div class="card-info"><p class="card-name">Corrente Prisma</p><p class="card-price">R$ 189</p></div>
+      <button class="card-visual color-card" style="background:#EFF1EC;" data-open-product="17" data-color-idx="2">
+        <img src="cuir-supreme-rose.png" alt="Rosé" style="width:100%;height:100%;object-fit:contain;">
+      </button>
+      <div class="card-info">
+        <p class="card-name">Cuir Suprême — Rosé</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot" style="background:#4B5A3A;"></span>
+          <span class="color-dot" style="background:#8A5A2E;"></span>
+          <span class="color-dot active" style="background:#C98A7A;"></span>
+          <span class="color-dot" style="background:#5B2A73;"></span>
+          <span class="color-dot" style="background:#9ACD32;"></span>
+        </div>
+      </div>
     </article>
     <article class="card">
-      <div class="card-visual tone-gelo"></div>
-      <div class="card-info"><p class="card-name">Skin Cristallo — iPhone 15</p><p class="card-price">R$ 229</p></div>
+      <button class="card-visual color-card" style="background:#EFF1EC;" data-open-product="17" data-color-idx="3">
+        <img src="cuir-supreme-roxo.png" alt="Roxo" style="width:100%;height:100%;object-fit:contain;">
+      </button>
+      <div class="card-info">
+        <p class="card-name">Cuir Suprême — Roxo</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot" style="background:#4B5A3A;"></span>
+          <span class="color-dot" style="background:#8A5A2E;"></span>
+          <span class="color-dot" style="background:#C98A7A;"></span>
+          <span class="color-dot active" style="background:#5B2A73;"></span>
+          <span class="color-dot" style="background:#9ACD32;"></span>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <button class="card-visual color-card" style="background:#EFF1EC;" data-open-product="17" data-color-idx="4">
+        <img src="cuir-supreme-limao.png" alt="Verde Limão" style="width:100%;height:100%;object-fit:contain;">
+      </button>
+      <div class="card-info">
+        <p class="card-name">Cuir Suprême — Verde Limão</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot" style="background:#4B5A3A;"></span>
+          <span class="color-dot" style="background:#8A5A2E;"></span>
+          <span class="color-dot" style="background:#C98A7A;"></span>
+          <span class="color-dot" style="background:#5B2A73;"></span>
+          <span class="color-dot active" style="background:#9ACD32;"></span>
+        </div>
+      </div>
+    </article>
+    <article class="card card-placeholder" style="opacity:0.7;">
+      <div class="card-visual" style="background:#EEEFEA;display:flex;align-items:center;justify-content:center;">
+        <span style="color:var(--muted);font-size:12px;">Em breve</span>
+      </div>
+      <div class="card-info"><p class="card-name">Novas cores em produção</p></div>
     </article>
   </div>
+  <p style="color:var(--muted);font-size:13px;margin-top:18px;">Toque numa cor pra ver os modelos de iPhone disponíveis. Mostrando iPhone 17 por padrão — escolha outro modelo pelo menu.</p>
 </section>
 
 <footer>
@@ -489,7 +453,6 @@
   </nav>
   <div class="footer-bottom"><span>© 2026 Senza Pari Atelier</span><span>Recife, Brasil</span></div>
 </footer>
-
 <!-- MENU OVERLAY -->
 <div class="menu-overlay" id="menuOverlay">
   <div class="overlay-top">
@@ -856,7 +819,6 @@
     </div>
   </div>
 </div>
-
 <!-- LOGO TRANSITION SPLASH -->
 <div class="splash" id="splash"><span>SENZA PARI</span></div>
 
@@ -916,36 +878,11 @@
     });
   });
 
-  // Hero: garante que o vídeo sempre tente tocar em loop, mesmo se o autoplay inicial for bloqueado
-  const heroVideo = $('#heroVideo');
-  if (heroVideo) {
-    heroVideo.muted = true;
-    const tryPlay = () => heroVideo.play().catch(() => {});
-    tryPlay();
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) tryPlay(); });
-
-    $('#soundBtn').addEventListener('click', () => {
-      heroVideo.muted = !heroVideo.muted;
-      $('#soundBtn').classList.toggle('on', !heroVideo.muted);
-      tryPlay();
-    });
-  }
-
-  // Bottom swipe gallery arrows
-  const rail = $('#swipeRail');
-  const cardWidth = () => rail.querySelector('.swipe-card').offsetWidth + 10;
-  $('#swipeNext').addEventListener('click', () => rail.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
-  $('#swipePrev').addEventListener('click', () => rail.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
-
-  // Logo click → splash transition → back to top / close overlays
+  // Logo click → splash transition → volta pra home
   function goHome(){
     const splash = $('#splash');
     splash.classList.add('show');
-    $('#menuOverlay').classList.remove('open');
-    closeSearch();
-    resetPanes();
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    setTimeout(() => splash.classList.remove('show'), 850);
+    setTimeout(() => { window.location.href = 'index.html'; }, 700);
   }
   $('#logoBtn').addEventListener('click', goHome);
   $('#logoBtnMenu').addEventListener('click', goHome);
