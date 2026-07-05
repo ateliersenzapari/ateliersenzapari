@@ -273,8 +273,8 @@
   }
   .collection-intro h1 em{ font-style:italic; color:var(--sage-deep); }
   .collection-intro p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:50ch; }
-  .card-placeholder{ opacity:0.7; }
   .card-tag{ font-size:11px; letter-spacing:0.04em; text-transform:uppercase; color:var(--sage-deep); font-weight:600; }
+  .grid-uniform .card-visual{ aspect-ratio:3/4; border:1px solid var(--line); }
   /* ================= PRODUCT QUICK VIEW ================= */
   .product-overlay{
     position:fixed; inset:0; z-index:110; background:rgba(10,10,8,0.4);
@@ -445,9 +445,9 @@
 
 <section class="section" id="produtos-colecao">
   <div class="section-head"><h2>Peças da coleção</h2></div>
-  <div class="grid" id="collectionGrid">
+  <div class="grid grid-uniform" id="collectionGrid">
     <article class="card">
-      <div class="card-visual" style="aspect-ratio:490/950;background-image:url('lor-phenomenal-case-preto.jpg');background-size:cover;background-position:center;"></div>
+      <div class="card-visual" style="background-color:var(--panel);background-image:url('lor-phenomenal-case-preto.jpg');background-size:contain;background-repeat:no-repeat;background-position:center;"></div>
       <div class="card-info">
         <span class="card-tag">Couro de crocodilo</span>
         <p class="card-name">Case iPhone — Preto & Ouro</p>
@@ -455,7 +455,7 @@
       </div>
     </article>
     <article class="card">
-      <div class="card-visual" style="aspect-ratio:645/1300;background-image:url('lor-phenomenal-case-ouro-total.jpg');background-size:cover;background-position:center;"></div>
+      <div class="card-visual" style="background-color:var(--panel);background-image:url('lor-phenomenal-case-ouro-total.jpg');background-size:contain;background-repeat:no-repeat;background-position:center;"></div>
       <div class="card-info">
         <span class="card-tag">Couro de crocodilo</span>
         <p class="card-name">Case iPhone — Ouro Total</p>
@@ -463,7 +463,7 @@
       </div>
     </article>
     <article class="card">
-      <div class="card-visual" style="aspect-ratio:4/3;background-image:url('lor-phenomenal-watchband.jpg');background-size:cover;background-position:center;"></div>
+      <div class="card-visual" style="background-color:var(--panel);background-image:url('lor-phenomenal-watchband.jpg');background-size:contain;background-repeat:no-repeat;background-position:center;"></div>
       <div class="card-info">
         <span class="card-tag">Apple Watch Ultra</span>
         <p class="card-name">Watch Band — Preto & Ouro</p>
@@ -471,7 +471,7 @@
       </div>
     </article>
     <article class="card">
-      <div class="card-visual" style="aspect-ratio:4/3;background-image:url('lor-phenomenal-airpods.jpg');background-size:cover;background-position:center;"></div>
+      <div class="card-visual" style="background-color:var(--panel);background-image:url('lor-phenomenal-airpods.jpg');background-size:contain;background-repeat:no-repeat;background-position:center;"></div>
       <div class="card-info">
         <span class="card-tag">Couro de crocodilo</span>
         <p class="card-name">AirPods — Preto & Ouro</p>
@@ -479,18 +479,20 @@
       </div>
     </article>
     <article class="card">
-      <div class="card-visual" style="aspect-ratio:1360/900;background-image:url('lor-phenomenal-airtag.jpg');background-size:cover;background-position:center;"></div>
+      <div class="card-visual" style="background-color:var(--panel);background-image:url('lor-phenomenal-airtag.jpg');background-size:contain;background-repeat:no-repeat;background-position:center;"></div>
       <div class="card-info">
         <span class="card-tag">Couro de crocodilo</span>
         <p class="card-name">AirTag — Preto & Ouro</p>
         <p class="card-price">Sob consulta</p>
       </div>
     </article>
-    <article class="card card-placeholder">
-      <div class="card-visual" style="background:#EEEFEA;display:flex;align-items:center;justify-content:center;">
-        <span style="color:var(--muted);font-size:12px;">Em breve</span>
+    <article class="card">
+      <div class="card-visual" style="background-color:var(--panel);background-image:url('lor-phenomenal-wallet.jpg');background-size:contain;background-repeat:no-repeat;background-position:center;"></div>
+      <div class="card-info">
+        <span class="card-tag">Couro de crocodilo</span>
+        <p class="card-name">Wallet — Preto & Ouro</p>
+        <p class="card-price">Sob consulta</p>
       </div>
-      <div class="card-info"><p class="card-name">Peça em produção</p></div>
     </article>
   </div>
   <p style="color:var(--muted);font-size:13px;margin-top:18px;">Novas peças desta coleção sendo adicionadas em breve.</p>
@@ -543,7 +545,7 @@
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
-      <a class="menu-row" href="#">
+      <a class="menu-row" href="colecao-lor-phenomenal.html">
         <span class="menu-row-main">
           <img class="menu-row-thumb" src="thumb-wallet.png" alt="Wallets">
           <span class="menu-row-text">
@@ -1070,6 +1072,7 @@
     { name:"Watch Band", sub:"Preto & Ouro", img:"lor-phenomenal-watchband.jpg" },
     { name:"AirPods", sub:"Preto & Ouro", img:"lor-phenomenal-airpods.jpg" },
     { name:"AirTag", sub:"Preto & Ouro", img:"lor-phenomenal-airtag.jpg" },
+    { name:"Wallet", sub:"Preto & Ouro", img:"lor-phenomenal-wallet.jpg" },
     { name:"Case iPhone", sub:"Ouro Total", img:"lor-phenomenal-case-ouro-total.jpg" },
   ];
   let currentProduct = null;
