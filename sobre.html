@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SENZA PARI — Atelier di Cristallo</title>
+<title>Sobre o Atelier — SENZA PARI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -257,6 +257,8 @@
     .swipe-card{ flex:0 0 32%; }
     .menu-pane{ max-width:420px; }
   }
+  .back-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); font-weight:600; }
+  .back-link svg{ width:14px; height:14px; stroke:var(--muted); }
 </style>
 </head>
 <body>
@@ -287,75 +289,22 @@
   </div>
 </header>
 
-<div class="hero-wrap">
-  <div class="hero-visual" id="heroVisual">
-    <video class="hero-video" id="heroVideo" src="hero-video.mp4" autoplay muted loop playsinline preload="auto" webkit-playsinline="true"></video>
-    <button class="hero-sound-btn" id="soundBtn" aria-label="Ativar som">
-      <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
-      <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 6a9 9 0 010 12"/></svg>
-    </button>
+
+<section class="section" style="max-width:720px;">
+  <div class="collection-back" style="padding:0 0 20px;">
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+      Voltar
+    </a>
   </div>
-
-  <section class="swipe-gallery">
-    <h2 class="swipe-title">Coleções</h2>
-    <div class="swipe-rail" id="swipeRail">
-      <a class="swipe-card sc-1" href="colecao-lor-phenomenal.html">
-        <span class="swipe-card-img" style="background-image:url('collection-lor-phenomenal.jpg');background-size:cover;background-position:center;"></span>
-        <span class="swipe-card-text">
-          <span class="swipe-card-name">L'Or Phénoménal</span>
-          <span class="swipe-card-sub">Couro de crocodilo dourado</span>
-        </span>
-      </a>
-      <a class="swipe-card sc-blank">
-        <span class="swipe-card-img"></span>
-        <span class="swipe-card-text">
-          <span class="swipe-card-name">Em breve</span>
-        </span>
-      </a>
-      <a class="swipe-card sc-blank">
-        <span class="swipe-card-img"></span>
-        <span class="swipe-card-text">
-          <span class="swipe-card-name">Em breve</span>
-        </span>
-      </a>
-    </div>
-    <div class="swipe-arrows">
-      <button class="swipe-arrow" id="swipePrev" aria-label="Anterior">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button class="swipe-arrow" id="swipeNext" aria-label="Próximo">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-    </div>
-  </section>
-
-  <div class="hero-text">
-    <span class="eyebrow">Atelier de Lumière</span>
-    <h1>A proteção que <em>brilha</em> como sua jóia.</h1>
-    <p>Skins e capinhas facetadas à mão, inspiradas no corte de pedras preciosas.</p>
-    <a href="#vitrine" class="btn">Ver coleção</a>
-  </div>
-</div>
-
-<section class="section" id="vitrine">
-  <div class="section-head"><h2>Mais procurados</h2><a href="#">Ver tudo →</a></div>
-  <div class="grid">
-    <article class="card">
-      <div class="card-visual tone-gelo"></div>
-      <div class="card-info"><p class="card-name">Skin Cristallo — iPhone 16 Pro</p><p class="card-price">R$ 249</p></div>
-    </article>
-    <article class="card">
-      <div class="card-visual tone-onix"></div>
-      <div class="card-info"><p class="card-name">Capa Facetada — iPhone 16</p><p class="card-price">R$ 319</p></div>
-    </article>
-    <article class="card">
-      <div class="card-visual tone-champagne"></div>
-      <div class="card-info"><p class="card-name">Corrente Prisma</p><p class="card-price">R$ 189</p></div>
-    </article>
-    <article class="card">
-      <div class="card-visual tone-gelo"></div>
-      <div class="card-info"><p class="card-name">Skin Cristallo — iPhone 15</p><p class="card-price">R$ 229</p></div>
-    </article>
+  <span class="eyebrow">Sobre nós</span>
+  <h1 style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(28px,7vw,42px);margin:14px 0 24px;line-height:1.15;">
+    Atelier di <em style="font-style:italic;color:var(--sage-deep);">Cristallo</em>
+  </h1>
+  <div style="color:var(--muted);font-size:15px;line-height:1.8;">
+    <p style="margin-bottom:18px;">A SENZA PARI nasce do encontro entre a joalheria e a tecnologia. Cada peça é desenhada para quem entende que os detalhes fazem a diferença — onde a proteção do seu iPhone se torna também uma expressão de estilo.</p>
+    <p style="margin-bottom:18px;">Trabalhamos com couro de crocodilo em alto relevo, acabamentos facetados inspirados no corte de pedras preciosas, e detalhes banhados a ouro — tudo produzido de forma artesanal, peça a peça.</p>
+    <p style="margin-bottom:18px;">Sediados no Recife, Brasil, unimos referências internacionais de luxo a uma produção cuidadosa e exclusiva, para clientes que buscam algo verdadeiramente sem igual — Senza Pari.</p>
   </div>
 </section>
 
@@ -369,7 +318,6 @@
   </nav>
   <div class="footer-bottom"><span>© 2026 Senza Pari Atelier</span><span>Recife, Brasil</span></div>
 </footer>
-
 <!-- MENU OVERLAY -->
 <div class="menu-overlay" id="menuOverlay">
   <div class="overlay-top">
@@ -567,21 +515,19 @@
     });
   }
 
-  // Bottom swipe gallery arrows
+  // Bottom swipe gallery arrows (se existir nesta página)
   const rail = $('#swipeRail');
-  const cardWidth = () => rail.querySelector('.swipe-card').offsetWidth + 10;
-  $('#swipeNext').addEventListener('click', () => rail.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
-  $('#swipePrev').addEventListener('click', () => rail.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
+  if (rail) {
+    const cardWidth = () => rail.querySelector('.swipe-card').offsetWidth + 10;
+    $('#swipeNext').addEventListener('click', () => rail.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
+    $('#swipePrev').addEventListener('click', () => rail.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
+  }
 
   // Logo click → splash transition → back to top / close overlays
   function goHome(){
     const splash = $('#splash');
     splash.classList.add('show');
-    $('#menuOverlay').classList.remove('open');
-    closeSearch();
-    resetPanes();
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    setTimeout(() => splash.classList.remove('show'), 850);
+    setTimeout(() => { window.location.href = 'index.html'; }, 700);
   }
   $('#logoBtn').addEventListener('click', goHome);
   $('#logoBtnMenu').addEventListener('click', goHome);
