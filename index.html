@@ -195,6 +195,9 @@
   .menu-pane.pane-sub{ transform:translateX(100%); z-index:2; }
   .menu-pane.pane-sub.active{ transform:translateX(0); }
   .menu-pane.pane-main.pushed{ transform:translateX(-100%); }
+  .menu-pane.pane-subsub{ transform:translateX(100%); z-index:3; }
+  .menu-pane.pane-subsub.active{ transform:translateX(0); }
+  .menu-pane.pane-sub.pushed{ transform:translateX(-100%); }
 
   .menu-row{
     display:flex; align-items:center; justify-content:space-between;
@@ -451,7 +454,35 @@
         <button class="back-btn" data-back>
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Cases — iPhone</span>
+        <span class="sub-title">Cases — Linhas</span>
+      </div>
+      <button class="menu-row" data-open-subsub="paneCasesCuir">
+        <span class="menu-row-main">
+          <span class="menu-row-text">
+            <span class="label">Cuir Suprême</span>
+            <span class="sub">Couro de crocodilo</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-subsub="paneCasesMetal">
+        <span class="menu-row-main">
+          <span class="menu-row-text">
+            <span class="label">Metal</span>
+            <span class="sub">Alumínio aeroespacial</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <a class="menu-row shop-all" href="#">Ver todas as Cases</a>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneCasesCuir">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneCases">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Cuir Suprême — iPhone</span>
       </div>
       <a class="menu-row" href="#"><span class="label">iPhone 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
@@ -462,7 +493,26 @@
       <a class="menu-row" href="#"><span class="label">iPhone 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
-      <a class="menu-row shop-all" href="#">Ver todas as Cases</a>
+      <a class="menu-row shop-all" href="#">Ver todas — Cuir Suprême</a>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneCasesMetal">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneCases">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Metal — iPhone</span>
+      </div>
+      <a class="menu-row" href="#"><span class="label">iPhone 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#"><span class="label">iPhone 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#"><span class="label">iPhone 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row shop-all" href="#">Ver todas — Metal</a>
     </div>
 
     <div class="menu-pane pane-sub" id="paneWatchbands">
@@ -532,7 +582,8 @@
 
   function resetPanes(){
     $('#paneMain').classList.remove('pushed');
-    document.querySelectorAll('.menu-pane.pane-sub').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.menu-pane.pane-sub').forEach(p => { p.classList.remove('active'); p.classList.remove('pushed'); });
+    document.querySelectorAll('.menu-pane.pane-subsub').forEach(p => p.classList.remove('active'));
     $('#menuOverlay').classList.remove('sub-open');
   }
 
@@ -544,8 +595,23 @@
       $('#menuOverlay').classList.add('sub-open');
     });
   });
+  document.querySelectorAll('[data-open-subsub]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const parentPane = btn.closest('.menu-pane.pane-sub');
+      if (parentPane) parentPane.classList.add('pushed');
+      $('#' + btn.dataset.openSubsub).classList.add('active');
+    });
+  });
   document.querySelectorAll('[data-back]').forEach(btn => {
     btn.addEventListener('click', () => resetPanes());
+  });
+  document.querySelectorAll('[data-back-to]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const subsub = btn.closest('.menu-pane.pane-subsub');
+      if (subsub) subsub.classList.remove('active');
+      const parent = document.getElementById(btn.dataset.backTo);
+      if (parent) parent.classList.remove('pushed');
+    });
   });
 
   // Hero: garante que o vídeo sempre tente tocar em loop, mesmo se o autoplay inicial for bloqueado
