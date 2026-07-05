@@ -158,9 +158,10 @@
   .swipe-card-text{ padding:10px 14px 14px; }
   .swipe-card-name{ font-size:14px; font-weight:700; margin-bottom:2px; }
   .swipe-card-sub{ font-size:12px; color:var(--muted); }
-  .sc-1 .swipe-card-img{ background:linear-gradient(150deg,#E7ECE3,#C7D2C1 75%); }
-  .sc-2 .swipe-card-img{ background:linear-gradient(150deg,#2E3230,#181A19 75%); }
-  .sc-3 .swipe-card-img{ background:linear-gradient(150deg,#EFE4CF,#CBB98F 75%); }
+  .sc-1 .swipe-card-img{ background:linear-gradient(150deg,#3a2f1a,#0f0d09 45%,#5c4a22 100%); }
+  .sc-blank .swipe-card-img{ background:#EEEFEA; }
+  .sc-blank .swipe-card-name{ color:var(--muted); font-weight:600; }
+  .sc-blank{ opacity:0.6; }
   .swipe-arrows{ display:flex; gap:8px; justify-content:flex-end; padding:12px 20px 0; }
   .swipe-arrow{
     width:32px; height:32px; border-radius:50%; border:1px solid var(--line);
@@ -296,27 +297,25 @@
   </div>
 
   <section class="swipe-gallery">
-    <h2 class="swipe-title">Peças que você vai amar</h2>
+    <h2 class="swipe-title">Coleções</h2>
     <div class="swipe-rail" id="swipeRail">
       <a class="swipe-card sc-1">
         <span class="swipe-card-img"></span>
         <span class="swipe-card-text">
-          <span class="swipe-card-name">Cristallo Gelo</span>
-          <span class="swipe-card-sub">Acabamento espelhado</span>
+          <span class="swipe-card-name">L'Or Phénoménal</span>
+          <span class="swipe-card-sub">Couro de crocodilo dourado</span>
         </span>
       </a>
-      <a class="swipe-card sc-2">
+      <a class="swipe-card sc-blank">
         <span class="swipe-card-img"></span>
         <span class="swipe-card-text">
-          <span class="swipe-card-name">Cristallo Ônix</span>
-          <span class="swipe-card-sub">Preto profundo facetado</span>
+          <span class="swipe-card-name">Em breve</span>
         </span>
       </a>
-      <a class="swipe-card sc-3">
+      <a class="swipe-card sc-blank">
         <span class="swipe-card-img"></span>
         <span class="swipe-card-text">
-          <span class="swipe-card-name">Cristallo Safira</span>
-          <span class="swipe-card-sub">Tons dourados</span>
+          <span class="swipe-card-name">Em breve</span>
         </span>
       </a>
     </div>
@@ -331,7 +330,7 @@
   </section>
 
   <div class="hero-text">
-    <span class="eyebrow">Coleção Cristallo</span>
+    <span class="eyebrow">Atelier de Lumière</span>
     <h1>A proteção que <em>brilha</em> como sua jóia.</h1>
     <p>Skins e capinhas facetadas à mão, inspiradas no corte de pedras preciosas.</p>
     <a href="#vitrine" class="btn">Ver coleção</a>
