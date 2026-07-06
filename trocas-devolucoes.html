@@ -75,12 +75,23 @@
     transition:max-height 0.32s cubic-bezier(.4,0,.2,1);
   }
   .search-panel.open{ max-height:86px; }
+  .search-panel.open.has-results{ max-height:70vh; overflow-y:auto; }
   .search-field{
     margin:14px 18px 16px; display:flex; align-items:center; gap:10px;
     background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;
   }
   .search-field input{ border:none; outline:none; flex:1; font-size:15px; background:none; color:var(--ink); font-family:inherit; }
   .search-field svg{ width:18px; height:18px; stroke:var(--muted); flex:0 0 auto; }
+  .search-results{ padding:0 18px 18px; display:flex; flex-direction:column; gap:8px; }
+  .search-result-row{
+    display:flex; align-items:center; justify-content:space-between; width:100%;
+    padding:13px 16px; background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    text-align:left; font-family:inherit;
+  }
+  .search-result-row .label{ font-size:14px; font-weight:600; color:var(--ink); }
+  .search-result-row .sub{ font-size:12px; color:var(--muted); margin-top:2px; }
+  .search-result-row svg{ width:15px; height:15px; stroke:var(--muted); flex:0 0 auto; }
+  .search-empty{ padding:0 18px 18px; font-size:13px; color:var(--muted); }
 
   /* ---------- SECTIONS ---------- */
   .section{ max-width:1200px; margin:0 auto; padding:44px 20px; }
@@ -321,6 +332,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       <input type="text" placeholder="Buscar produtos..." id="searchInput">
     </div>
+    <div class="search-results" id="searchResults"></div>
   </div>
 </header>
 
@@ -402,7 +414,7 @@
           <img class="menu-row-thumb" src="thumb-case.png" alt="Cases">
           <span class="menu-row-text">
             <span class="label">Cases</span>
-            <span class="sub">iPhone 15 & Mais</span>
+            <span class="sub">Série 15 & Mais</span>
           </span>
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
@@ -542,15 +554,15 @@
         <button class="back-btn" data-back-to="paneCases">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Cuir Suprême — iPhone</span>
+        <span class="sub-title">Cuir Suprême — Série</span>
       </div>
-      <button class="menu-row" data-open-product="17" data-linha="cuir-supreme"><span class="label">iPhone 17</span>
+      <button class="menu-row" data-open-product="17" data-linha="cuir-supreme"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="16" data-linha="cuir-supreme"><span class="label">iPhone 16</span>
+      <button class="menu-row" data-open-product="16" data-linha="cuir-supreme"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="15" data-linha="cuir-supreme"><span class="label">iPhone 15</span>
+      <button class="menu-row" data-open-product="15" data-linha="cuir-supreme"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <a class="menu-row shop-all" href="linha-cuir-supreme.html">Ver todas — Cuir Suprême</a>
@@ -561,15 +573,15 @@
         <button class="back-btn" data-back-to="paneCases">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Metal — iPhone</span>
+        <span class="sub-title">Metal — Série</span>
       </div>
-      <button class="menu-row" data-open-product="17" data-linha="metal"><span class="label">iPhone 17</span>
+      <button class="menu-row" data-open-product="17" data-linha="metal"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="16" data-linha="metal"><span class="label">iPhone 16</span>
+      <button class="menu-row" data-open-product="16" data-linha="metal"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="15" data-linha="metal"><span class="label">iPhone 15</span>
+      <button class="menu-row" data-open-product="15" data-linha="metal"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="menu-row shop-all" data-open-product="17" data-linha="metal">Ver todas — Metal</button>
@@ -579,15 +591,15 @@
         <button class="back-btn" data-back-to="paneCases">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Super Finas — iPhone</span>
+        <span class="sub-title">Super Finas — Série</span>
       </div>
-      <a class="menu-row" href="#"><span class="label">iPhone 17</span>
+      <a class="menu-row" href="#"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
-      <a class="menu-row" href="#"><span class="label">iPhone 16</span>
+      <a class="menu-row" href="#"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
-      <a class="menu-row" href="#"><span class="label">iPhone 15</span>
+      <a class="menu-row" href="#"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
       <a class="menu-row shop-all" href="#">Ver todas — Super Finas</a>
@@ -597,15 +609,15 @@
         <button class="back-btn" data-back-to="paneCases">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Transparentes — iPhone</span>
+        <span class="sub-title">Transparentes — Série</span>
       </div>
-      <button class="menu-row" data-open-product="17" data-linha="transparente"><span class="label">iPhone 17</span>
+      <button class="menu-row" data-open-product="17" data-linha="transparente"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="16" data-linha="transparente"><span class="label">iPhone 16</span>
+      <button class="menu-row" data-open-product="16" data-linha="transparente"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="15" data-linha="transparente"><span class="label">iPhone 15</span>
+      <button class="menu-row" data-open-product="15" data-linha="transparente"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="menu-row shop-all" data-open-product="17" data-linha="transparente">Ver todas — Transparentes</button>
@@ -615,15 +627,15 @@
         <button class="back-btn" data-back-to="paneCases">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Tecido — iPhone</span>
+        <span class="sub-title">Tecido — Série</span>
       </div>
-      <a class="menu-row" href="#"><span class="label">iPhone 17</span>
+      <a class="menu-row" href="#"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
-      <a class="menu-row" href="#"><span class="label">iPhone 16</span>
+      <a class="menu-row" href="#"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
-      <a class="menu-row" href="#"><span class="label">iPhone 15</span>
+      <a class="menu-row" href="#"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
       <a class="menu-row shop-all" href="#">Ver todas — Tecido</a>
@@ -633,15 +645,15 @@
         <button class="back-btn" data-back-to="paneCases">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Metal & Madeira — iPhone</span>
+        <span class="sub-title">Metal & Madeira — Série</span>
       </div>
-      <button class="menu-row" data-open-product="17" data-linha="madeira"><span class="label">iPhone 17</span>
+      <button class="menu-row" data-open-product="17" data-linha="madeira"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="16" data-linha="madeira"><span class="label">iPhone 16</span>
+      <button class="menu-row" data-open-product="16" data-linha="madeira"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="15" data-linha="madeira"><span class="label">iPhone 15</span>
+      <button class="menu-row" data-open-product="15" data-linha="madeira"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="menu-row shop-all" data-open-product="17" data-linha="madeira">Ver todas — Metal & Madeira</button>
@@ -652,15 +664,15 @@
         <button class="back-btn" data-back-to="paneCases">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Mármore — iPhone</span>
+        <span class="sub-title">Mármore — Série</span>
       </div>
-      <button class="menu-row" data-open-product="17" data-linha="marmore"><span class="label">iPhone 17</span>
+      <button class="menu-row" data-open-product="17" data-linha="marmore"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="16" data-linha="marmore"><span class="label">iPhone 16</span>
+      <button class="menu-row" data-open-product="16" data-linha="marmore"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="15" data-linha="marmore"><span class="label">iPhone 15</span>
+      <button class="menu-row" data-open-product="15" data-linha="marmore"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="menu-row shop-all" data-open-product="17" data-linha="marmore">Ver todas — Mármore</button>
@@ -720,15 +732,15 @@
         <button class="back-btn" data-back-to="paneSkins">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Rosa Quartz — iPhone</span>
+        <span class="sub-title">Rosa Quartz — Série</span>
       </div>
-      <button class="menu-row" data-open-product="17" data-linha="skin-rosa-quartz"><span class="label">iPhone 17</span>
+      <button class="menu-row" data-open-product="17" data-linha="skin-rosa-quartz"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="16" data-linha="skin-rosa-quartz"><span class="label">iPhone 16</span>
+      <button class="menu-row" data-open-product="16" data-linha="skin-rosa-quartz"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="15" data-linha="skin-rosa-quartz"><span class="label">iPhone 15</span>
+      <button class="menu-row" data-open-product="15" data-linha="skin-rosa-quartz"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="menu-row shop-all" data-open-product="17" data-linha="skin-rosa-quartz">Ver todas — Rosa Quartz</button>
@@ -739,15 +751,15 @@
         <button class="back-btn" data-back-to="paneSkins">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Preto Mármore — iPhone</span>
+        <span class="sub-title">Preto Mármore — Série</span>
       </div>
-      <button class="menu-row" data-open-product="17" data-linha="skin-preto-marmore"><span class="label">iPhone 17</span>
+      <button class="menu-row" data-open-product="17" data-linha="skin-preto-marmore"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="16" data-linha="skin-preto-marmore"><span class="label">iPhone 16</span>
+      <button class="menu-row" data-open-product="16" data-linha="skin-preto-marmore"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="15" data-linha="skin-preto-marmore"><span class="label">iPhone 15</span>
+      <button class="menu-row" data-open-product="15" data-linha="skin-preto-marmore"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="menu-row shop-all" data-open-product="17" data-linha="skin-preto-marmore">Ver todas — Preto Mármore</button>
@@ -758,15 +770,15 @@
         <button class="back-btn" data-back-to="paneSkins">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Mármore Green — iPhone</span>
+        <span class="sub-title">Mármore Green — Série</span>
       </div>
-      <button class="menu-row" data-open-product="17" data-linha="skin-marmore-green"><span class="label">iPhone 17</span>
+      <button class="menu-row" data-open-product="17" data-linha="skin-marmore-green"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="16" data-linha="skin-marmore-green"><span class="label">iPhone 16</span>
+      <button class="menu-row" data-open-product="16" data-linha="skin-marmore-green"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="15" data-linha="skin-marmore-green"><span class="label">iPhone 15</span>
+      <button class="menu-row" data-open-product="15" data-linha="skin-marmore-green"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="menu-row shop-all" data-open-product="17" data-linha="skin-marmore-green">Ver todas — Mármore Green</button>
@@ -777,15 +789,15 @@
         <button class="back-btn" data-back-to="paneSkins">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Gold Escovado — iPhone</span>
+        <span class="sub-title">Gold Escovado — Série</span>
       </div>
-      <button class="menu-row" data-open-product="17" data-linha="skin-gold-escovado"><span class="label">iPhone 17</span>
+      <button class="menu-row" data-open-product="17" data-linha="skin-gold-escovado"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="16" data-linha="skin-gold-escovado"><span class="label">iPhone 16</span>
+      <button class="menu-row" data-open-product="16" data-linha="skin-gold-escovado"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="15" data-linha="skin-gold-escovado"><span class="label">iPhone 15</span>
+      <button class="menu-row" data-open-product="15" data-linha="skin-gold-escovado"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="menu-row shop-all" data-open-product="17" data-linha="skin-gold-escovado">Ver todas — Gold Escovado</button>
@@ -918,10 +930,14 @@
   }
   function closeSearch(){
     $('#searchPanel').classList.remove('open');
+    $('#searchPanel').classList.remove('has-results');
+    $('#searchInput').value = '';
+    $('#searchResults').innerHTML = '';
   }
   $('#searchBtn').addEventListener('click', () => {
     $('#searchPanel').classList.contains('open') ? closeSearch() : openSearch();
   });
+  $('#searchInput').addEventListener('input', (e) => renderSearchResults(e.target.value));
 
   // Menu overlay
   $('#menuBtn').addEventListener('click', () => $('#menuOverlay').classList.add('open'));
@@ -1164,6 +1180,67 @@
       ],
     },
   };
+
+  function normalizeSearch(str){
+    return str.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+  }
+
+  const SEARCH_SYNONYMS = {
+    'cuir-supreme': 'couro crocodilo',
+    'metal': 'aluminio aeroespacial',
+    'madeira': 'madeira nobre nogueira',
+    'transparente': 'cristal transparente invisivel',
+    'marmore': 'marmore preto dourado veios',
+    'skin-rosa-quartz': 'rosa quartzo fosco',
+    'skin-preto-marmore': 'marmore preto dourado',
+    'skin-marmore-green': 'marmore verde esmeralda',
+    'skin-gold-escovado': 'gold dourado escovado',
+  };
+  const SEARCH_INDEX = [
+    ...Object.entries(LINES).map(([key, data]) => ({
+      label: data.label,
+      sub: data.kind === 'skin' ? 'Skin' : 'Case',
+      keywords: normalizeSearch(`${data.label} ${data.kind === 'skin' ? 'skin' : 'case capinha'} ${key} ${SEARCH_SYNONYMS[key] || ''}`),
+      action: () => { closeSearch(); openProduct(key, '17', 0); },
+    })),
+    { label: "L'Or Phénoménal", sub: 'Coleção', keywords: normalizeSearch("lor phenomenal colecao ouro"), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
+    { label: 'Watch Band', sub: 'Acessório', keywords: normalizeSearch('watch band pulseira apple watch'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
+    { label: 'AirPods', sub: 'Acessório', keywords: normalizeSearch('airpods estojo fone'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
+    { label: 'AirTag', sub: 'Acessório', keywords: normalizeSearch('airtag chaveiro'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
+    { label: 'Wallet', sub: 'Acessório', keywords: normalizeSearch('wallet carteira magsafe porta cartao'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
+    { label: 'Sobre', sub: 'Página', keywords: normalizeSearch('sobre historia atelier senza pari'), action: () => { location.href = 'sobre.html'; } },
+    { label: 'Contato', sub: 'Página', keywords: normalizeSearch('contato whatsapp fale conosco'), action: () => { location.href = 'contato.html'; } },
+    { label: 'Trocas e Devoluções', sub: 'Página', keywords: normalizeSearch('trocas devolucoes politica garantia'), action: () => { location.href = 'trocas-devolucoes.html'; } },
+  ];
+
+  function renderSearchResults(query){
+    const panel = $('#searchPanel');
+    const resultsEl = $('#searchResults');
+    const q = normalizeSearch(query);
+    if (!q){
+      panel.classList.remove('has-results');
+      resultsEl.innerHTML = '';
+      return;
+    }
+    const matches = SEARCH_INDEX.filter(item => item.keywords.includes(q));
+    panel.classList.add('has-results');
+    if (matches.length === 0){
+      resultsEl.innerHTML = `<p class="search-empty">Nenhum resultado para "${query}".</p>`;
+      return;
+    }
+    resultsEl.innerHTML = matches.map((item, idx) => `
+      <button class="search-result-row" data-search-idx="${idx}">
+        <span>
+          <span class="label">${item.label}</span>
+          <span class="sub">${item.sub}</span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    `).join('');
+    resultsEl.querySelectorAll('[data-search-idx]').forEach(btn => {
+      btn.addEventListener('click', () => matches[parseInt(btn.dataset.searchIdx, 10)].action());
+    });
+  }
   const RELATED_ITEMS = [
     { name:"Watch Band", sub:"Preto & Ouro", img:"lor-phenomenal-watchband.jpg" },
     { name:"AirPods", sub:"Preto & Ouro", img:"lor-phenomenal-airpods.jpg" },
@@ -1180,7 +1257,7 @@
     const lineData = LINES[linha];
     $('#productBackLabel').textContent = lineData.label;
     const kindLabel = lineData.kind === 'skin' ? 'Skin' : 'Case';
-    $('#productTitle').textContent = `${kindLabel} iPhone ${model} — ${lineData.label}`;
+    $('#productTitle').textContent = `${kindLabel} Série ${model} — ${lineData.label}`;
     $('#productDesc').textContent = lineData.desc;
     $('#qtyValue').textContent = '1';
     renderSwatches();
@@ -1245,7 +1322,7 @@
     const color = lineData.colors[currentProduct.colorIndex];
     addToCart({
       sku: `${currentProduct.linha}-${currentProduct.model}-${color.id}`,
-      name: `Case iPhone ${currentProduct.model} — ${lineData.label}`,
+      name: `${lineData.kind === 'skin' ? 'Skin' : 'Case'} Série ${currentProduct.model} — ${lineData.label}`,
       meta: color.label,
       img: color.img,
       qty: currentProduct.qty,
