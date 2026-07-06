@@ -307,8 +307,20 @@
   .product-close{ width:32px; height:32px; border-radius:50%; border:1px solid var(--line); background:var(--panel); display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
   .product-close svg{ width:14px; height:14px; stroke:var(--ink); }
   .product-body{ padding:18px 20px 28px; }
-  .product-preview{ width:100%; aspect-ratio:3/4; background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:12px; display:flex; align-items:center; justify-content:center; }
+  .product-preview{ position:relative; width:100%; aspect-ratio:3/4; background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:12px; display:flex; align-items:center; justify-content:center; touch-action:pan-y; }
   .product-preview img{ width:100%; height:100%; object-fit:contain; }
+  .gallery-nav-btn{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+    width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.9); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .gallery-nav-btn[hidden]{ display:none; }
+  .gallery-nav-btn.prev{ left:10px; }
+  .gallery-nav-btn.next{ right:10px; }
+  .gallery-nav-btn svg{ width:16px; height:16px; stroke:var(--ink); }
+  .gallery-dots{ position:absolute; bottom:12px; left:0; right:0; z-index:2; display:flex; justify-content:center; gap:6px; }
+  .gallery-dot{ width:6px; height:6px; border-radius:3px; background:rgba(22,24,26,0.28); transition:width 0.2s, background 0.2s; }
+  .gallery-dot.active{ width:16px; background:var(--ink); }
   .product-head-row{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:16px; margin-bottom:4px; }
   .product-title{ font-family:'Bodoni Moda',serif; font-size:21px; font-weight:500; }
   .product-price{ font-size:14px; color:var(--muted); white-space:nowrap; }
@@ -600,7 +612,7 @@
       </div>
       <button class="menu-row" data-open-subsub="paneCasesCuir">
         <span class="menu-row-main">
-          <img class="menu-row-thumb" decoding="async" data-src="cuir-supreme-verde-militar.png" alt="Cuir Suprême">
+          <img class="menu-row-thumb" decoding="async" data-src="cuir-supreme-green-acid-1.png" alt="Cuir Suprême">
           <span class="menu-row-text">
             <span class="label">Cuir Suprême</span>
             <span class="sub">Couro de crocodilo</span>
@@ -975,8 +987,15 @@
       </button>
     </div>
     <div class="product-body">
-      <div class="product-preview">
+      <div class="product-preview" id="productPreview">
         <img id="productPreviewImg" src="" alt="">
+        <button class="gallery-nav-btn prev" id="galleryPrevBtn" aria-label="Foto anterior" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="gallery-nav-btn next" id="galleryNextBtn" aria-label="Próxima foto" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <div class="gallery-dots" id="galleryDots"></div>
       </div>
       <div class="thumb-row" id="productSwatches"></div>
       <div class="product-head-row">
@@ -1251,11 +1270,11 @@
       label: 'Cuir Suprême',
       desc: 'Couro legítimo com acabamento liso e toque macio, cortado e costurado à mão — pensado pra unir proteção e sofisticação ao seu iPhone.',
       colors: [
-        { id:'verde', label:'Verde Militar', img:'cuir-supreme-verde-militar.png' },
-        { id:'caramelo', label:'Caramelo', img:'cuir-supreme-caramelo.png' },
-        { id:'rose', label:'Rosé', img:'cuir-supreme-rose.png' },
-        { id:'roxo', label:'Roxo', img:'cuir-supreme-roxo.png' },
-        { id:'limao', label:'Verde Limão', img:'cuir-supreme-limao.png' },
+        { id:'green-acid', label:'Green Acid', gallery:['cuir-supreme-green-acid-1.png', 'cuir-supreme-green-acid-2.png', 'cuir-supreme-green-acid-3.png', 'cuir-supreme-green-acid-4.png', 'cuir-supreme-green-acid-5.png', 'cuir-supreme-green-acid-6.png'] },
+        { id:'light-blue', label:'Light Blue', gallery:['cuir-supreme-light-blue-1.png', 'cuir-supreme-light-blue-2.png', 'cuir-supreme-light-blue-3.png', 'cuir-supreme-light-blue-4.png', 'cuir-supreme-light-blue-5.png', 'cuir-supreme-light-blue-6.png'] },
+        { id:'dark-gold', label:'Dark Gold', gallery:['cuir-supreme-dark-gold-1.png', 'cuir-supreme-dark-gold-2.png', 'cuir-supreme-dark-gold-3.png', 'cuir-supreme-dark-gold-4.png', 'cuir-supreme-dark-gold-5.png', 'cuir-supreme-dark-gold-6.png'] },
+        { id:'duo-tone', label:'Duo Tone', gallery:['cuir-supreme-duo-tone-1.png', 'cuir-supreme-duo-tone-2.png', 'cuir-supreme-duo-tone-3.png', 'cuir-supreme-duo-tone-4.png', 'cuir-supreme-duo-tone-5.png', 'cuir-supreme-duo-tone-6.png'] },
+        { id:'black-black', label:'Black Black', gallery:['cuir-supreme-black-black-1.png', 'cuir-supreme-black-black-2.png', 'cuir-supreme-black-black-3.png', 'cuir-supreme-black-black-4.png', 'cuir-supreme-black-black-5.png', 'cuir-supreme-black-black-6.png'] },
       ],
     },
     'metal': {
@@ -1263,7 +1282,7 @@
       label: 'Metal',
       desc: 'Estrutura em alumínio aeroespacial com acabamento escovado — leve, resistente e discreta.',
       colors: [
-        { id:'preto', label:'Preto Fosco', img:'case-metal.png' },
+        { id:'preto', label:'Preto Fosco', gallery:['case-metal.png'] },
       ],
     },
     'madeira': {
@@ -1271,7 +1290,7 @@
       label: 'Metal & Madeira',
       desc: 'Estrutura em alumínio com painel traseiro em madeira legítima — cada peça com veios únicos.',
       colors: [
-        { id:'nogueira', label:'Nogueira', img:'case-madeira.png' },
+        { id:'nogueira', label:'Nogueira', gallery:['case-madeira.png'] },
       ],
     },
     'transparente': {
@@ -1279,7 +1298,7 @@
       label: 'Transparentes',
       desc: 'Policarbonato transparente de alta clareza, feito pra mostrar o design original do seu iPhone sem perder proteção.',
       colors: [
-        { id:'cristal', label:'Cristal', img:'case-transparente.png' },
+        { id:'cristal', label:'Cristal', gallery:['case-transparente.png'] },
       ],
     },
     'marmore': {
@@ -1287,12 +1306,7 @@
       label: 'Mármore',
       desc: 'Estrutura em alumínio com acabamento em mármore preto e veios dourados — peça única, elegante e resistente.',
       colors: [
-        { id:'marmore-1', label:'Mármore', img:'case-marmore-1.png' },
-        { id:'marmore-2', label:'Mármore', img:'case-marmore-2.png' },
-        { id:'marmore-3', label:'Mármore', img:'case-marmore-3.png' },
-        { id:'marmore-4', label:'Mármore', img:'case-marmore-4.png' },
-        { id:'marmore-5', label:'Mármore', img:'case-marmore-5.png' },
-        { id:'marmore-6', label:'Mármore', img:'case-marmore-6.png' },
+        { id:'marmore', label:'Mármore', gallery:['case-marmore-1.png', 'case-marmore-2.png', 'case-marmore-3.png', 'case-marmore-4.png', 'case-marmore-5.png', 'case-marmore-6.png'] },
       ],
     },
     'skin-rosa-quartz': {
@@ -1300,10 +1314,7 @@
       label: 'Rosa Quartz',
       desc: 'Skin em vinil premium com acabamento fosco rosa quartzo — aplicação precisa, sem bolhas, protegendo sem esconder o design do seu iPhone.',
       colors: [
-        { id:'rosa-quartz-1', label:'Rosa Quartz', img:'skin-rosa-quartz-1.png' },
-        { id:'rosa-quartz-2', label:'Rosa Quartz', img:'skin-rosa-quartz-2.png' },
-        { id:'rosa-quartz-3', label:'Rosa Quartz', img:'skin-rosa-quartz-3.png' },
-        { id:'rosa-quartz-4', label:'Rosa Quartz', img:'skin-rosa-quartz-4.png' },
+        { id:'rosa-quartz', label:'Rosa Quartz', gallery:['skin-rosa-quartz-1.png', 'skin-rosa-quartz-2.png', 'skin-rosa-quartz-3.png', 'skin-rosa-quartz-4.png'] },
       ],
     },
     'skin-preto-marmore': {
@@ -1311,10 +1322,7 @@
       label: 'Preto Mármore',
       desc: 'Skin em vinil premium com padrão mármore preto e veios dourados — textura fiel à pedra natural, aplicação precisa e acabamento fosco.',
       colors: [
-        { id:'preto-marmore-1', label:'Preto Mármore', img:'skin-preto-marmore-1.png' },
-        { id:'preto-marmore-2', label:'Preto Mármore', img:'skin-preto-marmore-2.png' },
-        { id:'preto-marmore-3', label:'Preto Mármore', img:'skin-preto-marmore-3.png' },
-        { id:'preto-marmore-4', label:'Preto Mármore', img:'skin-preto-marmore-4.png' },
+        { id:'preto-marmore', label:'Preto Mármore', gallery:['skin-preto-marmore-1.png', 'skin-preto-marmore-2.png', 'skin-preto-marmore-3.png', 'skin-preto-marmore-4.png'] },
       ],
     },
     'skin-marmore-green': {
@@ -1322,10 +1330,7 @@
       label: 'Mármore Green',
       desc: 'Skin em vinil premium com padrão mármore verde esmeralda e veios dourados — textura fiel à pedra natural, aplicação precisa e acabamento fosco.',
       colors: [
-        { id:'marmore-green-1', label:'Mármore Green', img:'skin-marmore-green-1.png' },
-        { id:'marmore-green-2', label:'Mármore Green', img:'skin-marmore-green-2.png' },
-        { id:'marmore-green-3', label:'Mármore Green', img:'skin-marmore-green-3.png' },
-        { id:'marmore-green-4', label:'Mármore Green', img:'skin-marmore-green-4.png' },
+        { id:'marmore-green', label:'Mármore Green', gallery:['skin-marmore-green-1.png', 'skin-marmore-green-2.png', 'skin-marmore-green-3.png', 'skin-marmore-green-4.png'] },
       ],
     },
     'skin-gold-escovado': {
@@ -1333,10 +1338,7 @@
       label: 'Gold Escovado',
       desc: 'Skin em vinil premium com acabamento escovado dourado — textura metálica autêntica, aplicação precisa e proteção sem volume.',
       colors: [
-        { id:'gold-escovado-1', label:'Gold Escovado', img:'skin-gold-escovado-1.png' },
-        { id:'gold-escovado-2', label:'Gold Escovado', img:'skin-gold-escovado-2.png' },
-        { id:'gold-escovado-3', label:'Gold Escovado', img:'skin-gold-escovado-3.png' },
-        { id:'gold-escovado-4', label:'Gold Escovado', img:'skin-gold-escovado-4.png' },
+        { id:'gold-escovado', label:'Gold Escovado', gallery:['skin-gold-escovado-1.png', 'skin-gold-escovado-2.png', 'skin-gold-escovado-3.png', 'skin-gold-escovado-4.png'] },
       ],
     },
   };
@@ -1413,7 +1415,7 @@
   function openProduct(linha, model, colorIndex){
     $('#menuOverlay').classList.remove('open');
     resetPanes();
-    currentProduct = { linha, model, colorIndex: colorIndex || 0, qty: 1 };
+    currentProduct = { linha, model, colorIndex: colorIndex || 0, galleryIndex: 0, qty: 1 };
     const lineData = LINES[linha];
     $('#productBackLabel').textContent = lineData.label;
     const kindLabel = lineData.kind === 'skin' ? 'Skin' : 'Case';
@@ -1434,23 +1436,63 @@
     const row = $('#productSwatches');
     row.innerHTML = colors.map((c, idx) => `
       <button class="thumb${idx === currentProduct.colorIndex ? ' selected' : ''}" data-color-idx="${idx}" aria-label="${c.label}">
-        <img src="${c.img}" alt="${c.label}" loading="lazy" decoding="async">
+        <img src="${c.gallery[0]}" alt="${c.label}" loading="lazy" decoding="async">
       </button>
     `).join('');
     row.querySelectorAll('[data-color-idx]').forEach(btn => {
       btn.addEventListener('click', () => {
         currentProduct.colorIndex = parseInt(btn.dataset.colorIdx, 10);
+        currentProduct.galleryIndex = 0;
         renderSwatches();
         updateProductPreview();
       });
     });
   }
+  function currentGallery(){
+    return LINES[currentProduct.linha].colors[currentProduct.colorIndex].gallery;
+  }
   function updateProductPreview(){
     const color = LINES[currentProduct.linha].colors[currentProduct.colorIndex];
-    $('#productPreviewImg').src = color.img;
+    const gallery = color.gallery;
+    if (currentProduct.galleryIndex >= gallery.length) currentProduct.galleryIndex = 0;
+    $('#productPreviewImg').src = gallery[currentProduct.galleryIndex];
     $('#productPreviewImg').alt = color.label;
     $('#colorLabelText').textContent = color.label;
+    renderGalleryNav();
   }
+  function renderGalleryNav(){
+    const gallery = currentGallery();
+    const multi = gallery.length > 1;
+    $('#galleryPrevBtn').hidden = !multi;
+    $('#galleryNextBtn').hidden = !multi;
+    $('#galleryDots').innerHTML = multi ? gallery.map((_, idx) => `
+      <button class="gallery-dot${idx === currentProduct.galleryIndex ? ' active' : ''}" data-gallery-idx="${idx}" aria-label="Foto ${idx + 1}"></button>
+    `).join('') : '';
+    $('#galleryDots').querySelectorAll('[data-gallery-idx]').forEach(dot => {
+      dot.addEventListener('click', () => {
+        currentProduct.galleryIndex = parseInt(dot.dataset.galleryIdx, 10);
+        updateProductPreview();
+      });
+    });
+  }
+  function goToGalleryOffset(offset){
+    const gallery = currentGallery();
+    currentProduct.galleryIndex = (currentProduct.galleryIndex + offset + gallery.length) % gallery.length;
+    updateProductPreview();
+  }
+  $('#galleryPrevBtn').addEventListener('click', () => goToGalleryOffset(-1));
+  $('#galleryNextBtn').addEventListener('click', () => goToGalleryOffset(1));
+  (function setupGallerySwipe(){
+    const preview = $('#productPreview');
+    let startX = null;
+    preview.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+    preview.addEventListener('touchend', (e) => {
+      if (startX === null) return;
+      const deltaX = e.changedTouches[0].clientX - startX;
+      if (Math.abs(deltaX) > 40) goToGalleryOffset(deltaX < 0 ? 1 : -1);
+      startX = null;
+    });
+  })();
   function renderRelated(){
     $('#relatedRow').innerHTML = RELATED_ITEMS.map(item => `
       <a class="related-card" href="colecao-lor-phenomenal.html">
@@ -1484,7 +1526,7 @@
       sku: `${currentProduct.linha}-${currentProduct.model}-${color.id}`,
       name: `${lineData.kind === 'skin' ? 'Skin' : 'Case'} Série ${currentProduct.model} — ${lineData.label}`,
       meta: color.label,
-      img: color.img,
+      img: color.gallery[0],
       qty: currentProduct.qty,
     });
     $('#addConfirm').classList.add('show');
