@@ -322,6 +322,8 @@
   .gallery-dots{ position:absolute; bottom:12px; left:0; right:0; z-index:2; display:flex; justify-content:center; gap:6px; }
   .gallery-dot{ width:6px; height:6px; border-radius:3px; background:rgba(22,24,26,0.28); transition:width 0.2s, background 0.2s; }
   .gallery-dot.active{ width:16px; background:var(--ink); }
+  .product-preview.fit-cover img{ object-fit:cover; }
+  .thumb-row.fit-cover .thumb img{ object-fit:cover; }
   .product-head-row{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:16px; margin-bottom:4px; }
   .product-title{ font-family:'Bodoni Moda',serif; font-size:21px; font-weight:500; }
   .product-price{ font-size:14px; color:var(--muted); white-space:nowrap; }
@@ -564,7 +566,7 @@
       </div>
       <button class="menu-row" data-open-subsub="paneCasesCuir">
         <span class="menu-row-main">
-          <img class="menu-row-thumb" decoding="async" data-src="cuir-supreme-green-acid-1.png" alt="Cuir Suprême">
+          <img class="menu-row-thumb" decoding="async" data-src="cuir-supreme-menu-thumb.png" alt="Cuir Suprême">
           <span class="menu-row-text">
             <span class="label">Cuir Suprême</span>
             <span class="sub">Couro de crocodilo</span>
@@ -1218,6 +1220,7 @@
       kind: 'case',
       label: 'Cuir Suprême',
       desc: 'Couro legítimo com acabamento liso e toque macio, cortado e costurado à mão — pensado pra unir proteção e sofisticação ao seu iPhone.',
+      previewFit: 'cover',
       colors: [
         { id:'green-acid', label:'Green Acid', gallery:['cuir-supreme-green-acid-1.png', 'cuir-supreme-green-acid-2.png', 'cuir-supreme-green-acid-3.png', 'cuir-supreme-green-acid-4.png', 'cuir-supreme-green-acid-5.png', 'cuir-supreme-green-acid-6.png'] },
         { id:'light-blue', label:'Light Blue', gallery:['cuir-supreme-light-blue-1.png', 'cuir-supreme-light-blue-2.png', 'cuir-supreme-light-blue-3.png', 'cuir-supreme-light-blue-4.png', 'cuir-supreme-light-blue-5.png', 'cuir-supreme-light-blue-6.png'] },
@@ -1383,6 +1386,7 @@
   function renderSwatches(){
     const colors = LINES[currentProduct.linha].colors;
     const row = $('#productSwatches');
+    row.classList.toggle('fit-cover', LINES[currentProduct.linha].previewFit === 'cover');
     row.innerHTML = colors.map((c, idx) => `
       <button class="thumb${idx === currentProduct.colorIndex ? ' selected' : ''}" data-color-idx="${idx}" aria-label="${c.label}">
         <img src="${c.gallery[0]}" alt="${c.label}" loading="lazy" decoding="async">
@@ -1404,6 +1408,7 @@
     const color = LINES[currentProduct.linha].colors[currentProduct.colorIndex];
     const gallery = color.gallery;
     if (currentProduct.galleryIndex >= gallery.length) currentProduct.galleryIndex = 0;
+    $('#productPreview').classList.toggle('fit-cover', LINES[currentProduct.linha].previewFit === 'cover');
     $('#productPreviewImg').src = gallery[currentProduct.galleryIndex];
     $('#productPreviewImg').alt = color.label;
     $('#colorLabelText').textContent = color.label;
