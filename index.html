@@ -142,6 +142,16 @@
     transition:opacity 0.2s ease;
   }
   .btn:hover{ opacity:0.8; }
+  .skin-thumb-rail{
+    display:flex; gap:10px; overflow-x:auto; margin-top:20px; padding-bottom:2px;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .skin-thumb-rail::-webkit-scrollbar{ display:none; }
+  .skin-thumb{
+    flex:0 0 auto; width:56px; height:56px; border-radius:12px; overflow:hidden;
+    background:#FFFFFF; border:1px solid var(--line);
+  }
+  .skin-thumb img{ width:100%; height:100%; object-fit:contain; }
 
   /* ---------- SECTIONS ---------- */
   .section{ max-width:1200px; margin:0 auto; padding:44px 20px; }
@@ -465,13 +475,6 @@
           <span class="swipe-card-sub">Couro de crocodilo dourado</span>
         </span>
       </a>
-      <button class="swipe-card" data-open-product="17" data-linha="skin-black-gold-marble">
-        <span class="swipe-card-img" style="background-image:url('skin-black-gold-marble-1.png');background-size:cover;background-position:center;"></span>
-        <span class="swipe-card-text">
-          <span class="swipe-card-name">Atelier de Lumière</span>
-          <span class="swipe-card-sub">Skins facetadas em mármore e dourado</span>
-        </span>
-      </button>
       <a class="swipe-card" href="colecao-eclipse-titanium.html">
         <span class="swipe-card-img" style="background-image:url('eclipse-titanium-cover.jpg');background-size:cover;background-position:center;"></span>
         <span class="swipe-card-text">
@@ -491,10 +494,21 @@
   </section>
 
   <div class="hero-text">
-    <span class="eyebrow">Atelier de Lumière</span>
+    <span class="eyebrow">Atelier des Peaux Nobles</span>
     <h1>A proteção que <em>brilha</em> como sua jóia.</h1>
     <p>Skins e capinhas facetadas à mão, inspiradas no corte de pedras preciosas.</p>
     <button class="btn" data-open-product="17" data-linha="skin-black-gold-marble">Ver coleção</button>
+    <div class="skin-thumb-rail" id="skinThumbRail">
+      <button class="skin-thumb" data-open-product="17" data-linha="skin-ouro-escovado">
+        <img src="skin-ouro-escovado-1.png" alt="Ouro Escovado" loading="lazy" decoding="async">
+      </button>
+      <button class="skin-thumb" data-open-product="17" data-linha="skin-gold-croco">
+        <img src="skin-gold-croco-1.png" alt="Gold Croco" loading="lazy" decoding="async">
+      </button>
+      <button class="skin-thumb" data-open-product="17" data-linha="skin-gold-champagne">
+        <img src="skin-gold-champagne-1.png" alt="Gold Champagne" loading="lazy" decoding="async">
+      </button>
+    </div>
   </div>
 </div>
 
