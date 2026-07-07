@@ -904,6 +904,16 @@
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
+      <button class="menu-row" data-open-subsub="paneSkinsBlackCroco">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-black-croco-1.png" alt="Black Croco">
+          <span class="menu-row-text">
+            <span class="label">Black Croco</span>
+            <span class="sub">Textura crocodilo preta</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
       <button class="menu-row" data-open-subsub="paneSkinsBlackGoldMarble">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="skin-black-gold-marble-1.png" alt="Black Gold Marble">
@@ -982,6 +992,25 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="menu-row shop-all" data-open-product="17" data-linha="skin-gold-croco">Ver todas — Gold Croco</button>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneSkinsBlackCroco">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneSkins">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Black Croco — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="skin-black-croco"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="skin-black-croco"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="skin-black-croco"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="skin-black-croco">Ver todas — Black Croco</button>
     </div>
 
     <div class="menu-pane pane-subsub" id="paneSkinsBlackGoldMarble">
@@ -1416,7 +1445,7 @@
       label: 'Ouro Escovado',
       desc: 'Skin em vinil premium com acabamento dourado escovado — textura metálica autêntica, aplicação precisa e proteção sem volume.',
       colors: [
-        { id:'ouro-escovado', label:'Ouro Escovado', gallery:['skin-ouro-escovado-1.png'] },
+        { id:'ouro-escovado', label:'Ouro Escovado', gallery:['skin-ouro-escovado-1.png', 'skin-ouro-escovado-2.png', 'skin-ouro-escovado-3.png', 'skin-ouro-escovado-4.png', 'skin-ouro-escovado-5.png'] },
       ],
     },
     'skin-gold-croco': {
@@ -1424,7 +1453,15 @@
       label: 'Gold Croco',
       desc: 'Skin em vinil premium com textura de couro de crocodilo dourado — relevo fiel ao couro exótico, aplicação precisa e acabamento de alto brilho.',
       colors: [
-        { id:'gold-croco', label:'Gold Croco', gallery:['skin-gold-croco-1.png'] },
+        { id:'gold-croco', label:'Gold Croco', gallery:['skin-gold-croco-1.png', 'skin-gold-croco-2.png', 'skin-gold-croco-3.png', 'skin-gold-croco-4.png', 'skin-gold-croco-5.png'] },
+      ],
+    },
+    'skin-black-croco': {
+      kind: 'skin',
+      label: 'Black Croco',
+      desc: 'Skin em vinil premium com textura de couro de crocodilo preto — relevo fiel ao couro exótico, aplicação precisa e acabamento fosco.',
+      colors: [
+        { id:'black-croco', label:'Black Croco', gallery:['skin-black-croco-1.png', 'skin-black-croco-2.png', 'skin-black-croco-3.png'] },
       ],
     },
     'skin-black-gold-marble': {
@@ -1432,7 +1469,7 @@
       label: 'Black Gold Marble',
       desc: 'Skin em vinil premium com padrão mármore preto e veios dourados — textura fiel à pedra natural, aplicação precisa e acabamento fosco.',
       colors: [
-        { id:'black-gold-marble', label:'Black Gold Marble', gallery:['skin-black-gold-marble-1.png'] },
+        { id:'black-gold-marble', label:'Black Gold Marble', gallery:['skin-black-gold-marble-1.png', 'skin-black-gold-marble-2.png', 'skin-black-gold-marble-3.png', 'skin-black-gold-marble-4.png', 'skin-black-gold-marble-5.png'] },
       ],
     },
     'skin-green-gold-marble': {
@@ -1440,7 +1477,7 @@
       label: 'Green Gold Marble',
       desc: 'Skin em vinil premium com padrão mármore verde esmeralda e veios dourados — textura fiel à pedra natural, aplicação precisa e acabamento fosco.',
       colors: [
-        { id:'green-gold-marble', label:'Green Gold Marble', gallery:['skin-green-gold-marble-1.png'] },
+        { id:'green-gold-marble', label:'Green Gold Marble', gallery:['skin-green-gold-marble-1.png', 'skin-green-gold-marble-2.png', 'skin-green-gold-marble-3.png', 'skin-green-gold-marble-4.png', 'skin-green-gold-marble-5.png'] },
       ],
     },
     'skin-gold-champagne': {
@@ -1448,7 +1485,7 @@
       label: 'Gold Champagne',
       desc: 'Skin em vinil premium com acabamento metálico champagne — tom dourado suave, aplicação precisa e proteção sem volume.',
       colors: [
-        { id:'gold-champagne', label:'Gold Champagne', gallery:['skin-gold-champagne-1.png'] },
+        { id:'gold-champagne', label:'Gold Champagne', gallery:['skin-gold-champagne-1.png', 'skin-gold-champagne-2.png', 'skin-gold-champagne-3.png', 'skin-gold-champagne-4.png', 'skin-gold-champagne-5.png'] },
       ],
     },
     'skin-dark-eclipse': {
@@ -1473,6 +1510,7 @@
     'marmore': 'marmore preto dourado veios',
     'skin-ouro-escovado': 'ouro dourado escovado',
     'skin-gold-croco': 'gold croco crocodilo dourado',
+    'skin-black-croco': 'black croco crocodilo preto',
     'skin-black-gold-marble': 'black gold marble marmore preto dourado',
     'skin-green-gold-marble': 'green gold marble marmore verde esmeralda dourado',
     'skin-gold-champagne': 'gold champagne dourado suave',
