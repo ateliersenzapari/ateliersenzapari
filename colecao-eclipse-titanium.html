@@ -299,7 +299,7 @@
   .collection-intro h1 em{ font-style:italic; color:var(--sage-deep); }
   .collection-intro p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:50ch; }
   .card-tag{ font-size:11px; letter-spacing:0.04em; text-transform:uppercase; color:var(--sage-deep); font-weight:600; }
-  .grid-uniform .card-visual{ aspect-ratio:4/3; }
+  .grid-uniform .card-visual{ aspect-ratio:4/5; }
   /* ================= PRODUCT QUICK VIEW ================= */
   .product-overlay{
     position:fixed; inset:0; z-index:110; background:rgba(10,10,8,0.4);
@@ -479,6 +479,7 @@
     <span class="eyebrow">Senza Pari</span>
     <h1>Eclipse <em>Titanium</em></h1>
     <p>Titânio escovado e fibra de carbono forjado, envelhecidos à mão. Uma coleção sobre peso, precisão e sombra.</p>
+    <a class="btn" href="#produtos-colecao" style="margin-top:18px;">Loja</a>
   </div>
 </div>
 
@@ -486,7 +487,7 @@
   <div class="section-head"><h2>Peças da coleção</h2></div>
   <div class="grid grid-uniform" id="collectionGrid">
     <article class="card">
-      <div class="card-visual" style="background-image:url('eclipse-titanium-case-1.jpg');background-size:cover;background-position:center;"></div>
+      <button class="card-visual" style="display:block;width:100%;padding:0;background-image:url('eclipse-titanium-case-1.jpg');background-size:cover;background-position:center;" data-open-product="17" data-linha="eclipse-titanium-case"></button>
       <div class="card-info">
         <span class="card-tag">Titânio & Fibra de Carbono</span>
         <p class="card-name">Case iPhone — Eclipse Titanium</p>
@@ -502,7 +503,7 @@
       </div>
     </article>
     <article class="card">
-      <div class="card-visual" style="background-image:url('eclipse-titanium-watchband-1.jpg');background-size:cover;background-position:center;"></div>
+      <button class="card-visual" style="display:block;width:100%;padding:0;background-image:url('eclipse-titanium-watchband-1.jpg');background-size:cover;background-position:center;" data-open-product="U" data-linha="eclipse-titanium-watchband"></button>
       <div class="card-info">
         <span class="card-tag">Apple Watch Ultra</span>
         <p class="card-name">Watch Band — Eclipse Titanium</p>
@@ -510,7 +511,7 @@
       </div>
     </article>
     <article class="card">
-      <div class="card-visual" style="background-image:url('eclipse-titanium-airpods-1.jpg');background-size:cover;background-position:center;"></div>
+      <button class="card-visual" style="display:block;width:100%;padding:0;background-image:url('eclipse-titanium-airpods-1.jpg');background-size:cover;background-position:center;" data-open-product="U" data-linha="eclipse-titanium-airpods"></button>
       <div class="card-info">
         <span class="card-tag">Titânio & Fibra de Carbono</span>
         <p class="card-name">AirPods — Eclipse Titanium</p>
@@ -518,7 +519,7 @@
       </div>
     </article>
     <article class="card">
-      <div class="card-visual" style="background-image:url('eclipse-titanium-airtag-1.jpg');background-size:cover;background-position:center;"></div>
+      <button class="card-visual" style="display:block;width:100%;padding:0;background-image:url('eclipse-titanium-airtag-1.jpg');background-size:cover;background-position:center;" data-open-product="U" data-linha="eclipse-titanium-airtag"></button>
       <div class="card-info">
         <span class="card-tag">Titânio & Fibra de Carbono</span>
         <p class="card-name">AirTag — Eclipse Titanium</p>
@@ -526,7 +527,7 @@
       </div>
     </article>
     <article class="card">
-      <div class="card-visual" style="background-image:url('eclipse-titanium-wallet-1.jpg');background-size:cover;background-position:center;"></div>
+      <button class="card-visual" style="display:block;width:100%;padding:0;background-image:url('eclipse-titanium-wallet-1.jpg');background-size:cover;background-position:center;" data-open-product="U" data-linha="eclipse-titanium-wallet"></button>
       <div class="card-info">
         <span class="card-tag">Titânio & Fibra de Carbono</span>
         <p class="card-name">Wallet — Eclipse Titanium</p>
@@ -693,7 +694,7 @@
       </button>
       <button class="menu-row" data-open-subsub="paneCasesMarmore">
         <span class="menu-row-main">
-          <img class="menu-row-thumb cover" decoding="async" data-src="case-marmore-1.png" alt="Mármore">
+          <img class="menu-row-thumb" decoding="async" data-src="case-marmore-1.png" alt="Mármore">
           <span class="menu-row-text">
             <span class="label">Mármore</span>
             <span class="sub">Veios dourados sobre preto</span>
@@ -842,7 +843,7 @@
       </div>
       <button class="menu-row" data-open-subsub="paneSkinsOuroEscovado">
         <span class="menu-row-main">
-          <img class="menu-row-thumb cover" decoding="async" data-src="skin-ouro-escovado-1.png" alt="Ouro Escovado">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-ouro-escovado-1.png" alt="Ouro Escovado">
           <span class="menu-row-text">
             <span class="label">Ouro Escovado</span>
             <span class="sub">Acabamento metálico escovado</span>
@@ -852,7 +853,7 @@
       </button>
       <button class="menu-row" data-open-subsub="paneSkinsGoldCroco">
         <span class="menu-row-main">
-          <img class="menu-row-thumb cover" decoding="async" data-src="skin-gold-croco-1.png" alt="Gold Croco">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-gold-croco-1.png" alt="Gold Croco">
           <span class="menu-row-text">
             <span class="label">Gold Croco</span>
             <span class="sub">Textura crocodilo dourada</span>
@@ -862,7 +863,7 @@
       </button>
       <button class="menu-row" data-open-subsub="paneSkinsBlackCroco">
         <span class="menu-row-main">
-          <img class="menu-row-thumb cover" decoding="async" data-src="skin-black-croco-1.png" alt="Dark Black | Texture">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-black-croco-thumb.png" alt="Dark Black | Texture">
           <span class="menu-row-text">
             <span class="label">Dark Black | Texture</span>
             <span class="sub">Textura preta fosca</span>
@@ -872,7 +873,7 @@
       </button>
       <button class="menu-row" data-open-subsub="paneSkinsBlackGoldMarble">
         <span class="menu-row-main">
-          <img class="menu-row-thumb cover" decoding="async" data-src="skin-black-gold-marble-1.png" alt="Black Gold Marble">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-black-gold-marble-1.png" alt="Black Gold Marble">
           <span class="menu-row-text">
             <span class="label">Black Gold Marble</span>
             <span class="sub">Mármore preto & veios dourados</span>
@@ -882,7 +883,7 @@
       </button>
       <button class="menu-row" data-open-subsub="paneSkinsGreenGoldMarble">
         <span class="menu-row-main">
-          <img class="menu-row-thumb cover" decoding="async" data-src="skin-green-gold-marble-1.png" alt="Green Gold Marble">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-green-gold-marble-1.png" alt="Green Gold Marble">
           <span class="menu-row-text">
             <span class="label">Green Gold Marble</span>
             <span class="sub">Mármore verde & veios dourados</span>
@@ -892,7 +893,7 @@
       </button>
       <button class="menu-row" data-open-subsub="paneSkinsGoldChampagne">
         <span class="menu-row-main">
-          <img class="menu-row-thumb cover" decoding="async" data-src="skin-gold-champagne-1.png" alt="Gold Champagne">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-gold-champagne-1.png" alt="Gold Champagne">
           <span class="menu-row-text">
             <span class="label">Gold Champagne</span>
             <span class="sub">Acabamento metálico champagne</span>
@@ -902,7 +903,7 @@
       </button>
       <button class="menu-row" data-open-subsub="paneSkinsDarkEclipse">
         <span class="menu-row-main">
-          <img class="menu-row-thumb cover" decoding="async" data-src="skin-dark-eclipse-1.jpg" alt="Dark Eclipse">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-dark-eclipse-1.jpg" alt="Dark Eclipse">
           <span class="menu-row-text">
             <span class="label">Dark Eclipse</span>
             <span class="sub">Textura escamada preta</span>
@@ -1484,6 +1485,56 @@
         { id:'dark-eclipse', label:'Dark Eclipse', gallery:['skin-dark-eclipse-1.jpg', 'skin-dark-eclipse-2.jpg', 'skin-dark-eclipse-3.jpg', 'skin-dark-eclipse-4.jpg', 'skin-dark-eclipse-5.jpg'] },
       ],
     },
+    'eclipse-titanium-case': {
+      kind: 'accessory',
+      title: 'Case iPhone — Eclipse Titanium',
+      label: 'Eclipse Titanium',
+      desc: 'Estrutura em titânio escovado com bumper reforçado e painel traseiro em fibra de carbono forjado — proteção robusta com acabamento industrial.',
+      previewFit: 'cover',
+      colors: [
+        { id:'eclipse-titanium', label:'Eclipse Titanium', gallery:['eclipse-titanium-case-1.jpg', 'eclipse-titanium-case-2.jpg', 'eclipse-titanium-case-3.jpg', 'eclipse-titanium-case-4.jpg', 'eclipse-titanium-case-5.jpg', 'eclipse-titanium-case-6.jpg'] },
+      ],
+    },
+    'eclipse-titanium-watchband': {
+      kind: 'accessory',
+      title: 'Watch Band — Eclipse Titanium',
+      label: 'Eclipse Titanium',
+      desc: 'Pulseira para Apple Watch Ultra em titânio escovado com elos de fibra de carbono forjado — leve, resistente e com acabamento envelhecido à mão.',
+      previewFit: 'cover',
+      colors: [
+        { id:'eclipse-titanium', label:'Eclipse Titanium', gallery:['eclipse-titanium-watchband-1.jpg', 'eclipse-titanium-watchband-2.jpg', 'eclipse-titanium-watchband-3.jpg', 'eclipse-titanium-watchband-4.jpg', 'eclipse-titanium-watchband-5.jpg', 'eclipse-titanium-watchband-6.jpg'] },
+      ],
+    },
+    'eclipse-titanium-airtag': {
+      kind: 'accessory',
+      title: 'AirTag — Eclipse Titanium',
+      label: 'Eclipse Titanium',
+      desc: 'Case para AirTag em titânio escovado com inserto em fibra de carbono forjado — proteção discreta com argola integrada.',
+      previewFit: 'cover',
+      colors: [
+        { id:'eclipse-titanium', label:'Eclipse Titanium', gallery:['eclipse-titanium-airtag-1.jpg', 'eclipse-titanium-airtag-2.jpg', 'eclipse-titanium-airtag-3.jpg', 'eclipse-titanium-airtag-4.jpg', 'eclipse-titanium-airtag-5.jpg', 'eclipse-titanium-airtag-6.jpg'] },
+      ],
+    },
+    'eclipse-titanium-wallet': {
+      kind: 'accessory',
+      title: 'Wallet — Eclipse Titanium',
+      label: 'Eclipse Titanium',
+      desc: 'Porta-cartões MagSafe em titânio escovado com painel em fibra de carbono forjado — fixação magnética precisa para até 3 cartões.',
+      previewFit: 'cover',
+      colors: [
+        { id:'eclipse-titanium', label:'Eclipse Titanium', gallery:['eclipse-titanium-wallet-1.jpg', 'eclipse-titanium-wallet-2.jpg', 'eclipse-titanium-wallet-3.jpg', 'eclipse-titanium-wallet-4.jpg', 'eclipse-titanium-wallet-5.jpg', 'eclipse-titanium-wallet-6.jpg'] },
+      ],
+    },
+    'eclipse-titanium-airpods': {
+      kind: 'accessory',
+      title: 'AirPods — Eclipse Titanium',
+      label: 'Eclipse Titanium',
+      desc: 'Case para AirPods Pro em titânio escovado com painel em fibra de carbono forjado — encaixe preciso e proteção contra impactos.',
+      previewFit: 'cover',
+      colors: [
+        { id:'eclipse-titanium', label:'Eclipse Titanium', gallery:['eclipse-titanium-airpods-1.jpg', 'eclipse-titanium-airpods-2.jpg', 'eclipse-titanium-airpods-3.jpg', 'eclipse-titanium-airpods-4.jpg', 'eclipse-titanium-airpods-5.jpg', 'eclipse-titanium-airpods-6.jpg'] },
+      ],
+    },
   };
 
   function normalizeSearch(str){
@@ -1506,9 +1557,9 @@
   };
   const SEARCH_INDEX = [
     ...Object.entries(LINES).map(([key, data]) => ({
-      label: data.label,
-      sub: data.kind === 'skin' ? 'Skin' : 'Case',
-      keywords: normalizeSearch(`${data.label} ${data.kind === 'skin' ? 'skin' : 'case capinha'} ${key} ${SEARCH_SYNONYMS[key] || ''}`),
+      label: data.kind === 'accessory' ? (data.title || data.label) : data.label,
+      sub: data.kind === 'skin' ? 'Skin' : (data.kind === 'accessory' ? 'Acessório' : 'Case'),
+      keywords: normalizeSearch(`${data.label} ${data.kind === 'skin' ? 'skin' : (data.kind === 'accessory' ? 'acessorio eclipse titanium' : 'case capinha')} ${key} ${SEARCH_SYNONYMS[key] || ''}`),
       action: () => { closeSearch(); openProduct(key, '17', 0); },
     })),
     { label: "L'Or Phénoménal", sub: 'Coleção', keywords: normalizeSearch("lor phenomenal colecao ouro"), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
@@ -1565,8 +1616,12 @@
     currentProduct = { linha, model, colorIndex: colorIndex || 0, galleryIndex: 0, qty: 1 };
     const lineData = LINES[linha];
     $('#productBackLabel').textContent = lineData.label;
-    const kindLabel = lineData.kind === 'skin' ? 'Skin' : 'Case';
-    $('#productTitle').textContent = `${kindLabel} Série ${model} — ${lineData.label}`;
+    if (lineData.kind === 'accessory') {
+      $('#productTitle').textContent = lineData.title || lineData.label;
+    } else {
+      const kindLabel = lineData.kind === 'skin' ? 'Skin' : 'Case';
+      $('#productTitle').textContent = `${kindLabel} Série ${model} — ${lineData.label}`;
+    }
     $('#productDesc').textContent = lineData.desc;
     $('#qtyValue').textContent = '1';
     renderSwatches();
@@ -1673,7 +1728,7 @@
     const color = lineData.colors[currentProduct.colorIndex];
     addToCart({
       sku: `${currentProduct.linha}-${currentProduct.model}-${color.id}`,
-      name: `${lineData.kind === 'skin' ? 'Skin' : 'Case'} Série ${currentProduct.model} — ${lineData.label}`,
+      name: lineData.kind === 'accessory' ? (lineData.title || lineData.label) : `${lineData.kind === 'skin' ? 'Skin' : 'Case'} Série ${currentProduct.model} — ${lineData.label}`,
       meta: color.label,
       img: color.gallery[0],
       qty: currentProduct.qty,
