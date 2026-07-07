@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eclipse Titanium — SENZA PARI</title>
-<meta name="description" content="Coleção Eclipse Titanium: cases, wallet, watch band, AirPods e AirTag em titânio escovado e fibra de carbono forjado.">
-<link rel="canonical" href="https://ateliersenzapari.com.br/colecao-eclipse-titanium.html">
+<title>Atelier des Peaux Nobles — Todas as Skins — SENZA PARI</title>
+<meta name="description" content="Skins premium em peles nobres, com acabamento artesanal, textura sofisticada e encaixe preciso para um visual exclusivo.">
+<link rel="canonical" href="https://ateliersenzapari.com.br/todas-as-skins.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Eclipse Titanium — SENZA PARI">
-<meta property="og:description" content="Coleção Eclipse Titanium: cases, wallet, watch band, AirPods e AirTag em titânio escovado e fibra de carbono forjado.">
-<meta property="og:image" content="https://ateliersenzapari.com.br/eclipse-titanium-cover.jpg">
-<meta property="og:url" content="https://ateliersenzapari.com.br/colecao-eclipse-titanium.html">
+<meta property="og:title" content="Atelier des Peaux Nobles — SENZA PARI">
+<meta property="og:description" content="Skins premium em peles nobres, com acabamento artesanal, textura sofisticada e encaixe preciso para um visual exclusivo.">
+<meta property="og:image" content="https://ateliersenzapari.com.br/skin-black-gold-marble-1.png">
+<meta property="og:url" content="https://ateliersenzapari.com.br/todas-as-skins.html">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Eclipse Titanium — SENZA PARI">
-<meta name="twitter:description" content="Coleção Eclipse Titanium: cases, wallet, watch band, AirPods e AirTag em titânio escovado e fibra de carbono forjado.">
-<meta name="twitter:image" content="https://ateliersenzapari.com.br/eclipse-titanium-cover.jpg">
+<meta name="twitter:title" content="Atelier des Peaux Nobles — SENZA PARI">
+<meta name="twitter:description" content="Skins premium em peles nobres, com acabamento artesanal, textura sofisticada e encaixe preciso para um visual exclusivo.">
+<meta name="twitter:image" content="https://ateliersenzapari.com.br/skin-black-gold-marble-1.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -298,8 +298,35 @@
   }
   .collection-intro h1 em{ font-style:italic; color:var(--sage-deep); }
   .collection-intro p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:50ch; }
+  .collection-intro.no-video{ padding-top:36px; }
   .card-tag{ font-size:11px; letter-spacing:0.04em; text-transform:uppercase; color:var(--sage-deep); font-weight:600; }
   .grid-uniform .card-visual{ aspect-ratio:4/5; }
+
+  /* ---------- SKINS SHOP (filter + 2-col grid) ---------- */
+  .filter-bar{
+    display:flex; flex-wrap:wrap; gap:20px; align-items:flex-start;
+    margin-bottom:26px; padding-bottom:22px; border-bottom:1px solid var(--line);
+  }
+  .filter-group{ display:flex; flex-direction:column; gap:8px; }
+  .filter-group label{ font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); font-weight:700; }
+  .filter-group select{
+    padding:11px 14px; border-radius:9px; border:1px solid var(--line); background:var(--panel);
+    font-size:13px; font-family:inherit; color:var(--ink); min-width:170px;
+  }
+  .filter-chips{ display:flex; gap:8px; flex-wrap:wrap; }
+  .filter-chip{ padding:9px 15px; border-radius:999px; border:1px solid var(--line); background:var(--panel); font-size:12.5px; font-weight:600; color:var(--ink); }
+  .filter-chip.selected{ background:var(--ink); color:#fff; border-color:var(--ink); }
+
+  .skins-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px 12px; }
+  .skin-card{ display:flex; flex-direction:column; text-align:left; }
+  .skin-card-img{
+    width:100%; aspect-ratio:3/4; border-radius:14px; overflow:hidden;
+    background-size:cover; background-position:center; background-color:var(--panel);
+    border:1px solid var(--line); margin-bottom:10px;
+  }
+  .skin-card-info{ display:flex; flex-direction:column; gap:2px; }
+  .skin-card-name{ font-size:13.5px; font-weight:600; }
+  .skin-card-price{ font-size:12.5px; color:var(--muted); }
   /* ================= PRODUCT QUICK VIEW ================= */
   .product-overlay{
     position:fixed; inset:0; z-index:110; background:rgba(10,10,8,0.4);
@@ -468,74 +495,86 @@
       Voltar
     </a>
   </div>
-  <div class="hero-visual collection-hero-visual" id="heroVisual">
-    <video class="hero-video" id="heroVideo" src="hero-video.mp4" autoplay muted loop playsinline preload="auto" webkit-playsinline="true"></video>
-    <button class="hero-sound-btn" id="soundBtn" aria-label="Ativar som">
-      <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
-      <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 6a9 9 0 010 12"/></svg>
-    </button>
-  </div>
-  <div class="collection-intro">
-    <span class="eyebrow">Senza Pari</span>
-    <h1>Eclipse <em>Titanium</em></h1>
-    <p>Titânio escovado e fibra de carbono forjado, envelhecidos à mão. Uma coleção sobre peso, precisão e sombra.</p>
-    <a class="btn" href="#produtos-colecao" style="margin-top:18px;">Loja</a>
+  <div class="collection-intro no-video">
+    <span class="eyebrow">Atelier des Peaux Nobles</span>
+    <h1>Seu iPhone vestido como alta joalheria.</h1>
+    <p>Skins premium em peles nobres, com acabamento artesanal, textura sofisticada e encaixe preciso para um visual exclusivo.</p>
   </div>
 </div>
 
 <section class="section" id="produtos-colecao">
-  <div class="section-head"><h2>Peças da coleção</h2></div>
-  <div class="grid grid-uniform" id="collectionGrid">
-    <article class="card">
-      <button class="card-visual" style="display:block;width:100%;padding:0;background-image:url('eclipse-titanium-case-1.jpg');background-size:cover;background-position:center;" data-open-product="17" data-linha="eclipse-titanium-case"></button>
-      <div class="card-info">
-        <span class="card-tag">Titânio & Fibra de Carbono</span>
-        <p class="card-name">Case iPhone — Eclipse Titanium</p>
-        <p class="card-price">Sob consulta</p>
+  <div class="filter-bar">
+    <div class="filter-group">
+      <label for="modelFilter">Modelo</label>
+      <select id="modelFilter">
+        <option value="17">iPhone Series 17</option>
+        <option value="16">iPhone Series 16</option>
+        <option value="15">iPhone Series 15</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Cor</label>
+      <div class="filter-chips" id="colorFilter">
+        <button class="filter-chip selected" data-cor="todas">Todas</button>
+        <button class="filter-chip" data-cor="dourado">Dourado</button>
+        <button class="filter-chip" data-cor="preto">Preto</button>
+        <button class="filter-chip" data-cor="marmore">Mármore</button>
+        <button class="filter-chip" data-cor="champagne">Champagne</button>
       </div>
-    </article>
-    <article class="card">
-      <button class="card-visual" style="display:block;width:100%;padding:0;background-image:url('skin-dark-eclipse-1.jpg');background-size:cover;background-position:center;" data-open-product="17" data-linha="skin-dark-eclipse"></button>
-      <div class="card-info">
-        <span class="card-tag">Fibra de carbono forjado</span>
-        <p class="card-name">Skin — Dark Eclipse</p>
-        <p class="card-price">Sob consulta</p>
-      </div>
-    </article>
-    <article class="card">
-      <button class="card-visual" style="display:block;width:100%;padding:0;background-image:url('eclipse-titanium-watchband-1.jpg');background-size:cover;background-position:center;" data-open-product="U" data-linha="eclipse-titanium-watchband"></button>
-      <div class="card-info">
-        <span class="card-tag">Apple Watch Ultra</span>
-        <p class="card-name">Watch Band — Eclipse Titanium</p>
-        <p class="card-price">Sob consulta</p>
-      </div>
-    </article>
-    <article class="card">
-      <button class="card-visual" style="display:block;width:100%;padding:0;background-image:url('eclipse-titanium-airpods-1.jpg');background-size:cover;background-position:center;" data-open-product="U" data-linha="eclipse-titanium-airpods"></button>
-      <div class="card-info">
-        <span class="card-tag">Titânio & Fibra de Carbono</span>
-        <p class="card-name">AirPods — Eclipse Titanium</p>
-        <p class="card-price">Sob consulta</p>
-      </div>
-    </article>
-    <article class="card">
-      <button class="card-visual" style="display:block;width:100%;padding:0;background-image:url('eclipse-titanium-airtag-1.jpg');background-size:cover;background-position:center;" data-open-product="U" data-linha="eclipse-titanium-airtag"></button>
-      <div class="card-info">
-        <span class="card-tag">Titânio & Fibra de Carbono</span>
-        <p class="card-name">AirTag — Eclipse Titanium</p>
-        <p class="card-price">Sob consulta</p>
-      </div>
-    </article>
-    <article class="card">
-      <button class="card-visual" style="display:block;width:100%;padding:0;background-image:url('eclipse-titanium-wallet-1.jpg');background-size:cover;background-position:center;" data-open-product="U" data-linha="eclipse-titanium-wallet"></button>
-      <div class="card-info">
-        <span class="card-tag">Titânio & Fibra de Carbono</span>
-        <p class="card-name">Wallet — Eclipse Titanium</p>
-        <p class="card-price">Sob consulta</p>
-      </div>
-    </article>
+    </div>
   </div>
-  <p style="color:var(--muted);font-size:13px;margin-top:18px;">Novas peças desta coleção sendo adicionadas em breve.</p>
+
+  <div class="skins-grid" id="skinsGrid">
+    <button class="skin-card" data-open-product="17" data-linha="skin-ouro-escovado" data-cor="dourado">
+      <span class="skin-card-img" style="background-image:url('skin-ouro-escovado-1.png');"></span>
+      <span class="skin-card-info">
+        <span class="skin-card-name">Ouro Escovado</span>
+        <span class="skin-card-price">Sob consulta</span>
+      </span>
+    </button>
+    <button class="skin-card" data-open-product="17" data-linha="skin-gold-croco" data-cor="dourado">
+      <span class="skin-card-img" style="background-image:url('skin-gold-croco-1.png');"></span>
+      <span class="skin-card-info">
+        <span class="skin-card-name">Gold Croco</span>
+        <span class="skin-card-price">Sob consulta</span>
+      </span>
+    </button>
+    <button class="skin-card" data-open-product="17" data-linha="skin-black-croco" data-cor="preto">
+      <span class="skin-card-img" style="background-image:url('skin-black-croco-thumb.png');background-color:#111;"></span>
+      <span class="skin-card-info">
+        <span class="skin-card-name">Dark Black | Texture</span>
+        <span class="skin-card-price">Sob consulta</span>
+      </span>
+    </button>
+    <button class="skin-card" data-open-product="17" data-linha="skin-black-gold-marble" data-cor="marmore">
+      <span class="skin-card-img" style="background-image:url('skin-black-gold-marble-1.png');"></span>
+      <span class="skin-card-info">
+        <span class="skin-card-name">Black Gold Marble</span>
+        <span class="skin-card-price">Sob consulta</span>
+      </span>
+    </button>
+    <button class="skin-card" data-open-product="17" data-linha="skin-green-gold-marble" data-cor="marmore">
+      <span class="skin-card-img" style="background-image:url('skin-green-gold-marble-1.png');"></span>
+      <span class="skin-card-info">
+        <span class="skin-card-name">Green Gold Marble</span>
+        <span class="skin-card-price">Sob consulta</span>
+      </span>
+    </button>
+    <button class="skin-card" data-open-product="17" data-linha="skin-gold-champagne" data-cor="champagne">
+      <span class="skin-card-img" style="background-image:url('skin-gold-champagne-1.png');"></span>
+      <span class="skin-card-info">
+        <span class="skin-card-name">Gold Champagne</span>
+        <span class="skin-card-price">Sob consulta</span>
+      </span>
+    </button>
+    <button class="skin-card" data-open-product="17" data-linha="skin-dark-eclipse" data-cor="preto">
+      <span class="skin-card-img" style="background-image:url('skin-dark-eclipse-1.jpg');"></span>
+      <span class="skin-card-info">
+        <span class="skin-card-name">Dark Eclipse</span>
+        <span class="skin-card-price">Sob consulta</span>
+      </span>
+    </button>
+  </div>
 </section>
 
 <footer>
@@ -1254,6 +1293,34 @@
       heroVideo.muted = !heroVideo.muted;
       $('#soundBtn').classList.toggle('on', !heroVideo.muted);
       tryPlay();
+    });
+  }
+
+  // Skins shop: model + color filters
+  const modelFilterEl = $('#modelFilter');
+  if (modelFilterEl) {
+    function applyModelToCards(){
+      document.querySelectorAll('.skin-card[data-linha]').forEach(card => {
+        card.dataset.openProduct = modelFilterEl.value;
+      });
+    }
+    const params = new URLSearchParams(location.search);
+    const modeloParam = params.get('modelo');
+    if (modeloParam && ['15','16','17'].includes(modeloParam)) {
+      modelFilterEl.value = modeloParam;
+    }
+    applyModelToCards();
+    modelFilterEl.addEventListener('change', applyModelToCards);
+
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        const cor = chip.dataset.cor;
+        document.querySelectorAll('.skin-card').forEach(card => {
+          card.style.display = (cor === 'todas' || card.dataset.cor === cor) ? '' : 'none';
+        });
+      });
     });
   }
 
