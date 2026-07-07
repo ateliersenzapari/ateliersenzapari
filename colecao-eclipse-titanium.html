@@ -115,8 +115,10 @@
   }
   .hero-video{
     position:absolute; inset:0; width:100%; height:100%;
-    object-fit:cover; object-position:center;
+    object-fit:contain; object-position:center;
+    opacity:0; transition:opacity 0.9s ease;
   }
+  .hero-video.active{ opacity:1; }
   .hero-sound-btn{
     position:absolute; bottom:14px; right:14px; z-index:2;
     width:36px; height:36px; border-radius:50%;
@@ -469,7 +471,8 @@
     </a>
   </div>
   <div class="hero-visual collection-hero-visual" id="heroVisual">
-    <video class="hero-video" id="heroVideo" src="eclipse-titanium-hero-1.mp4" autoplay muted playsinline preload="auto" webkit-playsinline="true"></video>
+    <video class="hero-video active" id="heroVideo" src="eclipse-titanium-hero-1.mp4" autoplay muted playsinline preload="auto" webkit-playsinline="true"></video>
+    <video class="hero-video" id="heroVideoB" muted playsinline preload="auto" webkit-playsinline="true"></video>
     <button class="hero-sound-btn" id="soundBtn" aria-label="Ativar som">
       <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
       <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 6a9 9 0 010 12"/></svg>
@@ -1242,28 +1245,57 @@
     });
   });
 
-  // Hero: garante que o vídeo sempre tente tocar em loop, mesmo se o autoplay inicial for bloqueado
-  const heroVideo = $('#heroVideo');
-  if (heroVideo) {
-    heroVideo.muted = true;
-    const tryPlay = () => heroVideo.play().catch(() => {});
-    tryPlay();
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) tryPlay(); });
+  // Hero: toca os vídeos da coleção em sequência, com fade suave entre eles, e reinicia em loop ao final
+  const heroVideoA = $('#heroVideo');
+  const heroVideoB = $('#heroVideoB');
+  if (heroVideoA && heroVideoB) {
+    const HERO_PLAYLIST = ['eclipse-titanium-hero-1.mp4', 'eclipse-titanium-hero-2.mp4', 'eclipse-titanium-hero-3.mp4', 'eclipse-titanium-hero-4.mp4', 'eclipse-titanium-hero-5.mp4'];
+    const CROSSFADE_MS = 900;
+    let heroIndex = 0;
+    let activeVideo = heroVideoA;
+    let nextVideo = heroVideoB;
+    let muted = true;
+
+    const tryPlay = (v) => v.play().catch(() => {});
+    const setMuted = (state) => {
+      muted = state;
+      heroVideoA.muted = state;
+      heroVideoB.muted = state;
+    };
+    setMuted(true);
+    tryPlay(activeVideo);
+
+    // Pré-carrega o próximo vídeo da fila em segundo plano (pausado, invisível)
+    nextVideo.src = HERO_PLAYLIST[(heroIndex + 1) % HERO_PLAYLIST.length];
+    nextVideo.load();
+
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) tryPlay(activeVideo); });
 
     $('#soundBtn').addEventListener('click', () => {
-      heroVideo.muted = !heroVideo.muted;
-      $('#soundBtn').classList.toggle('on', !heroVideo.muted);
-      tryPlay();
+      setMuted(!muted);
+      $('#soundBtn').classList.toggle('on', !muted);
+      tryPlay(activeVideo);
     });
 
-    // Toca os vídeos da coleção em sequência e reinicia em loop ao final
-    const HERO_PLAYLIST = ['eclipse-titanium-hero-1.mp4', 'eclipse-titanium-hero-2.mp4', 'eclipse-titanium-hero-3.mp4', 'eclipse-titanium-hero-4.mp4', 'eclipse-titanium-hero-5.mp4'];
-    let heroIndex = 0;
-    heroVideo.addEventListener('ended', () => {
-      heroIndex = (heroIndex + 1) % HERO_PLAYLIST.length;
-      heroVideo.src = HERO_PLAYLIST[heroIndex];
-      tryPlay();
-    });
+    function crossfadeToNext(){
+      nextVideo.currentTime = 0;
+      tryPlay(nextVideo);
+      nextVideo.classList.add('active');
+      activeVideo.classList.remove('active');
+      setTimeout(() => {
+        activeVideo.pause();
+        const finished = activeVideo;
+        activeVideo = nextVideo;
+        nextVideo = finished;
+        heroIndex = (heroIndex + 1) % HERO_PLAYLIST.length;
+        // prepara o vídeo seguinte da fila no elemento que acabou de sair de cena
+        nextVideo.src = HERO_PLAYLIST[(heroIndex + 1) % HERO_PLAYLIST.length];
+        nextVideo.load();
+      }, CROSSFADE_MS);
+    }
+
+    heroVideoA.addEventListener('ended', () => { if (activeVideo === heroVideoA) crossfadeToNext(); });
+    heroVideoB.addEventListener('ended', () => { if (activeVideo === heroVideoB) crossfadeToNext(); });
   }
 
   // Bottom swipe gallery arrows (se existir nesta página)
