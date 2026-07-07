@@ -507,6 +507,13 @@
           <span class="swipe-card-sub">Titânio e fibra de carbono forjado</span>
         </span>
       </a>
+      <a class="swipe-card" href="colecao-alabaster-ceramic.html">
+        <span class="swipe-card-img" style="background-image:url('alabaster-ceramic-cover.jpg');background-size:cover;background-position:center;"></span>
+        <span class="swipe-card-text">
+          <span class="swipe-card-name">Alabaster Ceramic</span>
+          <span class="swipe-card-sub">Cerâmica branca e platina polida</span>
+        </span>
+      </a>
     </div>
     <div class="swipe-arrows">
       <button class="swipe-arrow" id="swipePrev" aria-label="Anterior">
@@ -1572,6 +1579,15 @@
         { id:'dark-eclipse', label:'Dark Eclipse', gallery:['skin-dark-eclipse-1.jpg', 'skin-dark-eclipse-2.jpg', 'skin-dark-eclipse-3.jpg', 'skin-dark-eclipse-4.jpg', 'skin-dark-eclipse-5.jpg'] },
       ],
     },
+    'skin-alabaster-pearl': {
+      kind: 'skin',
+      label: 'Alabaster Pearl',
+      desc: 'Skin ultrafina em cerâmica perolada branca, acabamento acetinado e textura mineral suave — proteção invisível com o toque silencioso da coleção Alabaster Ceramic.',
+      previewFit: 'cover',
+      colors: [
+        { id:'alabaster-pearl', label:'Alabaster Pearl', gallery:['skin-alabaster-pearl-1.jpg', 'skin-alabaster-pearl-2.jpg', 'skin-alabaster-pearl-3.jpg', 'skin-alabaster-pearl-4.jpg', 'skin-alabaster-pearl-5.jpg'] },
+      ],
+    },
   };
 
   function normalizeSearch(str){
@@ -1592,6 +1608,7 @@
     'skin-green-gold-marble': 'green gold marble marmore verde esmeralda dourado',
     'skin-gold-champagne': 'gold champagne dourado suave',
     'skin-dark-eclipse': 'dark eclipse preto escamado',
+    'skin-alabaster-pearl': 'alabaster pearl ceramica perolada branca',
   };
   const SEARCH_INDEX = [
     ...Object.entries(LINES).map(([key, data]) => ({
@@ -1602,6 +1619,7 @@
     })),
     { label: "L'Or Phénoménal", sub: 'Coleção', keywords: normalizeSearch("lor phenomenal colecao ouro"), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
     { label: "Eclipse Titanium", sub: 'Coleção', keywords: normalizeSearch("eclipse titanium colecao fibra carbono"), action: () => { location.href = 'colecao-eclipse-titanium.html'; } },
+    { label: "Alabaster Ceramic", sub: 'Coleção', keywords: normalizeSearch("alabaster ceramic colecao ceramica branca platina"), action: () => { location.href = 'colecao-alabaster-ceramic.html'; } },
     { label: "Atelier des Peaux Nobles", sub: 'Todas as Skins', keywords: normalizeSearch("atelier peaux nobles todas as skins joalheria"), action: () => { location.href = 'todas-as-skins.html'; } },
     { label: 'Watch Band', sub: 'Acessório', keywords: normalizeSearch('watch band pulseira apple watch'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
     { label: 'AirPods', sub: 'Acessório', keywords: normalizeSearch('airpods estojo fone'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },

@@ -574,6 +574,13 @@
         <span class="skin-card-price">Sob consulta</span>
       </span>
     </button>
+    <button class="skin-card" data-open-product="17" data-linha="skin-alabaster-pearl" data-cor="branco">
+      <span class="skin-card-img" style="background-image:url('skin-alabaster-pearl-1.jpg');"></span>
+      <span class="skin-card-info">
+        <span class="skin-card-name">Alabaster Pearl</span>
+        <span class="skin-card-price">Sob consulta</span>
+      </span>
+    </button>
   </div>
 </section>
 
@@ -950,6 +957,16 @@
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
+      <button class="menu-row" data-open-subsub="paneSkinsAlabasterPearl">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-alabaster-pearl-1.jpg" alt="Alabaster Pearl">
+          <span class="menu-row-text">
+            <span class="label">Alabaster Pearl</span>
+            <span class="sub">Cerâmica perolada branca</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
     </div>
 
     <div class="menu-pane pane-subsub" id="paneSkinsOuroEscovado">
@@ -1083,6 +1100,25 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="menu-row shop-all" data-open-product="17" data-linha="skin-dark-eclipse">Ver todas — Dark Eclipse</button>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneSkinsAlabasterPearl">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneSkins">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Alabaster Pearl — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="skin-alabaster-pearl"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="skin-alabaster-pearl"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="skin-alabaster-pearl"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="skin-alabaster-pearl">Ver todas — Alabaster Pearl</button>
     </div>
 
     <div class="menu-pane pane-sub" id="paneWatchbands">
@@ -1560,6 +1596,15 @@
         { id:'dark-eclipse', label:'Dark Eclipse', gallery:['skin-dark-eclipse-1.jpg', 'skin-dark-eclipse-2.jpg', 'skin-dark-eclipse-3.jpg', 'skin-dark-eclipse-4.jpg', 'skin-dark-eclipse-5.jpg'] },
       ],
     },
+    'skin-alabaster-pearl': {
+      kind: 'skin',
+      label: 'Alabaster Pearl',
+      desc: 'Skin ultrafina em cerâmica perolada branca, acabamento acetinado e textura mineral suave — proteção invisível com o toque silencioso da coleção Alabaster Ceramic.',
+      previewFit: 'cover',
+      colors: [
+        { id:'alabaster-pearl', label:'Alabaster Pearl', gallery:['skin-alabaster-pearl-1.jpg', 'skin-alabaster-pearl-2.jpg', 'skin-alabaster-pearl-3.jpg', 'skin-alabaster-pearl-4.jpg', 'skin-alabaster-pearl-5.jpg'] },
+      ],
+    },
     'eclipse-titanium-case': {
       kind: 'accessory',
       title: 'Case iPhone — Eclipse Titanium',
@@ -1630,6 +1675,7 @@
     'skin-green-gold-marble': 'green gold marble marmore verde esmeralda dourado',
     'skin-gold-champagne': 'gold champagne dourado suave',
     'skin-dark-eclipse': 'dark eclipse preto escamado',
+    'skin-alabaster-pearl': 'alabaster pearl ceramica perolada branca',
   };
   const SEARCH_INDEX = [
     ...Object.entries(LINES).map(([key, data]) => ({
@@ -1640,6 +1686,7 @@
     })),
     { label: "L'Or Phénoménal", sub: 'Coleção', keywords: normalizeSearch("lor phenomenal colecao ouro"), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
     { label: "Eclipse Titanium", sub: 'Coleção', keywords: normalizeSearch("eclipse titanium colecao fibra carbono"), action: () => { location.href = 'colecao-eclipse-titanium.html'; } },
+    { label: "Alabaster Ceramic", sub: 'Coleção', keywords: normalizeSearch("alabaster ceramic colecao ceramica branca platina"), action: () => { location.href = 'colecao-alabaster-ceramic.html'; } },
     { label: "Atelier des Peaux Nobles", sub: 'Todas as Skins', keywords: normalizeSearch("atelier peaux nobles todas as skins joalheria"), action: () => { location.href = 'todas-as-skins.html'; } },
     { label: 'Watch Band', sub: 'Acessório', keywords: normalizeSearch('watch band pulseira apple watch'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
     { label: 'AirPods', sub: 'Acessório', keywords: normalizeSearch('airpods estojo fone'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
