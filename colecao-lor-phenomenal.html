@@ -630,7 +630,7 @@
         </button>
         <span class="sub-title">Cases — Linhas</span>
       </div>
-      <button class="menu-row" data-open-subsub="paneCasesCuir">
+      <a class="menu-row" href="linha-cuir-supreme.html">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="cuir-supreme-menu-thumb.png" alt="Cuir Suprême">
           <span class="menu-row-text">
@@ -639,8 +639,8 @@
           </span>
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <button class="menu-row" data-open-subsub="paneCasesMetal">
+      </a>
+      <a class="menu-row" href="linha-metal.html">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="case-metal.png" alt="Metal">
           <span class="menu-row-text">
@@ -649,8 +649,8 @@
           </span>
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <button class="menu-row" data-open-subsub="paneCasesFinas">
+      </a>
+      <a class="menu-row" href="linha-superfinas.html">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="thumb-case.png" alt="Super Finas">
           <span class="menu-row-text">
@@ -659,8 +659,8 @@
           </span>
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <button class="menu-row" data-open-subsub="paneCasesTransparentes">
+      </a>
+      <a class="menu-row" href="linha-transparente.html">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="case-transparente.png" alt="Transparentes">
           <span class="menu-row-text">
@@ -669,7 +669,7 @@
           </span>
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
+      </a>
       <button class="menu-row" data-open-subsub="paneCasesTecido">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="thumb-case.png" alt="Tecido">
@@ -1394,6 +1394,14 @@
         { id:'preto', label:'Preto Fosco', gallery:['case-metal.png'] },
       ],
     },
+    'super-finas': {
+      kind: 'case',
+      label: 'Super Finas',
+      desc: 'Proteção ultra fina de 0,3mm de espessura — feita pra manter a leveza e o design original do seu iPhone.',
+      colors: [
+        { id:'preto', label:'Preto Fosco', gallery:['thumb-case.png'] },
+      ],
+    },
     'madeira': {
       kind: 'case',
       label: 'Metal & Madeira',
@@ -1483,6 +1491,7 @@
   const SEARCH_SYNONYMS = {
     'cuir-supreme': 'couro crocodilo',
     'metal': 'aluminio aeroespacial',
+    'super-finas': 'fina fino ultra fina 0.3mm',
     'madeira': 'madeira nobre nogueira',
     'transparente': 'cristal transparente invisivel',
     'marmore': 'marmore preto dourado veios',
