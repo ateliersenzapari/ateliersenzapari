@@ -469,7 +469,7 @@
     </a>
   </div>
   <div class="hero-visual collection-hero-visual" id="heroVisual">
-    <video class="hero-video" id="heroVideo" src="hero-video.mp4" autoplay muted loop playsinline preload="auto" webkit-playsinline="true"></video>
+    <video class="hero-video" id="heroVideo" src="eclipse-titanium-hero-1.mp4" autoplay muted playsinline preload="auto" webkit-playsinline="true"></video>
     <button class="hero-sound-btn" id="soundBtn" aria-label="Ativar som">
       <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
       <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 6a9 9 0 010 12"/></svg>
@@ -1253,6 +1253,15 @@
     $('#soundBtn').addEventListener('click', () => {
       heroVideo.muted = !heroVideo.muted;
       $('#soundBtn').classList.toggle('on', !heroVideo.muted);
+      tryPlay();
+    });
+
+    // Toca os vídeos da coleção em sequência e reinicia em loop ao final
+    const HERO_PLAYLIST = ['eclipse-titanium-hero-1.mp4', 'eclipse-titanium-hero-2.mp4', 'eclipse-titanium-hero-3.mp4', 'eclipse-titanium-hero-4.mp4', 'eclipse-titanium-hero-5.mp4'];
+    let heroIndex = 0;
+    heroVideo.addEventListener('ended', () => {
+      heroIndex = (heroIndex + 1) % HERO_PLAYLIST.length;
+      heroVideo.src = HERO_PLAYLIST[heroIndex];
       tryPlay();
     });
   }
