@@ -135,6 +135,10 @@
     line-height:1.1; letter-spacing:-0.01em; margin-bottom:14px;
   }
   .hero h1 em{ font-style:italic; color:var(--sage-deep); }
+  .jewel-headline{
+    font-family:'Neue Haas Grotesk Display', 'Helvetica Neue', Arial, sans-serif;
+    font-size:56px; font-weight:800; line-height:1.1; letter-spacing:-1.5px;
+  }
   .hero p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:46ch; margin-bottom:22px; }
   .btn{
     display:inline-flex; align-items:center; gap:10px; padding:14px 26px;
@@ -142,16 +146,37 @@
     transition:opacity 0.2s ease;
   }
   .btn:hover{ opacity:0.8; }
-  .skin-thumb-rail{
-    display:flex; gap:10px; overflow-x:auto; margin-top:20px; padding-bottom:2px;
-    -ms-overflow-style:none; scrollbar-width:none;
+  .btn.btn-disabled{ background:var(--sage); color:var(--muted); pointer-events:none; opacity:0.7; }
+
+  /* ---------- CATEGORY RAIL (shop by skin) ---------- */
+  .category-rail{ margin-top:30px; }
+  .category-rail-title{ font-size:13px; font-weight:700; letter-spacing:0.02em; margin-bottom:14px; }
+  .category-rail-scroll{
+    display:flex; gap:22px; overflow-x:auto; padding:2px 2px 10px;
+    -ms-overflow-style:none; scrollbar-width:none; scroll-snap-type:x proximity;
   }
-  .skin-thumb-rail::-webkit-scrollbar{ display:none; }
-  .skin-thumb{
-    flex:0 0 auto; width:56px; height:56px; border-radius:12px; overflow:hidden;
-    background:#FFFFFF; border:1px solid var(--line);
+  .category-rail-scroll::-webkit-scrollbar{ display:none; }
+  .category-item{
+    flex:0 0 auto; width:76px; display:flex; flex-direction:column; align-items:center; gap:9px;
+    scroll-snap-align:start;
   }
-  .skin-thumb img{ width:100%; height:100%; object-fit:contain; }
+  .category-item-img{
+    width:72px; height:72px; border-radius:50%; background-color:#fff;
+    background-size:cover; background-position:center; border:1px solid var(--line);
+    transition:border-color 0.2s ease;
+  }
+  .category-item:hover .category-item-img{ border-color:var(--sage-deep); }
+  .category-item-label{ font-size:11.5px; font-weight:600; text-align:center; line-height:1.25; color:var(--ink); }
+
+  /* ---------- MODEL PICKER + GATED CTA ---------- */
+  .model-picker{ margin-top:26px; padding-top:22px; border-top:1px solid var(--line); }
+  .model-picker-label{ display:block; font-size:12.5px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:10px; }
+  .model-options{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .model-opt{
+    padding:10px 16px; border-radius:999px; border:1px solid var(--line); background:var(--panel);
+    font-size:13px; font-weight:600; color:var(--ink); transition:all 0.15s ease;
+  }
+  .model-opt.selected{ background:var(--ink); border-color:var(--ink); color:#fff; }
 
   /* ---------- SECTIONS ---------- */
   .section{ max-width:1200px; margin:0 auto; padding:44px 20px; }
@@ -495,19 +520,50 @@
 
   <div class="hero-text">
     <span class="eyebrow">Atelier des Peaux Nobles</span>
-    <h1>A proteção que <em>brilha</em> como sua jóia.</h1>
-    <p>Skins e capinhas facetadas à mão, inspiradas no corte de pedras preciosas.</p>
-    <button class="btn" data-open-product="17" data-linha="skin-black-gold-marble">Ver coleção</button>
-    <div class="skin-thumb-rail" id="skinThumbRail">
-      <button class="skin-thumb" data-open-product="17" data-linha="skin-ouro-escovado">
-        <img src="skin-ouro-escovado-1.png" alt="Ouro Escovado" loading="lazy" decoding="async">
-      </button>
-      <button class="skin-thumb" data-open-product="17" data-linha="skin-gold-croco">
-        <img src="skin-gold-croco-1.png" alt="Gold Croco" loading="lazy" decoding="async">
-      </button>
-      <button class="skin-thumb" data-open-product="17" data-linha="skin-gold-champagne">
-        <img src="skin-gold-champagne-1.png" alt="Gold Champagne" loading="lazy" decoding="async">
-      </button>
+    <h1 class="jewel-headline">Seu iPhone vestido como alta joalheria</h1>
+
+    <section class="category-rail">
+      <h3 class="category-rail-title">Escolha sua skin</h3>
+      <div class="category-rail-scroll" id="categoryRail">
+        <button class="category-item" data-open-product="17" data-linha="skin-ouro-escovado">
+          <span class="category-item-img" style="background-image:url('skin-ouro-escovado-1.png');"></span>
+          <span class="category-item-label">Ouro Escovado</span>
+        </button>
+        <button class="category-item" data-open-product="17" data-linha="skin-gold-croco">
+          <span class="category-item-img" style="background-image:url('skin-gold-croco-1.png');"></span>
+          <span class="category-item-label">Gold Croco</span>
+        </button>
+        <button class="category-item" data-open-product="17" data-linha="skin-black-croco">
+          <span class="category-item-img" style="background-image:url('skin-black-croco-thumb.png');"></span>
+          <span class="category-item-label">Dark Black | Texture</span>
+        </button>
+        <button class="category-item" data-open-product="17" data-linha="skin-black-gold-marble">
+          <span class="category-item-img" style="background-image:url('skin-black-gold-marble-1.png');"></span>
+          <span class="category-item-label">Black Gold Marble</span>
+        </button>
+        <button class="category-item" data-open-product="17" data-linha="skin-green-gold-marble">
+          <span class="category-item-img" style="background-image:url('skin-green-gold-marble-1.png');"></span>
+          <span class="category-item-label">Green Gold Marble</span>
+        </button>
+        <button class="category-item" data-open-product="17" data-linha="skin-gold-champagne">
+          <span class="category-item-img" style="background-image:url('skin-gold-champagne-1.png');"></span>
+          <span class="category-item-label">Gold Champagne</span>
+        </button>
+        <button class="category-item" data-open-product="17" data-linha="skin-dark-eclipse">
+          <span class="category-item-img" style="background-image:url('skin-dark-eclipse-1.jpg');"></span>
+          <span class="category-item-label">Dark Eclipse</span>
+        </button>
+      </div>
+    </section>
+
+    <div class="model-picker">
+      <span class="model-picker-label">Escolha seu modelo</span>
+      <div class="model-options" id="modelOptions">
+        <button class="model-opt" data-model="17">iPhone Series 17</button>
+        <button class="model-opt" data-model="16">iPhone Series 16</button>
+        <button class="model-opt" data-model="15">iPhone Series 15</button>
+      </div>
+      <a class="btn btn-disabled" id="verTodasSkinsBtn" aria-disabled="true">Ver todas as Skins</a>
     </div>
   </div>
 </div>
@@ -1263,6 +1319,21 @@
     });
   }
 
+  // Model picker: gates the "Ver todas as Skins" CTA until a model is chosen
+  document.querySelectorAll('.model-opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.model-opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      const verBtn = $('#verTodasSkinsBtn');
+      verBtn.classList.remove('btn-disabled');
+      verBtn.setAttribute('aria-disabled', 'false');
+      verBtn.href = 'todas-as-skins.html?modelo=' + btn.dataset.model;
+    });
+  });
+  $('#verTodasSkinsBtn').addEventListener('click', (e) => {
+    if (e.currentTarget.classList.contains('btn-disabled')) e.preventDefault();
+  });
+
   // Bottom swipe gallery arrows
   const rail = $('#swipeRail');
   const cardWidth = () => rail.querySelector('.swipe-card').offsetWidth + 10;
@@ -1522,6 +1593,7 @@
     })),
     { label: "L'Or Phénoménal", sub: 'Coleção', keywords: normalizeSearch("lor phenomenal colecao ouro"), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
     { label: "Eclipse Titanium", sub: 'Coleção', keywords: normalizeSearch("eclipse titanium colecao fibra carbono"), action: () => { location.href = 'colecao-eclipse-titanium.html'; } },
+    { label: "Atelier des Peaux Nobles", sub: 'Todas as Skins', keywords: normalizeSearch("atelier peaux nobles todas as skins joalheria"), action: () => { location.href = 'todas-as-skins.html'; } },
     { label: 'Watch Band', sub: 'Acessório', keywords: normalizeSearch('watch band pulseira apple watch'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
     { label: 'AirPods', sub: 'Acessório', keywords: normalizeSearch('airpods estojo fone'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
     { label: 'AirTag', sub: 'Acessório', keywords: normalizeSearch('airtag chaveiro'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
