@@ -8,6 +8,7 @@ import {
 import {
   getFirestore, doc, setDoc, getDoc, collection, addDoc,
   query, orderBy, onSnapshot, serverTimestamp,
+  updateDoc, deleteDoc, collectionGroup,
 } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -76,9 +77,35 @@ async function getProfile(uid) {
   return snap.exists() ? snap.data() : null;
 }
 
+async function checkIsAdmin() {
+  if (!auth.currentUser) return false;
+  const snap = await getDoc(doc(db, "admins", auth.currentUser.uid));
+  return snap.exists();
+}
+
+function watchAllOrders(callback, onError) {
+  const q = query(collectionGroup(db, "orders"), orderBy("createdAt", "desc"));
+  return onSnapshot(
+    q,
+    (snap) => {
+      callback(snap.docs.map((d) => ({ id: d.id, uid: d.ref.parent.parent.id, ...d.data() })));
+    },
+    onError
+  );
+}
+
+function updateOrderStatus(uid, orderId, status) {
+  return updateDoc(doc(db, "users", uid, "orders", orderId), { status });
+}
+
+function deleteOrder(uid, orderId) {
+  return deleteDoc(doc(db, "users", uid, "orders", orderId));
+}
+
 window.senzaAccount = {
   auth, db,
   signUp, logIn, logOut, resetPassword, saveOrder, watchOrders, getProfile, resendVerification,
+  checkIsAdmin, watchAllOrders, updateOrderStatus, deleteOrder,
 };
 
 // ---------- Ícone de conta no header (dropdown) ----------
