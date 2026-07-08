@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Administrativo — SENZA PARI</title>
+<meta name="description" content="Painel interno de gestão de pedidos.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FAFAF8;
+    --panel: #FFFFFF;
+    --ink: #16181A;
+    --muted: #6B7268;
+    --line: #E4E6E0;
+    --sage: #D7DFD3;
+    --sage-deep: #AEBBA6;
+    --dark-hero: #101214;
+    --radius-cut: 16px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope', -apple-system, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; background:none; border:none; color:inherit; }
+  img,svg{ display:block; }
+  ::selection{ background:var(--sage-deep); color:#0B0C0A; }
+  :focus-visible{ outline:2px solid var(--sage-deep); outline-offset:3px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
+
+  .facet{
+    clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:60;
+    background:rgba(250,250,248,0.92);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 18px;
+    max-width:1200px; margin:0 auto;
+  }
+  .brand{ display:flex; align-items:center; gap:9px; }
+  .brand-mark{ width:17px; height:17px; flex:0 0 auto; }
+  .brand-mark path{ fill:var(--ink); }
+  .logo{
+    font-family:'Bodoni Moda', serif;
+    font-weight:500;
+    font-size:17px;
+    letter-spacing:0.1em;
+    color:var(--ink);
+  }
+  .header-icons{ display:flex; align-items:center; gap:17px; }
+  .account-dropdown{
+    position:absolute; top:calc(100% + 10px); right:0; z-index:70;
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    min-width:190px; padding:6px; box-shadow:0 10px 30px rgba(20,22,18,0.12);
+    opacity:0; pointer-events:none; transform:translateY(-6px);
+    transition:opacity 0.18s ease, transform 0.18s ease;
+  }
+  .account-dropdown.open{ opacity:1; pointer-events:all; transform:translateY(0); }
+  .account-dropdown-hello{ padding:10px 12px 6px; font-size:12px; color:var(--muted); font-weight:600; }
+  .account-dropdown-row{
+    display:block; width:100%; text-align:left; padding:10px 12px; font-size:14px;
+    border-radius:8px; font-family:inherit; cursor:pointer;
+  }
+  .account-dropdown-row:hover{ background:var(--bg); }
+  .account-dropdown-row + .account-dropdown-row{ border-top:1px solid var(--line); margin-top:2px; padding-top:12px; }
+  .icon-btn.logged-in svg{ stroke:var(--sage-deep); }
+
+  /* ---------- ACCOUNT PAGE ---------- */
+  .account-tabs{ display:flex; gap:8px; margin-bottom:22px; border-bottom:1px solid var(--line); }
+  .account-tab{ padding:10px 4px 12px; font-size:14px; font-weight:600; color:var(--muted); border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .account-tab.active{ color:var(--ink); border-bottom-color:var(--ink); }
+  .account-form{ display:flex; flex-direction:column; gap:16px; }
+  .account-form[hidden]{ display:none; }
+  .account-label{ display:flex; flex-direction:column; gap:6px; font-size:13px; font-weight:600; color:var(--muted); }
+  .account-label input{
+    font-family:inherit; font-size:15px; color:var(--ink); padding:13px 14px;
+    border:1px solid var(--line); border-radius:10px; background:var(--panel);
+  }
+  .account-label input:focus{ outline:none; border-color:var(--sage-deep); }
+  .account-submit{ width:100%; justify-content:center; margin-top:4px; }
+  .account-forgot{ font-size:13px; color:var(--muted); text-decoration:underline; text-align:center; margin-top:4px; }
+  .account-error{
+    background:#FBEAE8; border:1px solid #E9C2BD; color:#93392F; font-size:13px;
+    padding:12px 14px; border-radius:10px; margin-bottom:18px;
+  }
+  .account-verify-banner{
+    display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+    background:#FBF3E4; border:1px solid #EAD9B4; color:#7A5B1E; font-size:13px;
+    padding:14px 16px; border-radius:12px; margin-bottom:24px;
+  }
+  .account-verify-banner[hidden]{ display:none; }
+  .account-verify-banner p{ margin:0; line-height:1.5; }
+  .account-verify-banner button{
+    font-size:12.5px; font-weight:600; color:#7A5B1E; text-decoration:underline; white-space:nowrap;
+  }
+  .account-section-title{ font-family:'Bodoni Moda',serif; font-weight:500; font-size:19px; margin-bottom:14px; }
+  .account-orders{ display:flex; flex-direction:column; gap:12px; }
+  .account-order-empty{ color:var(--muted); font-size:14px; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px; text-align:center; }
+  .account-order-card{ background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
+  .account-order-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; gap:10px; }
+  .account-order-date{ font-size:12.5px; color:var(--muted); }
+  .account-order-status{ font-size:11.5px; font-weight:600; color:var(--sage-deep); text-transform:uppercase; letter-spacing:0.03em; }
+  .account-order-items{ font-size:13.5px; color:var(--ink); line-height:1.7; }
+  .admin-order-customer{ font-size:13px; font-weight:600; margin-bottom:2px; }
+  .admin-order-email{ font-size:12px; color:var(--muted); margin-bottom:12px; }
+  .admin-order-controls{ display:flex; align-items:center; gap:10px; margin-top:14px; flex-wrap:wrap; }
+  .admin-order-controls select{
+    font-family:inherit; font-size:13px; color:var(--ink); padding:9px 10px;
+    border:1px solid var(--line); border-radius:8px; background:var(--panel);
+  }
+  .admin-order-save{ font-size:12.5px; font-weight:600; padding:9px 14px; background:var(--ink); color:#fff; border-radius:8px; }
+  .admin-order-save:disabled{ opacity:0.5; }
+  .admin-order-delete{ font-size:12.5px; color:#93392F; text-decoration:underline; margin-left:auto; }
+  .account-orders-empty-page{ color:var(--muted); font-size:14px; text-align:center; padding:60px 0; }
+  .icon-btn{ width:22px; height:22px; display:flex; align-items:center; justify-content:center; position:relative; }
+  .icon-btn svg{ width:20px; height:20px; stroke:var(--ink); }
+
+  .search-panel{
+    max-height:0; overflow:hidden;
+    transition:max-height 0.32s cubic-bezier(.4,0,.2,1);
+  }
+  .search-panel.open{ max-height:86px; }
+  .search-panel.open.has-results{ max-height:70vh; overflow-y:auto; }
+  .search-field{
+    margin:14px 18px 16px; display:flex; align-items:center; gap:10px;
+    background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;
+  }
+  .search-field input{ border:none; outline:none; flex:1; font-size:15px; background:none; color:var(--ink); font-family:inherit; }
+  .search-field svg{ width:18px; height:18px; stroke:var(--muted); flex:0 0 auto; }
+  .search-results{ padding:0 18px 18px; display:flex; flex-direction:column; gap:8px; }
+  .search-result-row{
+    display:flex; align-items:center; justify-content:space-between; width:100%;
+    padding:13px 16px; background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    text-align:left; font-family:inherit;
+  }
+  .search-result-row .label{ font-size:14px; font-weight:600; color:var(--ink); }
+  .search-result-row .sub{ font-size:12px; color:var(--muted); margin-top:2px; }
+  .search-result-row svg{ width:15px; height:15px; stroke:var(--muted); flex:0 0 auto; }
+  .search-empty{ padding:0 18px 18px; font-size:13px; color:var(--muted); }
+
+  /* ---------- HERO (dark, moody — chrome stays light) ---------- */
+  .hero-wrap{ max-width:1200px; margin:0 auto; padding:0 0 40px; }
+  .hero-visual{
+    height:26vh; min-height:180px; width:100%;
+    background:linear-gradient(150deg,#23262B 0%, var(--dark-hero) 45%, #1a1d21 100%);
+    position:relative; overflow:hidden; border-radius:2px;
+  }
+  .hero-video{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:center;
+  }
+  .hero-sound-btn{
+    position:absolute; bottom:14px; right:14px; z-index:2;
+    width:36px; height:36px; border-radius:50%;
+    background:rgba(0,0,0,0.35); backdrop-filter:blur(6px);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-sound-btn svg{ width:16px; height:16px; stroke:#fff; }
+  .hero-sound-btn .icon-muted{ display:block; }
+  .hero-sound-btn .icon-on{ display:none; }
+  .hero-sound-btn.on .icon-muted{ display:none; }
+  .hero-sound-btn.on .icon-on{ display:block; }
+  .hero-text{ padding:26px 20px 0; }
+  .eyebrow{ font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block; }
+  .hero h1{
+    font-family:'Bodoni Moda', serif; font-weight:400; font-size:clamp(30px,7.5vw,48px);
+    line-height:1.1; letter-spacing:-0.01em; margin-bottom:14px;
+  }
+  .hero h1 em{ font-style:italic; color:var(--sage-deep); }
+  .hero p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:46ch; margin-bottom:22px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; padding:14px 26px;
+    background:var(--ink); color:#fff; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600;
+    transition:opacity 0.2s ease;
+  }
+  .btn:hover{ opacity:0.8; }
+
+  /* ---------- SECTIONS ---------- */
+  .section{ max-width:1200px; margin:0 auto; padding:44px 20px; }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:22px; gap:16px; }
+  .section-head h2{ font-family:'Bodoni Moda', serif; font-weight:500; font-size:24px; }
+  .section-head a{ font-size:12px; color:var(--muted); white-space:nowrap; }
+
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px 14px; }
+  .card-visual{ aspect-ratio:1/1.5; background:var(--sage); position:relative; overflow:hidden; border-radius:16px; }
+  .tone-gelo{ background:linear-gradient(150deg,#E7ECE3,#C7D2C1 75%); }
+  .tone-onix{ background:linear-gradient(150deg,#2E3230,#181A19 75%); }
+  .tone-champagne{ background:linear-gradient(150deg,#EFE4CF,#CBB98F 75%); }
+  .card-info{ padding:11px 2px 0; }
+  .card-name{ font-size:13.5px; font-weight:500; margin-bottom:3px; }
+  .card-price{ font-size:13px; color:var(--muted); }
+
+  /* ---------- BOTTOM SWIPE GALLERY (home) ---------- */
+  .swipe-gallery{ padding:16px 0 28px; background:#F1F2EE; }
+  .swipe-title{
+    font-family:'Bodoni Moda', serif; font-weight:600; font-size:clamp(22px,6vw,30px);
+    padding:0 20px 14px; letter-spacing:-0.01em;
+  }
+  .swipe-rail{
+    display:flex; gap:12px; overflow-x:auto; padding:0 20px;
+    scroll-snap-type:x mandatory; -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .swipe-rail::-webkit-scrollbar{ display:none; }
+  .swipe-card{
+    flex:0 0 58%; scroll-snap-align:start;
+    display:flex; flex-direction:column;
+    background:var(--panel); border-radius:16px; overflow:hidden;
+    box-shadow:0 4px 18px rgba(20,22,18,0.07);
+  }
+  .swipe-card-img{
+    width:100%; aspect-ratio:4/3;
+    background:var(--sage);
+  }
+  .swipe-card-text{ padding:10px 14px 14px; }
+  .swipe-card-name{ font-size:14px; font-weight:700; margin-bottom:2px; }
+  .swipe-card-sub{ font-size:12px; color:var(--muted); }
+  .sc-1 .swipe-card-img{ background:linear-gradient(150deg,#3a2f1a,#0f0d09 45%,#5c4a22 100%); }
+  .sc-blank .swipe-card-img{ background:#EEEFEA; }
+  .sc-blank .swipe-card-name{ color:var(--muted); font-weight:600; }
+  .sc-blank{ opacity:0.6; }
+  .swipe-arrows{ display:flex; gap:8px; justify-content:flex-end; padding:12px 20px 0; }
+  .swipe-arrow{
+    width:32px; height:32px; border-radius:50%; border:1px solid var(--line);
+    background:var(--panel); display:flex; align-items:center; justify-content:center;
+  }
+  .swipe-arrow svg{ width:14px; height:14px; stroke:var(--ink); }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:44px 20px 40px; max-width:1200px; margin:0 auto; border-top:1px solid var(--line); }
+  .footer-logo{ font-family:'Bodoni Moda', serif; font-size:18px; letter-spacing:0.08em; margin-bottom:16px; }
+  .footer-links{ display:flex; flex-direction:column; gap:9px; margin-bottom:24px; }
+  .footer-links a{ font-size:13px; color:var(--muted); }
+  .footer-bottom{ display:flex; justify-content:space-between; font-size:11px; color:var(--muted); }
+
+  /* ================= MENU OVERLAY ================= */
+  .menu-overlay{
+    position:fixed; inset:0; z-index:90; background:var(--bg);
+    transform:translateX(100%); transition:transform 0.34s cubic-bezier(.4,0,.2,1);
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .menu-overlay.open{ transform:translateX(0); }
+  .menu-overlay .overlay-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--line); transition:opacity 0.2s ease; }
+  .menu-overlay.sub-open .overlay-top{ opacity:0; pointer-events:none; position:absolute; }
+  .menu-panes{ position:relative; flex:1; overflow:hidden; }
+  .menu-pane{
+    position:absolute; inset:0; overflow-y:auto;
+    padding:18px 18px 60px;
+    transform:translateX(0); transition:transform 0.3s cubic-bezier(.4,0,.2,1);
+    background:var(--bg);
+  }
+  .menu-pane.pane-sub{ transform:translateX(100%); z-index:2; }
+  .menu-pane.pane-sub.active{ transform:translateX(0); }
+  .menu-pane.pane-main.pushed{ transform:translateX(-100%); }
+  .menu-pane.pane-subsub{ transform:translateX(100%); z-index:3; }
+  .menu-pane.pane-subsub.active{ transform:translateX(0); }
+  .menu-pane.pane-sub.pushed{ transform:translateX(-100%); }
+
+  .menu-row{
+    display:flex; align-items:center; justify-content:space-between;
+    width:100%; box-sizing:border-box;
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:12px 18px 12px 12px; margin-bottom:12px;
+    font-size:15px; text-align:left;
+  }
+  .menu-row-main{ display:flex; align-items:center; gap:16px; }
+  .menu-row-thumb{
+    width:92px; height:92px; border-radius:12px; object-fit:contain;
+    background:#FFFFFF; flex:0 0 auto; padding:6px; box-sizing:border-box;
+    border:1px solid var(--line);
+  }
+  .menu-row-text{ display:flex; flex-direction:column; gap:2px; }
+  .menu-row .label{ font-size:16px; font-weight:600; }
+  .menu-row .sub{ font-size:13px; color:var(--muted); }
+  .menu-row svg{ width:16px; height:16px; stroke:var(--muted); flex:0 0 auto; }
+  .menu-row.shop-all{ justify-content:center; text-align:center; font-weight:600; margin-top:6px; }
+
+  .sub-head{ display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-top:2px; }
+  .back-btn{
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; background:var(--panel); flex:0 0 auto;
+  }
+  .back-btn svg{ width:16px; height:16px; stroke:var(--ink); }
+  .sub-title{ font-size:16px; font-weight:600; }
+
+  /* ================= LOGO TRANSITION SPLASH ================= */
+  .splash{
+    position:fixed; inset:0; z-index:200; background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none;
+  }
+  .splash.show{ opacity:1; pointer-events:all; transition:opacity 0.15s ease; }
+  .splash span{
+    font-family:'Bodoni Moda', serif; font-weight:400; font-size:26px; letter-spacing:0.16em;
+    opacity:0; transform:translateY(6px) scale(0.98);
+  }
+  .splash.show span{ animation:splashIn 0.85s cubic-bezier(.2,.7,.3,1) forwards; }
+  @keyframes splashIn{
+    0%{ opacity:0; transform:translateY(6px) scale(0.98); }
+    35%{ opacity:1; transform:translateY(0) scale(1); }
+    80%{ opacity:1; }
+    100%{ opacity:0; }
+  }
+
+  /* ---------- DESKTOP ---------- */
+  @media (min-width:860px){
+    .header-inner{ padding:18px 40px; }
+    .hero-wrap{
+      display:grid; grid-template-columns:1fr 1fr; grid-template-areas:"text visual" "gallery gallery";
+      align-items:center; gap:16px 40px; padding:0 40px 60px;
+    }
+    .hero-visual{ grid-area:visual; aspect-ratio:3/4; height:auto; }
+    .hero-text{ grid-area:text; padding:0; }
+    .swipe-gallery{ grid-area:gallery; }
+    .section{ padding:60px 40px; }
+    .grid{ grid-template-columns:repeat(4,1fr); gap:20px; }
+    .swipe-card{ flex:0 0 32%; }
+    .menu-pane{ max-width:420px; }
+  }
+  .back-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); font-weight:600; }
+  .back-link svg{ width:14px; height:14px; stroke:var(--muted); }
+  /* ================= PRODUCT QUICK VIEW ================= */
+  .product-overlay{
+    position:fixed; inset:0; z-index:110; background:rgba(10,10,8,0.4);
+    display:flex; align-items:flex-end; justify-content:center;
+    opacity:0; pointer-events:none; transition:opacity 0.25s ease;
+  }
+  .product-overlay.open{ opacity:1; pointer-events:all; }
+  .product-sheet{
+    background:var(--bg); width:100%; max-width:520px; max-height:94vh; overflow-y:auto;
+    border-radius:20px 20px 0 0;
+    transform:translateY(100%); transition:transform 0.3s cubic-bezier(.4,0,.2,1);
+  }
+  .product-overlay.open .product-sheet{ transform:translateY(0); }
+  .product-sheet-top{
+    position:sticky; top:0; z-index:2; display:flex; justify-content:space-between; align-items:center;
+    padding:14px 18px; background:rgba(250,250,248,0.95); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); border-radius:20px 20px 0 0;
+  }
+  .product-back-label{ font-size:13px; font-weight:600; color:var(--muted); }
+  .product-close{ width:32px; height:32px; border-radius:50%; border:1px solid var(--line); background:var(--panel); display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+  .product-close svg{ width:14px; height:14px; stroke:var(--ink); }
+  .product-body{ padding:18px 20px 28px; }
+  .product-preview{ position:relative; width:100%; aspect-ratio:3/4; background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:12px; display:flex; align-items:center; justify-content:center; touch-action:pan-y; }
+  .product-preview img{ width:100%; height:100%; object-fit:contain; }
+  .gallery-nav-btn{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+    width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.9); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .gallery-nav-btn[hidden]{ display:none; }
+  .gallery-nav-btn.prev{ left:10px; }
+  .gallery-nav-btn.next{ right:10px; }
+  .gallery-nav-btn svg{ width:16px; height:16px; stroke:var(--ink); }
+  .gallery-dots{ position:absolute; bottom:12px; left:0; right:0; z-index:2; display:flex; justify-content:center; gap:6px; }
+  .gallery-dot{ width:6px; height:6px; border-radius:3px; background:rgba(22,24,26,0.28); transition:width 0.2s, background 0.2s; }
+  .gallery-dot.active{ width:16px; background:var(--ink); }
+  .product-preview.fit-cover img{ object-fit:cover; }
+  .thumb-row.fit-cover .thumb img{ object-fit:cover; }
+  .product-head-row{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:16px; margin-bottom:4px; }
+  .product-title{ font-family:'Bodoni Moda',serif; font-size:21px; font-weight:500; }
+  .product-price{ font-size:14px; color:var(--muted); white-space:nowrap; }
+  .product-desc{ font-size:14px; color:var(--ink); line-height:1.65; margin-top:16px; margin-bottom:22px; }
+  .swatch-label{ font-size:13px; font-weight:600; color:var(--ink); margin-bottom:10px; }
+  .swatch-label span{ font-weight:400; color:var(--muted); }
+  .thumb-row{ display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; }
+  .thumb{
+    width:56px; height:56px; border-radius:10px; border:2px solid transparent;
+    padding:4px; background:var(--panel); box-shadow:0 0 0 1px var(--line);
+    display:flex; align-items:center; justify-content:center; flex:0 0 auto; box-sizing:border-box;
+  }
+  .thumb img{ width:100%; height:100%; object-fit:contain; border-radius:4px; }
+  .thumb.selected{ border-color:var(--sage-deep); box-shadow:0 0 0 1px var(--sage-deep); }
+  .product-qty{ display:flex; align-items:center; gap:16px; margin-bottom:20px; }
+  .qty-btn{ width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:var(--panel); display:flex; align-items:center; justify-content:center; font-size:16px; }
+  .qty-value{ font-size:15px; font-weight:600; min-width:20px; text-align:center; }
+  .product-add-btn{
+    width:100%; padding:16px; background:var(--ink); color:#fff; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600; border-radius:12px;
+  }
+  .product-add-btn:active{ opacity:0.85; }
+  .add-confirm{ font-size:13px; color:var(--sage-deep); font-weight:600; text-align:center; margin-top:12px; opacity:0; transition:opacity 0.2s ease; }
+  .add-confirm.show{ opacity:1; }
+  .product-ship-note{ display:flex; align-items:center; justify-content:center; gap:7px; font-size:12px; color:var(--muted); margin-top:16px; text-align:center; }
+  .product-ship-note svg{ flex:0 0 auto; stroke:var(--muted); }
+  .product-ship-note a{ color:var(--muted); text-decoration:underline; }
+
+  .product-accordion{ border-top:1px solid var(--line); margin-top:26px; }
+  .accordion-item{ border-bottom:1px solid var(--line); }
+  .accordion-head{
+    width:100%; display:flex; justify-content:space-between; align-items:center;
+    padding:16px 0; font-size:14px; font-weight:600; text-align:left;
+  }
+  .accordion-head svg{ width:14px; height:14px; stroke:var(--ink); transition:transform 0.2s ease; flex:0 0 auto; }
+  .accordion-item.open .accordion-head svg{ transform:rotate(180deg); }
+  .accordion-panel{ max-height:0; overflow:hidden; transition:max-height 0.25s ease; }
+  .accordion-item.open .accordion-panel{ max-height:320px; }
+  .accordion-panel ul{ padding:0 0 16px 18px; color:var(--muted); font-size:13.5px; line-height:1.8; }
+
+  .related-section{ margin-top:30px; }
+  .related-title{ font-family:'Bodoni Moda',serif; font-size:16px; font-weight:500; margin-bottom:12px; }
+  .related-row{ display:flex; gap:12px; overflow-x:auto; padding-bottom:4px; }
+  .related-card{
+    flex:0 0 42%; background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden;
+  }
+  .related-card-img{ width:100%; aspect-ratio:1/1; background:var(--sage); }
+  .related-card-img img{ width:100%; height:100%; object-fit:cover; }
+  .related-card-info{ padding:8px 10px 12px; }
+  .related-card-name{ font-size:12.5px; font-weight:600; margin-bottom:2px; }
+  .related-card-sub{ font-size:11px; color:var(--muted); }
+
+  /* ================= CART DRAWER ================= */
+  .cart-overlay{
+    position:fixed; inset:0; z-index:120; background:rgba(10,10,8,0.4);
+    opacity:0; pointer-events:none; transition:opacity 0.25s ease;
+    display:flex; justify-content:flex-end;
+  }
+  .cart-overlay.open{ opacity:1; pointer-events:all; }
+  .cart-panel{
+    background:var(--bg); width:100%; max-width:400px; height:100%;
+    display:flex; flex-direction:column;
+    transform:translateX(100%); transition:transform 0.3s cubic-bezier(.4,0,.2,1);
+  }
+  .cart-overlay.open .cart-panel{ transform:translateX(0); }
+  .cart-header{ display:flex; align-items:center; justify-content:space-between; padding:18px; border-bottom:1px solid var(--line); }
+  .cart-title{ font-family:'Bodoni Moda',serif; font-size:18px; font-weight:500; }
+  .cart-items{ flex:1; overflow-y:auto; padding:16px 18px; }
+  .cart-empty{ color:var(--muted); font-size:14px; text-align:center; padding:40px 0; }
+  .cart-item{ display:flex; gap:12px; margin-bottom:16px; }
+  .cart-item-img{ width:64px; height:64px; border-radius:10px; border:1px solid var(--line); background:var(--panel); flex:0 0 auto; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .cart-item-img img{ width:100%; height:100%; object-fit:contain; }
+  .cart-item-info{ flex:1; display:flex; flex-direction:column; gap:2px; min-width:0; }
+  .cart-item-name{ font-size:13.5px; font-weight:600; }
+  .cart-item-meta{ font-size:12px; color:var(--muted); }
+  .cart-item-row{ display:flex; align-items:center; justify-content:space-between; margin-top:6px; }
+  .cart-item-qty{ display:flex; align-items:center; gap:10px; }
+  .cart-qty-btn{ width:26px; height:26px; border-radius:50%; border:1px solid var(--line); background:var(--panel); display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .cart-remove{ font-size:11px; color:var(--muted); text-decoration:underline; }
+  .cart-footer{ padding:18px; border-top:1px solid var(--line); }
+  .cart-total-row{ display:flex; justify-content:space-between; font-size:14px; margin-bottom:14px; }
+  .cart-checkout-btn{
+    width:100%; padding:16px; background:var(--ink); color:#fff; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600; border-radius:12px;
+  }
+  .cart-note{ font-size:11px; color:var(--muted); text-align:center; margin-top:10px; }
+  .cart-badge{
+    position:absolute; top:-4px; right:-6px; background:var(--ink); color:#fff;
+    font-size:10px; font-weight:700; min-width:16px; height:16px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center; padding:0 4px; line-height:1;
+  }
+  .cart-badge.hidden{ display:none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <button class="brand" id="logoBtn" aria-label="SENZA PARI — voltar à página inicial">
+      <svg class="brand-mark" viewBox="0 0 24 24"><path d="M12 2l6 7-6 13-6-13z"/></svg>
+      <span class="logo">SENZA PARI</span>
+    </button>
+    <div class="header-icons">
+      <button class="icon-btn" id="accountBtn" aria-label="Conta">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+      </button>
+      <button class="icon-btn" id="searchBtn" aria-label="Pesquisar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </button>
+      <button class="icon-btn" id="cartBtn" aria-label="Carrinho">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L4 3H2"/></svg>
+        <span class="cart-badge hidden" id="cartBadge">0</span>
+      </button>
+      <button class="icon-btn" id="menuBtn" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="search-panel" id="searchPanel">
+    <div class="search-field">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" placeholder="Buscar produtos..." id="searchInput">
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</header>
+
+
+<section class="section" style="max-width:680px;">
+  <div class="collection-back" style="padding:0 0 20px;">
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+      Voltar
+    </a>
+  </div>
+
+  <!-- LOGGED OUT: login -->
+  <div id="authSection" style="max-width:400px;">
+    <span class="eyebrow">Senza Pari</span>
+    <h1 style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(28px,7vw,42px);margin:14px 0 24px;">Painel administrativo</h1>
+
+    <p class="account-error" id="authError" hidden></p>
+
+    <form id="loginForm" class="account-form">
+      <label class="account-label">E-mail
+        <input type="email" name="email" required autocomplete="email">
+      </label>
+      <label class="account-label">Senha
+        <input type="password" name="password" required autocomplete="current-password">
+      </label>
+      <button type="submit" class="btn account-submit">Entrar</button>
+      <button type="button" class="account-forgot" id="forgotBtn">Esqueci minha senha</button>
+    </form>
+  </div>
+
+  <!-- LOGGED IN, NÃO-ADMIN -->
+  <div id="deniedSection" hidden style="max-width:400px;">
+    <span class="eyebrow">Senza Pari</span>
+    <h1 style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(28px,7vw,42px);margin:14px 0 14px;">Acesso restrito</h1>
+    <p style="color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:24px;">Esta conta não tem permissão pra acessar o painel administrativo.</p>
+    <button class="account-forgot" id="deniedLogoutBtn">Sair da conta</button>
+  </div>
+
+  <!-- LOGGED IN, ADMIN -->
+  <div id="adminSection" hidden>
+    <span class="eyebrow">Senza Pari</span>
+    <h1 style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(28px,7vw,42px);margin:14px 0 24px;">Pedidos</h1>
+    <div id="adminOrdersList" class="account-orders"></div>
+    <button class="account-forgot" id="adminLogoutBtn" style="margin-top:24px;">Sair da conta</button>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">SENZA PARI</span>
+  <nav class="footer-links">
+    <a href="colecao-lor-phenomenal.html">Coleções</a>
+    <a href="sobre.html">Sobre o Atelier</a>
+    <a href="trocas-devolucoes.html">Trocas e devoluções</a>
+    <a href="contato.html">Fale conosco</a>
+  </nav>
+  <div class="footer-bottom"><span>© 2026 Senza Pari Atelier</span><span>Recife, Brasil</span></div>
+</footer>
+<!-- MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="overlay-top">
+    <button class="logo" id="logoBtnMenu" aria-label="SENZA PARI — voltar à página inicial" style="background:none;border:none;padding:0;">SENZA PARI</button>
+    <div class="header-icons">
+      <button class="icon-btn" id="cartBtnMenu" aria-label="Carrinho">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L4 3H2"/></svg>
+        <span class="cart-badge hidden" id="cartBadgeMenu">0</span>
+      </button>
+      <button class="icon-btn" id="menuClose" aria-label="Fechar menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="menu-panes">
+    <div class="menu-pane pane-main" id="paneMain">
+      <button class="menu-row" data-open-sub="cases">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="thumb-case.png" alt="Cases">
+          <span class="menu-row-text">
+            <span class="label">Cases</span>
+            <span class="sub">Série 15 & Mais</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <a class="menu-row" href="todas-as-skins.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="thumb-skin.png" alt="Skins">
+          <span class="menu-row-text">
+            <span class="label">Skins</span>
+            <span class="sub">Acabamento facetado</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="colecao-lor-phenomenal.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="thumb-wallet.png" alt="Wallets">
+          <span class="menu-row-text">
+            <span class="label">Wallets</span>
+            <span class="sub">MagSafe Card Holder</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="colecao-lor-phenomenal.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="thumb-airtag.png" alt="AirTag Accessories">
+          <span class="menu-row-text">
+            <span class="label">AirTag Accessories</span>
+          </span>
+        </span>
+      </a>
+      <button class="menu-row" data-open-sub="watchbands">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="thumb-watchband.png" alt="Watch Bands">
+          <span class="menu-row-text">
+            <span class="label">Watch Bands</span>
+            <span class="sub">Apple Watch Ultra</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-sub="airpods">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="thumb-airpods.png" alt="AirPods">
+          <span class="menu-row-text">
+            <span class="label">AirPods</span>
+            <span class="sub">Estojo em couro</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="menu-pane pane-sub" id="paneCases">
+      <div class="sub-head">
+        <button class="back-btn" data-back>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Cases — Linhas</span>
+      </div>
+      <a class="menu-row" href="linha-cuir-supreme.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="cuir-supreme-menu-thumb.png" alt="Cuir Suprême">
+          <span class="menu-row-text">
+            <span class="label">Cuir Suprême</span>
+            <span class="sub">Couro de crocodilo</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="linha-metal.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="case-metal.png" alt="Metal">
+          <span class="menu-row-text">
+            <span class="label">Metal</span>
+            <span class="sub">Alumínio aeroespacial</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="linha-superfinas.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="thumb-case.png" alt="Super Finas">
+          <span class="menu-row-text">
+            <span class="label">Super Finas</span>
+            <span class="sub">0,3mm de espessura</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="linha-transparente.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="case-transparente.png" alt="Transparentes">
+          <span class="menu-row-text">
+            <span class="label">Transparentes</span>
+            <span class="sub">Proteção invisível</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <button class="menu-row" data-open-subsub="paneCasesTecido">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="thumb-case.png" alt="Tecido">
+          <span class="menu-row-text">
+            <span class="label">Tecido</span>
+            <span class="sub">Acabamento têxtil</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-subsub="paneCasesMadeira">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="case-madeira.png" alt="Metal & Madeira">
+          <span class="menu-row-text">
+            <span class="label">Metal & Madeira</span>
+            <span class="sub">Alumínio e madeira nobre</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-subsub="paneCasesMarmore">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="case-marmore-1.png" alt="Mármore">
+          <span class="menu-row-text">
+            <span class="label">Mármore</span>
+            <span class="sub">Veios dourados sobre preto</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <a class="menu-row shop-all" href="linha-cuir-supreme.html">Ver todas as Cases</a>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneCasesCuir">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneCases">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Cuir Suprême — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="cuir-supreme"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="cuir-supreme"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="cuir-supreme"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <a class="menu-row shop-all" href="linha-cuir-supreme.html">Ver todas — Cuir Suprême</a>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneCasesMetal">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneCases">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Metal — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="metal"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="metal"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="metal"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="metal">Ver todas — Metal</button>
+    </div>
+    <div class="menu-pane pane-subsub" id="paneCasesFinas">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneCases">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Super Finas — Série</span>
+      </div>
+      <a class="menu-row" href="#"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row shop-all" href="#">Ver todas — Super Finas</a>
+    </div>
+    <div class="menu-pane pane-subsub" id="paneCasesTransparentes">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneCases">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Transparentes — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="transparente"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="transparente"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="transparente"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="transparente">Ver todas — Transparentes</button>
+    </div>
+    <div class="menu-pane pane-subsub" id="paneCasesTecido">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneCases">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Tecido — Série</span>
+      </div>
+      <a class="menu-row" href="#"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row shop-all" href="#">Ver todas — Tecido</a>
+    </div>
+    <div class="menu-pane pane-subsub" id="paneCasesMadeira">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneCases">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Metal & Madeira — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="madeira"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="madeira"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="madeira"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="madeira">Ver todas — Metal & Madeira</button>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneCasesMarmore">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneCases">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Mármore — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="marmore"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="marmore"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="marmore"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="marmore">Ver todas — Mármore</button>
+    </div>
+
+    <div class="menu-pane pane-sub" id="paneSkins">
+      <div class="sub-head">
+        <button class="back-btn" data-back>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Skins — Linhas</span>
+      </div>
+      <button class="menu-row" data-open-subsub="paneSkinsOuroEscovado">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-ouro-escovado-thumb.png" alt="Ouro Escovado">
+          <span class="menu-row-text">
+            <span class="label">Ouro Escovado</span>
+            <span class="sub">Acabamento metálico escovado</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-subsub="paneSkinsGoldCroco">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-gold-croco-thumb.png" alt="Gold Croco">
+          <span class="menu-row-text">
+            <span class="label">Gold Croco</span>
+            <span class="sub">Textura crocodilo dourada</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-subsub="paneSkinsBlackCroco">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-black-croco-thumb.png" alt="Dark Black | Texture">
+          <span class="menu-row-text">
+            <span class="label">Dark Black | Texture</span>
+            <span class="sub">Textura preta fosca</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-subsub="paneSkinsBlackGoldMarble">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-black-gold-marble-thumb.png" alt="Black Gold Marble">
+          <span class="menu-row-text">
+            <span class="label">Black Gold Marble</span>
+            <span class="sub">Mármore preto & veios dourados</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-subsub="paneSkinsGreenGoldMarble">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-green-gold-marble-thumb.png" alt="Green Gold Marble">
+          <span class="menu-row-text">
+            <span class="label">Green Gold Marble</span>
+            <span class="sub">Mármore verde & veios dourados</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-subsub="paneSkinsGoldChampagne">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-gold-champagne-thumb.png" alt="Gold Champagne">
+          <span class="menu-row-text">
+            <span class="label">Gold Champagne</span>
+            <span class="sub">Acabamento metálico champagne</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-subsub="paneSkinsDarkEclipse">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="skin-dark-eclipse-thumb.png" alt="Dark Eclipse">
+          <span class="menu-row-text">
+            <span class="label">Dark Eclipse</span>
+            <span class="sub">Textura escamada preta</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneSkinsOuroEscovado">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneSkins">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Ouro Escovado — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="skin-ouro-escovado"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="skin-ouro-escovado"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="skin-ouro-escovado"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="skin-ouro-escovado">Ver todas — Ouro Escovado</button>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneSkinsGoldCroco">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneSkins">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Gold Croco — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="skin-gold-croco"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="skin-gold-croco"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="skin-gold-croco"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="skin-gold-croco">Ver todas — Gold Croco</button>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneSkinsBlackCroco">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneSkins">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Dark Black | Texture — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="skin-black-croco"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="skin-black-croco"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="skin-black-croco"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="skin-black-croco">Ver todas — Dark Black | Texture</button>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneSkinsBlackGoldMarble">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneSkins">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Black Gold Marble — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="skin-black-gold-marble"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="skin-black-gold-marble"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="skin-black-gold-marble"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="skin-black-gold-marble">Ver todas — Black Gold Marble</button>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneSkinsGreenGoldMarble">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneSkins">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Green Gold Marble — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="skin-green-gold-marble"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="skin-green-gold-marble"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="skin-green-gold-marble"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="skin-green-gold-marble">Ver todas — Green Gold Marble</button>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneSkinsGoldChampagne">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneSkins">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Gold Champagne — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="skin-gold-champagne"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="skin-gold-champagne"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="skin-gold-champagne"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="skin-gold-champagne">Ver todas — Gold Champagne</button>
+    </div>
+
+    <div class="menu-pane pane-subsub" id="paneSkinsDarkEclipse">
+      <div class="sub-head">
+        <button class="back-btn" data-back-to="paneSkins">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Dark Eclipse — Série</span>
+      </div>
+      <button class="menu-row" data-open-product="17" data-linha="skin-dark-eclipse"><span class="label">Série 17</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="skin-dark-eclipse"><span class="label">Série 16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="skin-dark-eclipse"><span class="label">Série 15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="skin-dark-eclipse">Ver todas — Dark Eclipse</button>
+    </div>
+
+    <div class="menu-pane pane-sub" id="paneWatchbands">
+      <div class="sub-head">
+        <button class="back-btn" data-back>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Watch Bands — Ultra</span>
+      </div>
+      <a class="menu-row" href="#"><span class="label">Apple Watch Ultra 3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#"><span class="label">Apple Watch Ultra 2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#"><span class="label">Apple Watch Ultra</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row shop-all" href="colecao-lor-phenomenal.html">Ver todas as Watch Bands</a>
+    </div>
+
+    <div class="menu-pane pane-sub" id="paneAirpods">
+      <div class="sub-head">
+        <button class="back-btn" data-back>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">AirPods</span>
+      </div>
+      <a class="menu-row" href="#"><span class="label">AirPods Pro 3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#"><span class="label">AirPods Pro 2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row" href="#"><span class="label">AirPods</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row shop-all" href="colecao-lor-phenomenal.html">Ver todos os AirPods</a>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT QUICK VIEW -->
+<div class="product-overlay" id="productOverlay">
+  <div class="product-sheet">
+    <div class="product-sheet-top">
+      <span class="product-back-label" id="productBackLabel">Cuir Suprême</span>
+      <button class="product-close" id="productClose" aria-label="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="product-body">
+      <div class="product-preview" id="productPreview">
+        <img id="productPreviewImg" src="" alt="">
+        <button class="gallery-nav-btn prev" id="galleryPrevBtn" aria-label="Foto anterior" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="gallery-nav-btn next" id="galleryNextBtn" aria-label="Próxima foto" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <div class="gallery-dots" id="galleryDots"></div>
+      </div>
+      <div class="thumb-row" id="productSwatches"></div>
+      <div class="product-head-row">
+        <p class="product-title" id="productTitle">Case iPhone — Cuir Suprême</p>
+        <span class="product-price">Sob consulta</span>
+      </div>
+      <p class="product-desc" id="productDesc">Couro legítimo com acabamento liso e toque macio, cortado e costurado à mão — pensado pra unir proteção e sofisticação ao seu iPhone.</p>
+      <p class="swatch-label">Cor: <span id="colorLabelText">—</span></p>
+      <div class="product-qty">
+        <button class="qty-btn" id="qtyMinus" aria-label="Diminuir quantidade">−</button>
+        <span class="qty-value" id="qtyValue">1</span>
+        <button class="qty-btn" id="qtyPlus" aria-label="Aumentar quantidade">+</button>
+      </div>
+      <button class="product-add-btn" id="productAddBtn">Adicionar ao carrinho</button>
+      <p class="add-confirm" id="addConfirm">Adicionado ao carrinho ✓</p>
+      <p class="product-ship-note">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke-width="1.6"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></svg>
+        Confira nossa <a href="trocas-devolucoes.html">política de trocas e devoluções</a>
+      </p>
+
+      <div class="product-accordion">
+        <div class="accordion-item" data-accordion>
+          <button class="accordion-head" data-accordion-toggle>
+            Detalhes
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="accordion-panel">
+            <ul>
+              <li>Couro legítimo, corte e costura artesanais</li>
+              <li>Acabamento exclusivo com a assinatura Senza Pari</li>
+              <li>Encaixe preciso, sem interferir em botões ou câmeras</li>
+              <li>Peça produzida sob encomenda</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="related-section">
+        <p class="related-title">Você também pode gostar</p>
+        <div class="related-row" id="relatedRow"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-panel">
+    <div class="cart-header">
+      <span class="cart-title">Carrinho</span>
+      <button class="product-close" id="cartClose" aria-label="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="cart-total-row"><span>Total</span><span>Sob consulta</span></div>
+      <button class="cart-checkout-btn" id="cartCheckoutBtn">Finalizar pedido</button>
+      <p class="cart-note">Você confirma valores e pagamento pelo WhatsApp.</p>
+    </div>
+  </div>
+</div>
+<!-- LOGO TRANSITION SPLASH -->
+<div class="splash" id="splash"><span>SENZA PARI</span></div>
+
+<script>
+  const $ = (sel) => document.querySelector(sel);
+
+  // Search accordion (embutido no header)
+  function openSearch(){
+    $('#searchPanel').classList.add('open');
+    setTimeout(() => $('#searchInput').focus(), 320);
+  }
+  function closeSearch(){
+    $('#searchPanel').classList.remove('open');
+    $('#searchPanel').classList.remove('has-results');
+    $('#searchInput').value = '';
+    $('#searchResults').innerHTML = '';
+  }
+  $('#searchBtn').addEventListener('click', () => {
+    $('#searchPanel').classList.contains('open') ? closeSearch() : openSearch();
+  });
+  $('#searchInput').addEventListener('input', (e) => renderSearchResults(e.target.value));
+
+  // Menu overlay
+  let menuThumbsHydrated = false;
+  function hydrateMenuThumbs(){
+    if (menuThumbsHydrated) return;
+    menuThumbsHydrated = true;
+    document.querySelectorAll('.menu-row-thumb[data-src]').forEach(img => {
+      img.src = img.dataset.src;
+      img.removeAttribute('data-src');
+    });
+  }
+  $('#menuBtn').addEventListener('click', () => {
+    $('#menuOverlay').classList.add('open');
+    hydrateMenuThumbs();
+  });
+  $('#menuClose').addEventListener('click', () => {
+    $('#menuOverlay').classList.remove('open');
+    resetPanes();
+  });
+
+  function resetPanes(){
+    $('#paneMain').classList.remove('pushed');
+    document.querySelectorAll('.menu-pane.pane-sub').forEach(p => { p.classList.remove('active'); p.classList.remove('pushed'); });
+    document.querySelectorAll('.menu-pane.pane-subsub').forEach(p => p.classList.remove('active'));
+    $('#menuOverlay').classList.remove('sub-open');
+  }
+
+  document.querySelectorAll('[data-open-sub]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.openSub;
+      $('#paneMain').classList.add('pushed');
+      $('#pane' + target.charAt(0).toUpperCase() + target.slice(1)).classList.add('active');
+      $('#menuOverlay').classList.add('sub-open');
+    });
+  });
+  document.querySelectorAll('[data-open-subsub]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const parentPane = btn.closest('.menu-pane.pane-sub');
+      if (parentPane) parentPane.classList.add('pushed');
+      $('#' + btn.dataset.openSubsub).classList.add('active');
+    });
+  });
+  document.querySelectorAll('[data-back]').forEach(btn => {
+    btn.addEventListener('click', () => resetPanes());
+  });
+  document.querySelectorAll('[data-back-to]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const subsub = btn.closest('.menu-pane.pane-subsub');
+      if (subsub) subsub.classList.remove('active');
+      const parent = document.getElementById(btn.dataset.backTo);
+      if (parent) parent.classList.remove('pushed');
+    });
+  });
+
+  // Hero: garante que o vídeo sempre tente tocar em loop, mesmo se o autoplay inicial for bloqueado
+  const heroVideo = $('#heroVideo');
+  if (heroVideo) {
+    heroVideo.muted = true;
+    const tryPlay = () => heroVideo.play().catch(() => {});
+    tryPlay();
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) tryPlay(); });
+
+    $('#soundBtn').addEventListener('click', () => {
+      heroVideo.muted = !heroVideo.muted;
+      $('#soundBtn').classList.toggle('on', !heroVideo.muted);
+      tryPlay();
+    });
+  }
+
+  // Bottom swipe gallery arrows (se existir nesta página)
+  const rail = $('#swipeRail');
+  if (rail) {
+    const cardWidth = () => rail.querySelector('.swipe-card').offsetWidth + 10;
+    $('#swipeNext').addEventListener('click', () => rail.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
+    $('#swipePrev').addEventListener('click', () => rail.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
+  }
+
+  // Logo click → splash transition → back to top / close overlays
+  function goHome(){
+    const splash = $('#splash');
+    splash.classList.add('show');
+    setTimeout(() => { window.location.href = 'index.html'; }, 700);
+  }
+  $('#logoBtn').addEventListener('click', goHome);
+  $('#logoBtnMenu').addEventListener('click', goHome);
+
+  // ================= CART =================
+  const CART_KEY = 'senzapari_cart';
+  function loadCart(){
+    try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+    catch(e){ return []; }
+  }
+  function saveCart(cart){
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    renderCartBadge();
+  }
+  function renderCartBadge(){
+    const count = loadCart().reduce((sum, i) => sum + i.qty, 0);
+    document.querySelectorAll('.cart-badge').forEach(b => {
+      b.textContent = count;
+      b.classList.toggle('hidden', count === 0);
+    });
+  }
+  function addToCart(item){
+    const cart = loadCart();
+    const existing = cart.find(i => i.sku === item.sku);
+    if (existing) { existing.qty += item.qty; } else { cart.push(item); }
+    saveCart(cart);
+  }
+  function removeFromCart(sku){
+    saveCart(loadCart().filter(i => i.sku !== sku));
+    renderCartItems();
+  }
+  function updateCartQty(sku, qty){
+    const cart = loadCart();
+    const item = cart.find(i => i.sku === sku);
+    if (item) { item.qty = Math.max(1, qty); saveCart(cart); }
+    renderCartItems();
+  }
+  function renderCartItems(){
+    const cart = loadCart();
+    const container = $('#cartItems');
+    if (cart.length === 0) {
+      container.innerHTML = '<p class="cart-empty">Seu carrinho está vazio.</p>';
+      return;
+    }
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-img"><img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async"></div>
+        <div class="cart-item-info">
+          <span class="cart-item-name">${item.name}</span>
+          <span class="cart-item-meta">${item.meta}</span>
+          <div class="cart-item-row">
+            <div class="cart-item-qty">
+              <button class="cart-qty-btn" data-qty-minus="${item.sku}" aria-label="Diminuir">−</button>
+              <span>${item.qty}</span>
+              <button class="cart-qty-btn" data-qty-plus="${item.sku}" aria-label="Aumentar">+</button>
+            </div>
+            <button class="cart-remove" data-remove="${item.sku}">Remover</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    container.querySelectorAll('[data-qty-minus]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sku = btn.dataset.qtyMinus;
+        const item = loadCart().find(i => i.sku === sku);
+        if (item && item.qty > 1) updateCartQty(sku, item.qty - 1);
+        else if (item) removeFromCart(sku);
+      });
+    });
+    container.querySelectorAll('[data-qty-plus]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sku = btn.dataset.qtyPlus;
+        const item = loadCart().find(i => i.sku === sku);
+        if (item) updateCartQty(sku, item.qty + 1);
+      });
+    });
+    container.querySelectorAll('[data-remove]').forEach(btn => {
+      btn.addEventListener('click', () => removeFromCart(btn.dataset.remove));
+    });
+  }
+  function openCart(){
+    $('#menuOverlay').classList.remove('open');
+    resetPanes();
+    renderCartItems();
+    $('#cartOverlay').classList.add('open');
+  }
+  function closeCart(){ $('#cartOverlay').classList.remove('open'); }
+  document.querySelectorAll('#cartBtn, #cartBtnMenu').forEach(btn => btn.addEventListener('click', openCart));
+  $('#cartClose').addEventListener('click', closeCart);
+  $('#cartOverlay').addEventListener('click', (e) => { if (e.target.id === 'cartOverlay') closeCart(); });
+  $('#cartCheckoutBtn').addEventListener('click', () => {
+    const cart = loadCart();
+    if (cart.length === 0) return;
+    const lines = cart.map(i => `• ${i.name} — ${i.meta} (qtd: ${i.qty})`).join('%0A');
+    const msg = `Olá! Gostaria de fechar um pedido:%0A%0A${lines}%0A%0APode me passar valores e formas de pagamento?`;
+    // Abre o WhatsApp de forma síncrona (o Safari bloqueia popups abertos após um await),
+    // e salva o pedido na conta em segundo plano, sem atrasar/bloquear a abertura.
+    window.open(`https://wa.me/5581992492027?text=${msg}`, '_blank');
+    if (window.senzaAccount && window.senzaAccount.auth.currentUser) {
+      window.senzaAccount.saveOrder(cart).catch(() => {});
+    }
+  });
+  renderCartBadge();
+
+  // ================= PRODUCT QUICK VIEW (Cuir Suprême) =================
+  const LINES = {
+    'cuir-supreme': {
+      kind: 'case',
+      label: 'Cuir Suprême',
+      desc: 'Couro legítimo com acabamento liso e toque macio, cortado e costurado à mão — pensado pra unir proteção e sofisticação ao seu iPhone.',
+      previewFit: 'cover',
+      colors: [
+        { id:'green-acid', label:'Green Acid', gallery:['cuir-supreme-green-acid-1.png', 'cuir-supreme-green-acid-2.png', 'cuir-supreme-green-acid-3.png', 'cuir-supreme-green-acid-4.png', 'cuir-supreme-green-acid-5.png', 'cuir-supreme-green-acid-6.png'] },
+        { id:'light-blue', label:'Light Blue', gallery:['cuir-supreme-light-blue-1.png', 'cuir-supreme-light-blue-2.png', 'cuir-supreme-light-blue-3.png', 'cuir-supreme-light-blue-4.png', 'cuir-supreme-light-blue-5.png', 'cuir-supreme-light-blue-6.png'] },
+        { id:'dark-gold', label:'Dark Gold', gallery:['cuir-supreme-dark-gold-1.png', 'cuir-supreme-dark-gold-2.png', 'cuir-supreme-dark-gold-3.png', 'cuir-supreme-dark-gold-4.png', 'cuir-supreme-dark-gold-5.png', 'cuir-supreme-dark-gold-6.png'] },
+        { id:'duo-tone', label:'Duo Tone', gallery:['cuir-supreme-duo-tone-1.png', 'cuir-supreme-duo-tone-2.png', 'cuir-supreme-duo-tone-3.png', 'cuir-supreme-duo-tone-4.png', 'cuir-supreme-duo-tone-5.png', 'cuir-supreme-duo-tone-6.png'] },
+        { id:'black-black', label:'Black Black', gallery:['cuir-supreme-black-black-1.png', 'cuir-supreme-black-black-2.png', 'cuir-supreme-black-black-3.png', 'cuir-supreme-black-black-4.png', 'cuir-supreme-black-black-5.png', 'cuir-supreme-black-black-6.png'] },
+        { id:'grass-green', label:'Grass Green', gallery:['cuir-supreme-grass-green-1.png', 'cuir-supreme-grass-green-2.png', 'cuir-supreme-grass-green-3.png', 'cuir-supreme-grass-green-4.png', 'cuir-supreme-grass-green-5.png', 'cuir-supreme-grass-green-6.png'] },
+        { id:'vermelho-bordo', label:'Vermelho Bordô', gallery:['cuir-supreme-vermelho-bordo-1.png', 'cuir-supreme-vermelho-bordo-2.png', 'cuir-supreme-vermelho-bordo-3.png', 'cuir-supreme-vermelho-bordo-4.png', 'cuir-supreme-vermelho-bordo-5.png', 'cuir-supreme-vermelho-bordo-6.png'] },
+        { id:'duo-tone-cinza', label:'Duo Tone Cinza', gallery:['cuir-supreme-duo-tone-cinza-1.png', 'cuir-supreme-duo-tone-cinza-2.png', 'cuir-supreme-duo-tone-cinza-3.png', 'cuir-supreme-duo-tone-cinza-4.png', 'cuir-supreme-duo-tone-cinza-5.png', 'cuir-supreme-duo-tone-cinza-6.png'] },
+        { id:'branco-gelo', label:'Branco Gelo', gallery:['cuir-supreme-branco-gelo-1.png', 'cuir-supreme-branco-gelo-2.png', 'cuir-supreme-branco-gelo-3.png', 'cuir-supreme-branco-gelo-4.png', 'cuir-supreme-branco-gelo-5.png', 'cuir-supreme-branco-gelo-6.png'] },
+      ],
+    },
+    'metal': {
+      kind: 'case',
+      label: 'Metal',
+      desc: 'Estrutura em alumínio aeroespacial com acabamento escovado — leve, resistente e discreta.',
+      colors: [
+        { id:'preto', label:'Preto Fosco', gallery:['case-metal.png'] },
+      ],
+    },
+    'super-finas': {
+      kind: 'case',
+      label: 'Super Finas',
+      desc: 'Proteção ultra fina de 0,3mm de espessura — feita pra manter a leveza e o design original do seu iPhone.',
+      colors: [
+        { id:'preto', label:'Preto Fosco', gallery:['thumb-case.png'] },
+      ],
+    },
+    'madeira': {
+      kind: 'case',
+      label: 'Metal & Madeira',
+      desc: 'Estrutura em alumínio com painel traseiro em madeira legítima — cada peça com veios únicos.',
+      colors: [
+        { id:'nogueira', label:'Nogueira', gallery:['case-madeira.png'] },
+      ],
+    },
+    'transparente': {
+      kind: 'case',
+      label: 'Transparentes',
+      desc: 'Policarbonato transparente de alta clareza, feito pra mostrar o design original do seu iPhone sem perder proteção.',
+      colors: [
+        { id:'cristal', label:'Cristal', gallery:['case-transparente.png'] },
+      ],
+    },
+    'marmore': {
+      kind: 'case',
+      label: 'Mármore',
+      desc: 'Estrutura em alumínio com acabamento em mármore e veios dourados — peça única, elegante e resistente.',
+      previewFit: 'cover',
+      colors: [
+        { id:'marmore', label:'Black Gold', gallery:['case-marmore-1.png', 'case-marmore-2.png', 'case-marmore-3.png', 'case-marmore-4.png', 'case-marmore-5.png', 'case-marmore-6.png', 'case-marmore-7.jpg', 'case-marmore-8.jpg', 'case-marmore-9.jpg', 'case-marmore-10.jpg', 'case-marmore-11.jpg'] },
+        { id:'champagne', label:'Champagne', gallery:['case-marmore-champagne-1.jpg', 'case-marmore-champagne-2.jpg', 'case-marmore-champagne-3.jpg', 'case-marmore-champagne-4.jpg', 'case-marmore-champagne-5.jpg'] },
+      ],
+    },
+    'skin-ouro-escovado': {
+      kind: 'skin',
+      label: 'Ouro Escovado',
+      desc: 'Skin em vinil premium com acabamento dourado escovado — textura metálica autêntica, aplicação precisa e proteção sem volume.',
+      previewFit: 'cover',
+      colors: [
+        { id:'ouro-escovado', label:'Ouro Escovado', gallery:['skin-ouro-escovado-1.png', 'skin-ouro-escovado-2.png', 'skin-ouro-escovado-3.png', 'skin-ouro-escovado-4.png', 'skin-ouro-escovado-5.png'] },
+      ],
+    },
+    'skin-gold-croco': {
+      kind: 'skin',
+      label: 'Gold Croco',
+      desc: 'Skin em vinil premium com textura de couro de crocodilo dourado — relevo fiel ao couro exótico, aplicação precisa e acabamento de alto brilho.',
+      previewFit: 'cover',
+      colors: [
+        { id:'gold-croco', label:'Gold Croco', gallery:['skin-gold-croco-1.png', 'skin-gold-croco-2.png', 'skin-gold-croco-3.png', 'skin-gold-croco-4.png', 'skin-gold-croco-5.png'] },
+      ],
+    },
+    'skin-black-croco': {
+      kind: 'skin',
+      label: 'Dark Black | Texture',
+      desc: 'Skin em vinil premium com acabamento preto fosco em textura fina — visual discreto e sofisticado, aplicação precisa e proteção sem volume.',
+      previewFit: 'cover',
+      colors: [
+        { id:'black-croco', label:'Dark Black | Texture', gallery:['skin-black-croco-1.png', 'skin-black-croco-2.png', 'skin-black-croco-3.png'] },
+      ],
+    },
+    'skin-black-gold-marble': {
+      kind: 'skin',
+      label: 'Black Gold Marble',
+      desc: 'Skin em vinil premium com padrão mármore preto e veios dourados — textura fiel à pedra natural, aplicação precisa e acabamento fosco.',
+      previewFit: 'cover',
+      colors: [
+        { id:'black-gold-marble', label:'Black Gold Marble', gallery:['skin-black-gold-marble-1.png', 'skin-black-gold-marble-2.png', 'skin-black-gold-marble-3.png', 'skin-black-gold-marble-4.png', 'skin-black-gold-marble-5.png'] },
+      ],
+    },
+    'skin-green-gold-marble': {
+      kind: 'skin',
+      label: 'Green Gold Marble',
+      desc: 'Skin em vinil premium com padrão mármore verde esmeralda e veios dourados — textura fiel à pedra natural, aplicação precisa e acabamento fosco.',
+      previewFit: 'cover',
+      colors: [
+        { id:'green-gold-marble', label:'Green Gold Marble', gallery:['skin-green-gold-marble-1.png', 'skin-green-gold-marble-2.png', 'skin-green-gold-marble-3.png', 'skin-green-gold-marble-4.png', 'skin-green-gold-marble-5.png'] },
+      ],
+    },
+    'skin-gold-champagne': {
+      kind: 'skin',
+      label: 'Gold Champagne',
+      desc: 'Skin em vinil premium com acabamento metálico champagne — tom dourado suave, aplicação precisa e proteção sem volume.',
+      previewFit: 'cover',
+      colors: [
+        { id:'gold-champagne', label:'Gold Champagne', gallery:['skin-gold-champagne-1.png', 'skin-gold-champagne-2.png', 'skin-gold-champagne-3.png', 'skin-gold-champagne-4.png', 'skin-gold-champagne-5.png'] },
+      ],
+    },
+    'skin-dark-eclipse': {
+      kind: 'skin',
+      label: 'Dark Eclipse',
+      desc: 'Skin em vinil premium com textura escamada preta — acabamento fosco de alto contraste, aplicação precisa e proteção sem volume.',
+      previewFit: 'cover',
+      colors: [
+        { id:'dark-eclipse', label:'Dark Eclipse', gallery:['skin-dark-eclipse-1.jpg', 'skin-dark-eclipse-2.jpg', 'skin-dark-eclipse-3.jpg', 'skin-dark-eclipse-4.jpg', 'skin-dark-eclipse-5.jpg'] },
+      ],
+    },
+  };
+
+  function normalizeSearch(str){
+    return str.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+  }
+
+  const SEARCH_SYNONYMS = {
+    'cuir-supreme': 'couro crocodilo',
+    'metal': 'aluminio aeroespacial',
+    'super-finas': 'fina fino ultra fina 0.3mm',
+    'madeira': 'madeira nobre nogueira',
+    'transparente': 'cristal transparente invisivel',
+    'marmore': 'marmore preto dourado veios',
+    'skin-ouro-escovado': 'ouro dourado escovado',
+    'skin-gold-croco': 'gold croco crocodilo dourado',
+    'skin-black-croco': 'dark black texture preto fosco',
+    'skin-black-gold-marble': 'black gold marble marmore preto dourado',
+    'skin-green-gold-marble': 'green gold marble marmore verde esmeralda dourado',
+    'skin-gold-champagne': 'gold champagne dourado suave',
+    'skin-dark-eclipse': 'dark eclipse preto escamado',
+  };
+  const SEARCH_INDEX = [
+    ...Object.entries(LINES).map(([key, data]) => ({
+      label: data.label,
+      sub: data.kind === 'skin' ? 'Skin' : 'Case',
+      keywords: normalizeSearch(`${data.label} ${data.kind === 'skin' ? 'skin' : 'case capinha'} ${key} ${SEARCH_SYNONYMS[key] || ''}`),
+      action: () => { closeSearch(); openProduct(key, '17', 0); },
+    })),
+    { label: "L'Or Phénoménal", sub: 'Coleção', keywords: normalizeSearch("lor phenomenal colecao ouro"), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
+    { label: 'Watch Band', sub: 'Acessório', keywords: normalizeSearch('watch band pulseira apple watch'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
+    { label: 'AirPods', sub: 'Acessório', keywords: normalizeSearch('airpods estojo fone'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
+    { label: 'AirTag', sub: 'Acessório', keywords: normalizeSearch('airtag chaveiro'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
+    { label: 'Wallet', sub: 'Acessório', keywords: normalizeSearch('wallet carteira magsafe porta cartao'), action: () => { location.href = 'colecao-lor-phenomenal.html'; } },
+    { label: 'Sobre', sub: 'Página', keywords: normalizeSearch('sobre historia atelier senza pari'), action: () => { location.href = 'sobre.html'; } },
+    { label: 'Contato', sub: 'Página', keywords: normalizeSearch('contato whatsapp fale conosco'), action: () => { location.href = 'contato.html'; } },
+    { label: 'Trocas e Devoluções', sub: 'Página', keywords: normalizeSearch('trocas devolucoes politica garantia'), action: () => { location.href = 'trocas-devolucoes.html'; } },
+  ];
+
+  function renderSearchResults(query){
+    const panel = $('#searchPanel');
+    const resultsEl = $('#searchResults');
+    const q = normalizeSearch(query);
+    if (!q){
+      panel.classList.remove('has-results');
+      resultsEl.innerHTML = '';
+      return;
+    }
+    const matches = SEARCH_INDEX.filter(item => item.keywords.includes(q));
+    panel.classList.add('has-results');
+    if (matches.length === 0){
+      resultsEl.innerHTML = `<p class="search-empty">Nenhum resultado para "${query}".</p>`;
+      return;
+    }
+    resultsEl.innerHTML = matches.map((item, idx) => `
+      <button class="search-result-row" data-search-idx="${idx}">
+        <span>
+          <span class="label">${item.label}</span>
+          <span class="sub">${item.sub}</span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    `).join('');
+    resultsEl.querySelectorAll('[data-search-idx]').forEach(btn => {
+      btn.addEventListener('click', () => matches[parseInt(btn.dataset.searchIdx, 10)].action());
+    });
+  }
+  const RELATED_ITEMS = [
+    { name:"Watch Band", sub:"Preto & Ouro", img:"lor-phenomenal-watchband.jpg" },
+    { name:"AirPods", sub:"Preto & Ouro", img:"lor-phenomenal-airpods.jpg" },
+    { name:"AirTag", sub:"Preto & Ouro", img:"lor-phenomenal-airtag.jpg" },
+    { name:"Wallet", sub:"Preto & Ouro", img:"lor-phenomenal-wallet.jpg" },
+    { name:"Case iPhone", sub:"Ouro Total", img:"lor-phenomenal-case-ouro-total.jpg" },
+  ];
+  let currentProduct = null;
+
+  function openProduct(linha, model, colorIndex){
+    $('#menuOverlay').classList.remove('open');
+    resetPanes();
+    currentProduct = { linha, model, colorIndex: colorIndex || 0, galleryIndex: 0, qty: 1 };
+    const lineData = LINES[linha];
+    $('#productBackLabel').textContent = lineData.label;
+    const kindLabel = lineData.kind === 'skin' ? 'Skin' : 'Case';
+    $('#productTitle').textContent = `${kindLabel} Série ${model} — ${lineData.label}`;
+    $('#productDesc').textContent = lineData.desc;
+    $('#qtyValue').textContent = '1';
+    renderSwatches();
+    updateProductPreview();
+    renderRelated();
+    $('#addConfirm').classList.remove('show');
+    document.querySelectorAll('.accordion-item').forEach(item => item.classList.remove('open'));
+    $('#productOverlay').classList.add('open');
+    $('.product-sheet').scrollTop = 0;
+  }
+  function closeProduct(){ $('#productOverlay').classList.remove('open'); }
+  function renderSwatches(){
+    const colors = LINES[currentProduct.linha].colors;
+    const row = $('#productSwatches');
+    row.classList.toggle('fit-cover', LINES[currentProduct.linha].previewFit === 'cover');
+    row.innerHTML = colors.map((c, idx) => `
+      <button class="thumb${idx === currentProduct.colorIndex ? ' selected' : ''}" data-color-idx="${idx}" aria-label="${c.label}">
+        <img src="${c.gallery[0]}" alt="${c.label}" loading="lazy" decoding="async">
+      </button>
+    `).join('');
+    row.querySelectorAll('[data-color-idx]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentProduct.colorIndex = parseInt(btn.dataset.colorIdx, 10);
+        currentProduct.galleryIndex = 0;
+        renderSwatches();
+        updateProductPreview();
+      });
+    });
+  }
+  function currentGallery(){
+    return LINES[currentProduct.linha].colors[currentProduct.colorIndex].gallery;
+  }
+  function updateProductPreview(){
+    const color = LINES[currentProduct.linha].colors[currentProduct.colorIndex];
+    const gallery = color.gallery;
+    if (currentProduct.galleryIndex >= gallery.length) currentProduct.galleryIndex = 0;
+    $('#productPreview').classList.toggle('fit-cover', LINES[currentProduct.linha].previewFit === 'cover');
+    $('#productPreviewImg').src = gallery[currentProduct.galleryIndex];
+    $('#productPreviewImg').alt = color.label;
+    $('#colorLabelText').textContent = color.label;
+    renderGalleryNav();
+  }
+  function renderGalleryNav(){
+    const gallery = currentGallery();
+    const multi = gallery.length > 1;
+    $('#galleryPrevBtn').hidden = !multi;
+    $('#galleryNextBtn').hidden = !multi;
+    $('#galleryDots').innerHTML = multi ? gallery.map((_, idx) => `
+      <button class="gallery-dot${idx === currentProduct.galleryIndex ? ' active' : ''}" data-gallery-idx="${idx}" aria-label="Foto ${idx + 1}"></button>
+    `).join('') : '';
+    $('#galleryDots').querySelectorAll('[data-gallery-idx]').forEach(dot => {
+      dot.addEventListener('click', () => {
+        currentProduct.galleryIndex = parseInt(dot.dataset.galleryIdx, 10);
+        updateProductPreview();
+      });
+    });
+  }
+  function goToGalleryOffset(offset){
+    const gallery = currentGallery();
+    currentProduct.galleryIndex = (currentProduct.galleryIndex + offset + gallery.length) % gallery.length;
+    updateProductPreview();
+  }
+  $('#galleryPrevBtn').addEventListener('click', () => goToGalleryOffset(-1));
+  $('#galleryNextBtn').addEventListener('click', () => goToGalleryOffset(1));
+  (function setupGallerySwipe(){
+    const preview = $('#productPreview');
+    let startX = null;
+    preview.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+    preview.addEventListener('touchend', (e) => {
+      if (startX === null) return;
+      const deltaX = e.changedTouches[0].clientX - startX;
+      if (Math.abs(deltaX) > 40) goToGalleryOffset(deltaX < 0 ? 1 : -1);
+      startX = null;
+    });
+  })();
+  function renderRelated(){
+    $('#relatedRow').innerHTML = RELATED_ITEMS.map(item => `
+      <a class="related-card" href="colecao-lor-phenomenal.html">
+        <div class="related-card-img"><img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async"></div>
+        <div class="related-card-info">
+          <p class="related-card-name">${item.name}</p>
+          <p class="related-card-sub">${item.sub}</p>
+        </div>
+      </a>
+    `).join('');
+  }
+  document.querySelectorAll('[data-accordion-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.closest('[data-accordion]').classList.toggle('open');
+    });
+  });
+  $('#productClose').addEventListener('click', closeProduct);
+  $('#productOverlay').addEventListener('click', (e) => { if (e.target.id === 'productOverlay') closeProduct(); });
+  $('#qtyMinus').addEventListener('click', () => {
+    currentProduct.qty = Math.max(1, currentProduct.qty - 1);
+    $('#qtyValue').textContent = currentProduct.qty;
+  });
+  $('#qtyPlus').addEventListener('click', () => {
+    currentProduct.qty += 1;
+    $('#qtyValue').textContent = currentProduct.qty;
+  });
+  $('#productAddBtn').addEventListener('click', () => {
+    const lineData = LINES[currentProduct.linha];
+    const color = lineData.colors[currentProduct.colorIndex];
+    addToCart({
+      sku: `${currentProduct.linha}-${currentProduct.model}-${color.id}`,
+      name: `${lineData.kind === 'skin' ? 'Skin' : 'Case'} Série ${currentProduct.model} — ${lineData.label}`,
+      meta: color.label,
+      img: color.gallery[0],
+      qty: currentProduct.qty,
+    });
+    $('#addConfirm').classList.add('show');
+    setTimeout(() => { $('#addConfirm').classList.remove('show'); }, 1800);
+  });
+  document.querySelectorAll('[data-open-product]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const colorIdx = btn.dataset.colorIdx !== undefined ? parseInt(btn.dataset.colorIdx, 10) : 0;
+      openProduct(btn.dataset.linha, btn.dataset.openProduct, colorIdx);
+    });
+  });
+</script>
+
+<script type="module" src="account.js"></script>
+<script type="module">
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+  function waitForSenzaAccount(){
+    return new Promise((resolve) => {
+      if (window.senzaAccount) return resolve(window.senzaAccount);
+      const t = setInterval(() => {
+        if (window.senzaAccount) { clearInterval(t); resolve(window.senzaAccount); }
+      }, 30);
+    });
+  }
+
+  const STATUS_OPTIONS = ['Aguardando confirmação', 'Confirmado', 'Em produção', 'Enviado', 'Entregue', 'Cancelado'];
+
+  waitForSenzaAccount().then((senzaAccount) => {
+    const $ = (sel) => document.querySelector(sel);
+    const authSection = $('#authSection');
+    const deniedSection = $('#deniedSection');
+    const adminSection = $('#adminSection');
+    const authError = $('#authError');
+    const loginForm = $('#loginForm');
+
+    function showError(msg){
+      authError.textContent = msg;
+      authError.hidden = false;
+    }
+    function clearError(){
+      authError.hidden = true;
+      authError.textContent = '';
+    }
+
+    const FIREBASE_ERROR_MESSAGES = {
+      'auth/invalid-email': 'E-mail inválido.',
+      'auth/user-not-found': 'Não encontramos uma conta com esse e-mail.',
+      'auth/wrong-password': 'Senha incorreta.',
+      'auth/invalid-credential': 'E-mail ou senha incorretos.',
+    };
+    function friendlyError(err){
+      return FIREBASE_ERROR_MESSAGES[err.code] || 'Algo deu errado. Tente novamente.';
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
+      const fd = new FormData(loginForm);
+      try {
+        await senzaAccount.logIn(fd.get('email'), fd.get('password'));
+      } catch (err) {
+        showError(friendlyError(err));
+      }
+    });
+
+    $('#forgotBtn').addEventListener('click', async () => {
+      const email = loginForm.email.value;
+      if (!email) { showError('Digite seu e-mail acima primeiro, depois clique em "Esqueci minha senha".'); return; }
+      try {
+        await senzaAccount.resetPassword(email);
+        clearError();
+        authError.hidden = false;
+        authError.style.background = '#EAF2E8';
+        authError.style.borderColor = '#C7DAC2';
+        authError.style.color = '#3D5A34';
+        authError.textContent = 'Enviamos um link de redefinição de senha pro seu e-mail.';
+      } catch (err) {
+        showError(friendlyError(err));
+      }
+    });
+
+    $('#deniedLogoutBtn').addEventListener('click', () => senzaAccount.logOut());
+    $('#adminLogoutBtn').addEventListener('click', () => senzaAccount.logOut());
+
+    const profileCache = {};
+    async function customerLabel(uid){
+      if (profileCache[uid]) return profileCache[uid];
+      const profile = await senzaAccount.getProfile(uid);
+      profileCache[uid] = profile || { name: '(sem nome)', email: '' };
+      return profileCache[uid];
+    }
+
+    async function renderOrders(orders){
+      const list = $('#adminOrdersList');
+      if (!orders.length){
+        list.innerHTML = '<p class="account-orders-empty-page">Nenhum pedido ainda.</p>';
+        return;
+      }
+      const rows = await Promise.all(orders.map(async (o) => {
+        const profile = await customerLabel(o.uid);
+        const date = o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '';
+        const items = (o.items || []).map((i) => `${i.qty}x ${i.name}${i.meta ? ' — ' + i.meta : ''}`).join('<br>');
+        const options = STATUS_OPTIONS.map((s) => `<option value="${s}" ${s === o.status ? 'selected' : ''}>${s}</option>`).join('');
+        return `
+          <div class="account-order-card" data-order-uid="${o.uid}" data-order-id="${o.id}">
+            <div class="account-order-head">
+              <span class="account-order-date">${date}</span>
+            </div>
+            <div class="admin-order-customer">${profile.name || '(sem nome)'}</div>
+            <div class="admin-order-email">${profile.email || ''}</div>
+            <div class="account-order-items">${items}</div>
+            <div class="admin-order-controls">
+              <select class="admin-status-select">${options}</select>
+              <button class="admin-order-save">Salvar</button>
+              <button class="admin-order-delete">Excluir</button>
+            </div>
+          </div>
+        `;
+      }));
+      list.innerHTML = rows.join('');
+
+      list.querySelectorAll('.admin-order-save').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const card = btn.closest('.account-order-card');
+          const select = card.querySelector('.admin-status-select');
+          btn.disabled = true;
+          btn.textContent = 'Salvando...';
+          try {
+            await senzaAccount.updateOrderStatus(card.dataset.orderUid, card.dataset.orderId, select.value);
+            btn.textContent = 'Salvo ✓';
+          } catch (err) {
+            btn.textContent = 'Erro, tentar de novo';
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      });
+      list.querySelectorAll('.admin-order-delete').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const card = btn.closest('.account-order-card');
+          if (!confirm('Excluir este pedido? Essa ação não pode ser desfeita.')) return;
+          try {
+            await senzaAccount.deleteOrder(card.dataset.orderUid, card.dataset.orderId);
+          } catch (err) {
+            alert('Não foi possível excluir. Tente novamente.');
+          }
+        });
+      });
+    }
+
+    let unsubscribeOrders = null;
+    onAuthStateChanged(senzaAccount.auth, async (user) => {
+      if (unsubscribeOrders) { unsubscribeOrders(); unsubscribeOrders = null; }
+      authSection.hidden = true;
+      deniedSection.hidden = true;
+      adminSection.hidden = true;
+
+      if (!user) {
+        authSection.hidden = false;
+        return;
+      }
+      const admin = await senzaAccount.checkIsAdmin();
+      if (!admin) {
+        deniedSection.hidden = false;
+        return;
+      }
+      adminSection.hidden = false;
+      unsubscribeOrders = senzaAccount.watchAllOrders(renderOrders, () => {
+        $('#adminOrdersList').innerHTML = '<p class="account-orders-empty-page">Erro ao carregar pedidos.</p>';
+      });
+    });
+  });
+</script>
+</body>
+</html>
