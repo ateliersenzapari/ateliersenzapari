@@ -1851,6 +1851,12 @@
       });
     }
 
+    function showOrdersError(err){
+      console.error('admin orders error', err);
+      const msg = (err && err.message) ? err.message : 'Erro desconhecido.';
+      $('#adminOrdersList').innerHTML = `<p class="account-orders-empty-page">Erro ao carregar pedidos:<br><span style="font-size:12px;word-break:break-all;">${msg}</span></p>`;
+    }
+
     let unsubscribeOrders = null;
     onAuthStateChanged(senzaAccount.auth, async (user) => {
       if (unsubscribeOrders) { unsubscribeOrders(); unsubscribeOrders = null; }
@@ -1868,11 +1874,10 @@
         return;
       }
       adminSection.hidden = false;
-      unsubscribeOrders = senzaAccount.watchAllOrders(renderOrders, (err) => {
-        console.error('watchAllOrders error', err);
-        const msg = (err && err.message) ? err.message : 'Erro desconhecido.';
-        $('#adminOrdersList').innerHTML = `<p class="account-orders-empty-page">Erro ao carregar pedidos:<br><span style="font-size:12px;word-break:break-all;">${msg}</span></p>`;
-      });
+      unsubscribeOrders = senzaAccount.watchAllOrders(
+        (orders) => { renderOrders(orders).catch(showOrdersError); },
+        showOrdersError
+      );
     });
   });
 </script>
