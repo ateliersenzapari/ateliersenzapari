@@ -3,6 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/fireba
 import {
   getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
   signInWithEmailAndPassword, signOut, updateProfile, sendPasswordResetEmail,
+  sendEmailVerification,
 } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 import {
   getFirestore, doc, setDoc, getDoc, collection, addDoc,
@@ -31,7 +32,13 @@ async function signUp(name, email, password) {
     email,
     createdAt: serverTimestamp(),
   });
+  await sendEmailVerification(cred.user);
   return cred.user;
+}
+
+function resendVerification() {
+  if (!auth.currentUser) return Promise.reject(new Error("not-logged-in"));
+  return sendEmailVerification(auth.currentUser);
 }
 
 function logIn(email, password) {
@@ -71,7 +78,7 @@ async function getProfile(uid) {
 
 window.senzaAccount = {
   auth, db,
-  signUp, logIn, logOut, resetPassword, saveOrder, watchOrders, getProfile,
+  signUp, logIn, logOut, resetPassword, saveOrder, watchOrders, getProfile, resendVerification,
 };
 
 // ---------- Ícone de conta no header (dropdown) ----------
