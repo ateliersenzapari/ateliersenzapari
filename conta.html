@@ -1376,15 +1376,17 @@
   document.querySelectorAll('#cartBtn, #cartBtnMenu').forEach(btn => btn.addEventListener('click', openCart));
   $('#cartClose').addEventListener('click', closeCart);
   $('#cartOverlay').addEventListener('click', (e) => { if (e.target.id === 'cartOverlay') closeCart(); });
-  $('#cartCheckoutBtn').addEventListener('click', async () => {
+  $('#cartCheckoutBtn').addEventListener('click', () => {
     const cart = loadCart();
     if (cart.length === 0) return;
-    if (window.senzaAccount && window.senzaAccount.auth.currentUser) {
-      try { await window.senzaAccount.saveOrder(cart); } catch (e) {}
-    }
     const lines = cart.map(i => `• ${i.name} — ${i.meta} (qtd: ${i.qty})`).join('%0A');
     const msg = `Olá! Gostaria de fechar um pedido:%0A%0A${lines}%0A%0APode me passar valores e formas de pagamento?`;
+    // Abre o WhatsApp de forma síncrona (o Safari bloqueia popups abertos após um await),
+    // e salva o pedido na conta em segundo plano, sem atrasar/bloquear a abertura.
     window.open(`https://wa.me/5581992492027?text=${msg}`, '_blank');
+    if (window.senzaAccount && window.senzaAccount.auth.currentUser) {
+      window.senzaAccount.saveOrder(cart).catch(() => {});
+    }
   });
   renderCartBadge();
 
