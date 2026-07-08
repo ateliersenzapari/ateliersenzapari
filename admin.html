@@ -1788,8 +1788,13 @@
     const profileCache = {};
     async function customerLabel(uid){
       if (profileCache[uid]) return profileCache[uid];
-      const profile = await senzaAccount.getProfile(uid);
-      profileCache[uid] = profile || { name: '(sem nome)', email: '' };
+      try {
+        const profile = await senzaAccount.getProfile(uid);
+        profileCache[uid] = profile || { name: '(sem nome)', email: '' };
+      } catch (err) {
+        console.error('getProfile error for uid', uid, err);
+        profileCache[uid] = { name: `(erro ao buscar perfil: ${err.code || err.message})`, email: '' };
+      }
       return profileCache[uid];
     }
 
