@@ -115,6 +115,16 @@
     background:#FBEAE8; border:1px solid #E9C2BD; color:#93392F; font-size:13px;
     padding:12px 14px; border-radius:10px; margin-bottom:18px;
   }
+  .account-verify-banner{
+    display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+    background:#FBF3E4; border:1px solid #EAD9B4; color:#7A5B1E; font-size:13px;
+    padding:14px 16px; border-radius:12px; margin-bottom:24px;
+  }
+  .account-verify-banner[hidden]{ display:none; }
+  .account-verify-banner p{ margin:0; line-height:1.5; }
+  .account-verify-banner button{
+    font-size:12.5px; font-weight:600; color:#7A5B1E; text-decoration:underline; white-space:nowrap;
+  }
   .account-section-title{ font-family:'Bodoni Moda',serif; font-weight:500; font-size:19px; margin-bottom:14px; }
   .account-orders{ display:flex; flex-direction:column; gap:12px; }
   .account-order-empty{ color:var(--muted); font-size:14px; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px; text-align:center; }
@@ -546,6 +556,11 @@
     <span class="eyebrow">Senza Pari</span>
     <h1 id="dashboardHello" style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(28px,7vw,42px);margin:14px 0 4px;">Olá</h1>
     <p id="dashboardEmail" style="color:var(--muted);font-size:14px;margin-bottom:28px;"></p>
+
+    <div class="account-verify-banner" id="verifyBanner" hidden>
+      <p>Confirme seu e-mail — enviamos um link pra <strong id="verifyEmailLabel"></strong>.</p>
+      <button type="button" id="resendVerifyBtn">Reenviar e-mail</button>
+    </div>
 
     <h2 id="pedidos" class="account-section-title">Meus pedidos</h2>
     <div id="ordersList" class="account-orders"></div>
@@ -1854,6 +1869,20 @@
       }).join('');
     }
 
+    const verifyBanner = $('#verifyBanner');
+    const resendVerifyBtn = $('#resendVerifyBtn');
+    resendVerifyBtn.addEventListener('click', async () => {
+      resendVerifyBtn.disabled = true;
+      resendVerifyBtn.textContent = 'Enviando...';
+      try {
+        await senzaAccount.resendVerification();
+        resendVerifyBtn.textContent = 'E-mail reenviado ✓';
+      } catch (err) {
+        resendVerifyBtn.textContent = 'Reenviar e-mail';
+        resendVerifyBtn.disabled = false;
+      }
+    });
+
     onAuthStateChanged(senzaAccount.auth, (user) => {
       if (unsubscribeOrders) { unsubscribeOrders(); unsubscribeOrders = null; }
       if (user) {
@@ -1861,6 +1890,8 @@
         dashboardSection.hidden = false;
         $('#dashboardHello').textContent = `Olá, ${(user.displayName || '').split(' ')[0] || 'bem-vinda(o)'}`;
         $('#dashboardEmail').textContent = user.email || '';
+        verifyBanner.hidden = user.emailVerified;
+        $('#verifyEmailLabel').textContent = user.email || '';
         unsubscribeOrders = senzaAccount.watchOrders(renderOrders);
         if (location.hash === '#pedidos') {
           setTimeout(() => $('#pedidos').scrollIntoView({ behavior: 'smooth' }), 200);
