@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Super Finas — SENZA PARI</title>
-<meta name="description" content="Case Super Fina: proteção de apenas 0,3mm de espessura, feita pra manter a leveza e o design original do seu iPhone.">
-<link rel="canonical" href="https://ateliersenzapari.com.br/linha-superfinas.html">
+<title>Minha Conta — SENZA PARI</title>
+<meta name="description" content="Entre ou crie sua conta Senza Pari para acompanhar seus pedidos e acessar seus dados.">
+<link rel="canonical" href="https://ateliersenzapari.com.br/conta.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Super Finas — SENZA PARI">
-<meta property="og:description" content="Case Super Fina: proteção de apenas 0,3mm de espessura, feita pra manter a leveza e o design original do seu iPhone.">
+<meta property="og:title" content="Minha Conta — SENZA PARI">
+<meta property="og:description" content="Entre ou crie sua conta Senza Pari para acompanhar seus pedidos e acessar seus dados.">
 <meta property="og:image" content="https://ateliersenzapari.com.br/collection-lor-phenomenal.jpg">
-<meta property="og:url" content="https://ateliersenzapari.com.br/linha-superfinas.html">
+<meta property="og:url" content="https://ateliersenzapari.com.br/conta.html">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Super Finas — SENZA PARI">
-<meta name="twitter:description" content="Case Super Fina: proteção de apenas 0,3mm de espessura, feita pra manter a leveza e o design original do seu iPhone.">
+<meta name="twitter:title" content="Minha Conta — SENZA PARI">
+<meta name="twitter:description" content="Entre ou crie sua conta Senza Pari para acompanhar seus pedidos e acessar seus dados.">
 <meta name="twitter:image" content="https://ateliersenzapari.com.br/collection-lor-phenomenal.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -96,6 +96,33 @@
   .account-dropdown-row:hover{ background:var(--bg); }
   .account-dropdown-row + .account-dropdown-row{ border-top:1px solid var(--line); margin-top:2px; padding-top:12px; }
   .icon-btn.logged-in svg{ stroke:var(--sage-deep); }
+
+  /* ---------- ACCOUNT PAGE ---------- */
+  .account-tabs{ display:flex; gap:8px; margin-bottom:22px; border-bottom:1px solid var(--line); }
+  .account-tab{ padding:10px 4px 12px; font-size:14px; font-weight:600; color:var(--muted); border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .account-tab.active{ color:var(--ink); border-bottom-color:var(--ink); }
+  .account-form{ display:flex; flex-direction:column; gap:16px; }
+  .account-form[hidden]{ display:none; }
+  .account-label{ display:flex; flex-direction:column; gap:6px; font-size:13px; font-weight:600; color:var(--muted); }
+  .account-label input{
+    font-family:inherit; font-size:15px; color:var(--ink); padding:13px 14px;
+    border:1px solid var(--line); border-radius:10px; background:var(--panel);
+  }
+  .account-label input:focus{ outline:none; border-color:var(--sage-deep); }
+  .account-submit{ width:100%; justify-content:center; margin-top:4px; }
+  .account-forgot{ font-size:13px; color:var(--muted); text-decoration:underline; text-align:center; margin-top:4px; }
+  .account-error{
+    background:#FBEAE8; border:1px solid #E9C2BD; color:#93392F; font-size:13px;
+    padding:12px 14px; border-radius:10px; margin-bottom:18px;
+  }
+  .account-section-title{ font-family:'Bodoni Moda',serif; font-weight:500; font-size:19px; margin-bottom:14px; }
+  .account-orders{ display:flex; flex-direction:column; gap:12px; }
+  .account-order-empty{ color:var(--muted); font-size:14px; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px; text-align:center; }
+  .account-order-card{ background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
+  .account-order-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; gap:10px; }
+  .account-order-date{ font-size:12.5px; color:var(--muted); }
+  .account-order-status{ font-size:11.5px; font-weight:600; color:var(--sage-deep); text-transform:uppercase; letter-spacing:0.03em; }
+  .account-order-items{ font-size:13.5px; color:var(--ink); line-height:1.7; }
   .icon-btn{ width:22px; height:22px; display:flex; align-items:center; justify-content:center; position:relative; }
   .icon-btn svg{ width:20px; height:20px; stroke:var(--ink); }
 
@@ -122,6 +149,43 @@
   .search-result-row svg{ width:15px; height:15px; stroke:var(--muted); flex:0 0 auto; }
   .search-empty{ padding:0 18px 18px; font-size:13px; color:var(--muted); }
 
+  /* ---------- HERO (dark, moody — chrome stays light) ---------- */
+  .hero-wrap{ max-width:1200px; margin:0 auto; padding:0 0 40px; }
+  .hero-visual{
+    height:26vh; min-height:180px; width:100%;
+    background:linear-gradient(150deg,#23262B 0%, var(--dark-hero) 45%, #1a1d21 100%);
+    position:relative; overflow:hidden; border-radius:2px;
+  }
+  .hero-video{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:center;
+  }
+  .hero-sound-btn{
+    position:absolute; bottom:14px; right:14px; z-index:2;
+    width:36px; height:36px; border-radius:50%;
+    background:rgba(0,0,0,0.35); backdrop-filter:blur(6px);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-sound-btn svg{ width:16px; height:16px; stroke:#fff; }
+  .hero-sound-btn .icon-muted{ display:block; }
+  .hero-sound-btn .icon-on{ display:none; }
+  .hero-sound-btn.on .icon-muted{ display:none; }
+  .hero-sound-btn.on .icon-on{ display:block; }
+  .hero-text{ padding:26px 20px 0; }
+  .eyebrow{ font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block; }
+  .hero h1{
+    font-family:'Bodoni Moda', serif; font-weight:400; font-size:clamp(30px,7.5vw,48px);
+    line-height:1.1; letter-spacing:-0.01em; margin-bottom:14px;
+  }
+  .hero h1 em{ font-style:italic; color:var(--sage-deep); }
+  .hero p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:46ch; margin-bottom:22px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; padding:14px 26px;
+    background:var(--ink); color:#fff; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600;
+    transition:opacity 0.2s ease;
+  }
+  .btn:hover{ opacity:0.8; }
+
   /* ---------- SECTIONS ---------- */
   .section{ max-width:1200px; margin:0 auto; padding:44px 20px; }
   .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:22px; gap:16px; }
@@ -130,9 +194,47 @@
 
   .grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px 14px; }
   .card-visual{ aspect-ratio:1/1.5; background:var(--sage); position:relative; overflow:hidden; border-radius:16px; }
+  .tone-gelo{ background:linear-gradient(150deg,#E7ECE3,#C7D2C1 75%); }
+  .tone-onix{ background:linear-gradient(150deg,#2E3230,#181A19 75%); }
+  .tone-champagne{ background:linear-gradient(150deg,#EFE4CF,#CBB98F 75%); }
   .card-info{ padding:11px 2px 0; }
   .card-name{ font-size:13.5px; font-weight:500; margin-bottom:3px; }
   .card-price{ font-size:13px; color:var(--muted); }
+
+  /* ---------- BOTTOM SWIPE GALLERY (home) ---------- */
+  .swipe-gallery{ padding:16px 0 28px; background:#F1F2EE; }
+  .swipe-title{
+    font-family:'Bodoni Moda', serif; font-weight:600; font-size:clamp(22px,6vw,30px);
+    padding:0 20px 14px; letter-spacing:-0.01em;
+  }
+  .swipe-rail{
+    display:flex; gap:12px; overflow-x:auto; padding:0 20px;
+    scroll-snap-type:x mandatory; -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .swipe-rail::-webkit-scrollbar{ display:none; }
+  .swipe-card{
+    flex:0 0 58%; scroll-snap-align:start;
+    display:flex; flex-direction:column;
+    background:var(--panel); border-radius:16px; overflow:hidden;
+    box-shadow:0 4px 18px rgba(20,22,18,0.07);
+  }
+  .swipe-card-img{
+    width:100%; aspect-ratio:4/3;
+    background:var(--sage);
+  }
+  .swipe-card-text{ padding:10px 14px 14px; }
+  .swipe-card-name{ font-size:14px; font-weight:700; margin-bottom:2px; }
+  .swipe-card-sub{ font-size:12px; color:var(--muted); }
+  .sc-1 .swipe-card-img{ background:linear-gradient(150deg,#3a2f1a,#0f0d09 45%,#5c4a22 100%); }
+  .sc-blank .swipe-card-img{ background:#EEEFEA; }
+  .sc-blank .swipe-card-name{ color:var(--muted); font-weight:600; }
+  .sc-blank{ opacity:0.6; }
+  .swipe-arrows{ display:flex; gap:8px; justify-content:flex-end; padding:12px 20px 0; }
+  .swipe-arrow{
+    width:32px; height:32px; border-radius:50%; border:1px solid var(--line);
+    background:var(--panel); display:flex; align-items:center; justify-content:center;
+  }
+  .swipe-arrow svg{ width:14px; height:14px; stroke:var(--ink); }
 
   /* ---------- FOOTER ---------- */
   footer{ padding:44px 20px 40px; max-width:1200px; margin:0 auto; border-top:1px solid var(--line); }
@@ -213,25 +315,20 @@
   /* ---------- DESKTOP ---------- */
   @media (min-width:860px){
     .header-inner{ padding:18px 40px; }
+    .hero-wrap{
+      display:grid; grid-template-columns:1fr 1fr; grid-template-areas:"text visual" "gallery gallery";
+      align-items:center; gap:16px 40px; padding:0 40px 60px;
+    }
+    .hero-visual{ grid-area:visual; aspect-ratio:3/4; height:auto; }
+    .hero-text{ grid-area:text; padding:0; }
+    .swipe-gallery{ grid-area:gallery; }
     .section{ padding:60px 40px; }
     .grid{ grid-template-columns:repeat(4,1fr); gap:20px; }
+    .swipe-card{ flex:0 0 32%; }
     .menu-pane{ max-width:420px; }
   }
-  /* ---------- LINHA PAGE ---------- */
-  .linha-hero{ max-width:1200px; margin:0 auto; padding:14px 20px 0; }
   .back-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); font-weight:600; }
   .back-link svg{ width:14px; height:14px; stroke:var(--muted); }
-  .linha-intro{ padding:24px 0 0; }
-  .linha-intro h1{
-    font-family:'Bodoni Moda', serif; font-weight:400; font-size:clamp(28px,7vw,44px);
-    line-height:1.1; letter-spacing:-0.01em; margin-bottom:14px;
-  }
-  .linha-intro h1 em{ font-style:italic; color:var(--sage-deep); }
-  .linha-intro p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:50ch; }
-  .color-card{ display:block; text-align:left; width:100%; }
-  .color-dots{ display:flex; gap:5px; margin-top:8px; }
-  .color-dot{ width:9px; height:9px; border-radius:50%; border:1px solid rgba(0,0,0,0.1); flex:0 0 auto; }
-  .color-dot.active{ box-shadow:0 0 0 2px var(--bg), 0 0 0 3px var(--ink); }
   /* ================= PRODUCT QUICK VIEW ================= */
   .product-overlay{
     position:fixed; inset:0; z-index:110; background:rgba(10,10,8,0.4);
@@ -395,32 +492,66 @@
   </div>
 </header>
 
-<div class="linha-hero">
-  <a href="index.html" class="back-link">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
-    Voltar
-  </a>
-  <div class="linha-intro">
-    <span class="eyebrow" style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block;">Cases — Linha</span>
-    <h1>Super Finas</h1>
-    <p>Proteção ultra fina de 0,3mm de espessura — feita pra manter a leveza e o design original do seu iPhone.</p>
-  </div>
-</div>
 
-<section class="section" id="produtos-linha">
-  <div class="section-head"><h2>Modelo disponível</h2></div>
-  <div class="grid" id="linhaGrid" style="max-width:280px;">
-    <article class="card">
-      <button class="card-visual color-card" style="background:#EFF1EC;" data-open-product="17" data-linha="super-finas">
-        <img src="thumb-case.png" alt="Case — Super Fina" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async">
-      </button>
-      <div class="card-info">
-        <p class="card-name">Case — Super Fina</p>
-        <p class="card-price">Sob consulta</p>
-      </div>
-    </article>
+<section class="section" style="max-width:480px;">
+  <div class="collection-back" style="padding:0 0 20px;">
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+      Voltar
+    </a>
   </div>
-  <p style="color:var(--muted);font-size:13px;margin-top:18px;">Toque na foto pra ver os modelos de iPhone disponíveis.</p>
+
+  <!-- LOGGED OUT: login / criar conta -->
+  <div id="authSection">
+    <span class="eyebrow">Senza Pari</span>
+    <h1 style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(28px,7vw,42px);margin:14px 0 24px;">Minha conta</h1>
+
+    <div class="account-tabs">
+      <button class="account-tab active" id="tabLogin" type="button">Entrar</button>
+      <button class="account-tab" id="tabSignup" type="button">Criar conta</button>
+    </div>
+
+    <p class="account-error" id="authError" hidden></p>
+
+    <form id="loginForm" class="account-form">
+      <label class="account-label">E-mail
+        <input type="email" name="email" required autocomplete="email">
+      </label>
+      <label class="account-label">Senha
+        <input type="password" name="password" required autocomplete="current-password">
+      </label>
+      <button type="submit" class="btn account-submit">Entrar</button>
+      <button type="button" class="account-forgot" id="forgotBtn">Esqueci minha senha</button>
+    </form>
+
+    <form id="signupForm" class="account-form" hidden>
+      <label class="account-label">Nome
+        <input type="text" name="name" required autocomplete="name">
+      </label>
+      <label class="account-label">E-mail
+        <input type="email" name="email" required autocomplete="email">
+      </label>
+      <label class="account-label">Senha
+        <input type="password" name="password" required autocomplete="new-password" minlength="6">
+      </label>
+      <label class="account-label">Confirmar senha
+        <input type="password" name="password2" required autocomplete="new-password" minlength="6">
+      </label>
+      <button type="submit" class="btn account-submit">Criar conta</button>
+    </form>
+  </div>
+
+  <!-- LOGGED IN: painel da conta -->
+  <div id="dashboardSection" hidden>
+    <span class="eyebrow">Senza Pari</span>
+    <h1 id="dashboardHello" style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(28px,7vw,42px);margin:14px 0 4px;">Olá</h1>
+    <p id="dashboardEmail" style="color:var(--muted);font-size:14px;margin-bottom:28px;"></p>
+
+    <h2 id="pedidos" class="account-section-title">Meus pedidos</h2>
+    <div id="ordersList" class="account-orders"></div>
+
+    <button class="account-forgot" id="logoutBtn" style="margin-top:24px;">Sair da conta</button>
+  </div>
 </section>
 
 <footer>
@@ -1127,7 +1258,30 @@
     });
   });
 
-  // Logo click → splash transition → volta pra home
+  // Hero: garante que o vídeo sempre tente tocar em loop, mesmo se o autoplay inicial for bloqueado
+  const heroVideo = $('#heroVideo');
+  if (heroVideo) {
+    heroVideo.muted = true;
+    const tryPlay = () => heroVideo.play().catch(() => {});
+    tryPlay();
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) tryPlay(); });
+
+    $('#soundBtn').addEventListener('click', () => {
+      heroVideo.muted = !heroVideo.muted;
+      $('#soundBtn').classList.toggle('on', !heroVideo.muted);
+      tryPlay();
+    });
+  }
+
+  // Bottom swipe gallery arrows (se existir nesta página)
+  const rail = $('#swipeRail');
+  if (rail) {
+    const cardWidth = () => rail.querySelector('.swipe-card').offsetWidth + 10;
+    $('#swipeNext').addEventListener('click', () => rail.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
+    $('#swipePrev').addEventListener('click', () => rail.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
+  }
+
+  // Logo click → splash transition → back to top / close overlays
   function goHome(){
     const splash = $('#splash');
     splash.classList.add('show');
@@ -1564,5 +1718,157 @@
 </script>
 
 <script type="module" src="account.js"></script>
+<script>
+  // Interações que não dependem do Firebase: rodam imediatamente, sem esperar a rede.
+  (function () {
+    const $ = (sel) => document.querySelector(sel);
+    const authError = $('#authError');
+    const loginForm = $('#loginForm');
+    const signupForm = $('#signupForm');
+    const tabLogin = $('#tabLogin');
+    const tabSignup = $('#tabSignup');
+
+    function clearError(){
+      authError.hidden = true;
+      authError.textContent = '';
+    }
+    function setTab(tab){
+      clearError();
+      const isLogin = tab === 'login';
+      tabLogin.classList.toggle('active', isLogin);
+      tabSignup.classList.toggle('active', !isLogin);
+      loginForm.hidden = !isLogin;
+      signupForm.hidden = isLogin;
+    }
+    tabLogin.addEventListener('click', () => setTab('login'));
+    tabSignup.addEventListener('click', () => setTab('signup'));
+    if (new URLSearchParams(location.search).get('modo') === 'criar') setTab('signup');
+  })();
+</script>
+<script type="module">
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+  function waitForSenzaAccount(){
+    return new Promise((resolve) => {
+      if (window.senzaAccount) return resolve(window.senzaAccount);
+      const t = setInterval(() => {
+        if (window.senzaAccount) { clearInterval(t); resolve(window.senzaAccount); }
+      }, 30);
+    });
+  }
+
+  waitForSenzaAccount().then((senzaAccount) => {
+    const $ = (sel) => document.querySelector(sel);
+    const authSection = $('#authSection');
+    const dashboardSection = $('#dashboardSection');
+    const authError = $('#authError');
+    const loginForm = $('#loginForm');
+    const signupForm = $('#signupForm');
+
+    function showError(msg){
+      authError.textContent = msg;
+      authError.hidden = false;
+    }
+    function clearError(){
+      authError.hidden = true;
+      authError.textContent = '';
+    }
+
+    const FIREBASE_ERROR_MESSAGES = {
+      'auth/invalid-email': 'E-mail inválido.',
+      'auth/user-not-found': 'Não encontramos uma conta com esse e-mail.',
+      'auth/wrong-password': 'Senha incorreta.',
+      'auth/invalid-credential': 'E-mail ou senha incorretos.',
+      'auth/email-already-in-use': 'Já existe uma conta com esse e-mail.',
+      'auth/weak-password': 'A senha precisa ter pelo menos 6 caracteres.',
+    };
+    function friendlyError(err){
+      return FIREBASE_ERROR_MESSAGES[err.code] || 'Algo deu errado. Tente novamente.';
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
+      const fd = new FormData(loginForm);
+      try {
+        await senzaAccount.logIn(fd.get('email'), fd.get('password'));
+      } catch (err) {
+        showError(friendlyError(err));
+      }
+    });
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
+      const fd = new FormData(signupForm);
+      if (fd.get('password') !== fd.get('password2')) {
+        showError('As senhas não coincidem.');
+        return;
+      }
+      try {
+        await senzaAccount.signUp(fd.get('name'), fd.get('email'), fd.get('password'));
+      } catch (err) {
+        showError(friendlyError(err));
+      }
+    });
+
+    $('#forgotBtn').addEventListener('click', async () => {
+      const email = loginForm.email.value;
+      if (!email) { showError('Digite seu e-mail acima primeiro, depois clique em "Esqueci minha senha".'); return; }
+      try {
+        await senzaAccount.resetPassword(email);
+        clearError();
+        authError.hidden = false;
+        authError.style.background = '#EAF2E8';
+        authError.style.borderColor = '#C7DAC2';
+        authError.style.color = '#3D5A34';
+        authError.textContent = 'Enviamos um link de redefinição de senha pro seu e-mail.';
+      } catch (err) {
+        showError(friendlyError(err));
+      }
+    });
+
+    $('#logoutBtn').addEventListener('click', () => senzaAccount.logOut());
+
+    let unsubscribeOrders = null;
+    function renderOrders(orders){
+      const list = $('#ordersList');
+      if (!orders.length){
+        list.innerHTML = '<p class="account-order-empty">Você ainda não fez nenhum pedido.</p>';
+        return;
+      }
+      list.innerHTML = orders.map((o) => {
+        const date = o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric' }) : '';
+        const items = (o.items || []).map((i) => `${i.qty}x ${i.name}${i.meta ? ' — ' + i.meta : ''}`).join('<br>');
+        return `
+          <div class="account-order-card">
+            <div class="account-order-head">
+              <span class="account-order-date">${date}</span>
+              <span class="account-order-status">${o.status || 'Aguardando confirmação'}</span>
+            </div>
+            <div class="account-order-items">${items}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    onAuthStateChanged(senzaAccount.auth, (user) => {
+      if (unsubscribeOrders) { unsubscribeOrders(); unsubscribeOrders = null; }
+      if (user) {
+        authSection.hidden = true;
+        dashboardSection.hidden = false;
+        $('#dashboardHello').textContent = `Olá, ${(user.displayName || '').split(' ')[0] || 'bem-vinda(o)'}`;
+        $('#dashboardEmail').textContent = user.email || '';
+        unsubscribeOrders = senzaAccount.watchOrders(renderOrders);
+        if (location.hash === '#pedidos') {
+          setTimeout(() => $('#pedidos').scrollIntoView({ behavior: 'smooth' }), 200);
+        }
+      } else {
+        authSection.hidden = false;
+        dashboardSection.hidden = true;
+      }
+    });
+  });
+</script>
 </body>
 </html>

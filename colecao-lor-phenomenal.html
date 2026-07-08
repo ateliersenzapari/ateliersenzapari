@@ -80,6 +80,22 @@
     color:var(--ink);
   }
   .header-icons{ display:flex; align-items:center; gap:17px; }
+  .account-dropdown{
+    position:absolute; top:calc(100% + 10px); right:0; z-index:70;
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    min-width:190px; padding:6px; box-shadow:0 10px 30px rgba(20,22,18,0.12);
+    opacity:0; pointer-events:none; transform:translateY(-6px);
+    transition:opacity 0.18s ease, transform 0.18s ease;
+  }
+  .account-dropdown.open{ opacity:1; pointer-events:all; transform:translateY(0); }
+  .account-dropdown-hello{ padding:10px 12px 6px; font-size:12px; color:var(--muted); font-weight:600; }
+  .account-dropdown-row{
+    display:block; width:100%; text-align:left; padding:10px 12px; font-size:14px;
+    border-radius:8px; font-family:inherit; cursor:pointer;
+  }
+  .account-dropdown-row:hover{ background:var(--bg); }
+  .account-dropdown-row + .account-dropdown-row{ border-top:1px solid var(--line); margin-top:2px; padding-top:12px; }
+  .icon-btn.logged-in svg{ stroke:var(--sage-deep); }
   .icon-btn{ width:22px; height:22px; display:flex; align-items:center; justify-content:center; position:relative; }
   .icon-btn svg{ width:20px; height:20px; stroke:var(--ink); }
 
@@ -438,6 +454,9 @@
       <span class="logo">SENZA PARI</span>
     </button>
     <div class="header-icons">
+      <button class="icon-btn" id="accountBtn" aria-label="Conta">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+      </button>
       <button class="icon-btn" id="searchBtn" aria-label="Pesquisar">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       </button>
@@ -1358,9 +1377,12 @@
   document.querySelectorAll('#cartBtn, #cartBtnMenu').forEach(btn => btn.addEventListener('click', openCart));
   $('#cartClose').addEventListener('click', closeCart);
   $('#cartOverlay').addEventListener('click', (e) => { if (e.target.id === 'cartOverlay') closeCart(); });
-  $('#cartCheckoutBtn').addEventListener('click', () => {
+  $('#cartCheckoutBtn').addEventListener('click', async () => {
     const cart = loadCart();
     if (cart.length === 0) return;
+    if (window.senzaAccount && window.senzaAccount.auth.currentUser) {
+      try { await window.senzaAccount.saveOrder(cart); } catch (e) {}
+    }
     const lines = cart.map(i => `• ${i.name} — ${i.meta} (qtd: ${i.qty})`).join('%0A');
     const msg = `Olá! Gostaria de fechar um pedido:%0A%0A${lines}%0A%0APode me passar valores e formas de pagamento?`;
     window.open(`https://wa.me/5581992492027?text=${msg}`, '_blank');
@@ -1696,5 +1718,6 @@
   });
 </script>
 
+<script type="module" src="account.js"></script>
 </body>
 </html>
