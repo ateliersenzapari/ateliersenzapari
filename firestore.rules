@@ -26,6 +26,10 @@ service cloud.firestore {
       }
     }
 
+    match /{path=**}/orders/{orderId} {
+      allow read: if isAdmin();
+    }
+
     match /admins/{adminId} {
       allow read: if isOwner(adminId);
       allow write: if false;
