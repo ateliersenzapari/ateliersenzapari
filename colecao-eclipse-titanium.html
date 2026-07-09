@@ -1296,7 +1296,9 @@
       tryPlay(activeVideo);
     });
 
-    function crossfadeToNext(){
+    let switching = false;
+
+    function doFade(){
       nextVideo.currentTime = 0;
       tryPlay(nextVideo);
       nextVideo.classList.add('active');
@@ -1310,11 +1312,36 @@
         // prepara o vídeo seguinte da fila no elemento que acabou de sair de cena
         nextVideo.src = HERO_PLAYLIST[(heroIndex + 1) % HERO_PLAYLIST.length];
         nextVideo.load();
+        switching = false;
       }, CROSSFADE_MS);
+    }
+
+    // Troca de vídeo: só avança quando o próximo já tiver dado pelo menos
+    // pra tocar (evita travar mostrando um quadro só se a rede estiver lenta),
+    // mas nunca espera mais que 2s, senão troca do mesmo jeito.
+    function crossfadeToNext(){
+      if (switching) return;
+      switching = true;
+      if (nextVideo.readyState >= 2) {
+        doFade();
+        return;
+      }
+      let done = false;
+      const onReady = () => { if (done) return; done = true; doFade(); };
+      nextVideo.addEventListener('canplay', onReady, { once: true });
+      setTimeout(() => {
+        if (done) return;
+        done = true;
+        nextVideo.removeEventListener('canplay', onReady);
+        doFade();
+      }, 2000);
     }
 
     heroVideoA.addEventListener('ended', () => { if (activeVideo === heroVideoA) crossfadeToNext(); });
     heroVideoB.addEventListener('ended', () => { if (activeVideo === heroVideoB) crossfadeToNext(); });
+    // se um vídeo falhar ao carregar/tocar, pula pro próximo em vez de travar a página
+    heroVideoA.addEventListener('error', () => { if (activeVideo === heroVideoA) crossfadeToNext(); });
+    heroVideoB.addEventListener('error', () => { if (activeVideo === heroVideoB) crossfadeToNext(); });
   }
 
   // Bottom swipe gallery arrows (se existir nesta página)
