@@ -645,16 +645,16 @@
         </button>
         <span class="sub-title">Cases — Linhas</span>
       </div>
-      <a class="menu-row" href="linha-cuir-supreme.html">
+      <button class="menu-row" data-open-subsub="paneCasesCuir">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="cuir-supreme-menu-thumb.png" alt="Cuir Suprême">
           <span class="menu-row-text">
             <span class="label">Cuir Suprême</span>
-            <span class="sub">Couro de crocodilo</span>
+            <span class="sub">Couro PDU</span>
           </span>
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </a>
+      </button>
       <a class="menu-row" href="linha-metal.html">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="case-metal.png" alt="Metal">
@@ -710,7 +710,7 @@
           <img class="menu-row-thumb" decoding="async" data-src="case-marmore-1.png" alt="Mármore">
           <span class="menu-row-text">
             <span class="label">Mármore</span>
-            <span class="sub">Veios dourados sobre preto</span>
+            <span class="sub">Veios dourados · 7 cores</span>
           </span>
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
@@ -723,18 +723,29 @@
         <button class="back-btn" data-back-to="paneCases">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="sub-title">Cuir Suprême — Série</span>
+        <span class="sub-title">Cuir Suprême — Estilos</span>
       </div>
-      <button class="menu-row" data-open-product="17" data-linha="cuir-supreme"><span class="label">Série 17</span>
+      <a class="menu-row" href="linha-cuir-supreme.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="cuir-supreme-menu-thumb.png" alt="Cuir Suprême Classique">
+          <span class="menu-row-text">
+            <span class="label">Classique</span>
+            <span class="sub">Couro PDU liso</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <button class="menu-row" data-open-product="17" data-linha="cuir-heritage">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="cuir-heritage-verde-musgo-thumb.png" alt="Cuir Héritage">
+          <span class="menu-row-text">
+            <span class="label">Héritage</span>
+            <span class="sub">MagSafe aparente · 8 cores</span>
+          </span>
+        </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
-      <button class="menu-row" data-open-product="16" data-linha="cuir-supreme"><span class="label">Série 16</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <button class="menu-row" data-open-product="15" data-linha="cuir-supreme"><span class="label">Série 15</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <a class="menu-row shop-all" href="linha-cuir-supreme.html">Ver todas — Cuir Suprême</a>
+      <a class="menu-row shop-all" href="linha-cuir-supreme.html#heritage">Ver todas — Cuir Suprême</a>
     </div>
 
     <div class="menu-pane pane-subsub" id="paneCasesMetal">
@@ -1124,7 +1135,7 @@
         <p class="product-title" id="productTitle">Case iPhone — Cuir Suprême</p>
         <span class="product-price">Sob consulta</span>
       </div>
-      <p class="product-desc" id="productDesc">Couro legítimo com acabamento liso e toque macio, cortado e costurado à mão — pensado pra unir proteção e sofisticação ao seu iPhone.</p>
+      <p class="product-desc" id="productDesc">Couro PDU com acabamento liso e toque macio, cortado e costurado à mão — pensado pra unir proteção e sofisticação ao seu iPhone.</p>
       <p class="swatch-label">Cor: <span id="colorLabelText">—</span></p>
       <div class="product-qty">
         <button class="qty-btn" id="qtyMinus" aria-label="Diminuir quantidade">−</button>
@@ -1392,7 +1403,7 @@
     'cuir-supreme': {
       kind: 'case',
       label: 'Cuir Suprême',
-      desc: 'Couro legítimo com acabamento liso e toque macio, cortado e costurado à mão — pensado pra unir proteção e sofisticação ao seu iPhone.',
+      desc: 'Couro PDU com acabamento liso e toque macio, cortado e costurado à mão — pensado pra unir proteção e sofisticação ao seu iPhone.',
       previewFit: 'cover',
       colors: [
         { id:'green-acid', label:'Green Acid', gallery:['cuir-supreme-green-acid-1.png', 'cuir-supreme-green-acid-2.png', 'cuir-supreme-green-acid-3.png', 'cuir-supreme-green-acid-4.png', 'cuir-supreme-green-acid-5.png', 'cuir-supreme-green-acid-6.png'] },
@@ -1404,6 +1415,22 @@
         { id:'vermelho-bordo', label:'Vermelho Bordô', gallery:['cuir-supreme-vermelho-bordo-1.png', 'cuir-supreme-vermelho-bordo-2.png', 'cuir-supreme-vermelho-bordo-3.png', 'cuir-supreme-vermelho-bordo-4.png', 'cuir-supreme-vermelho-bordo-5.png', 'cuir-supreme-vermelho-bordo-6.png'] },
         { id:'duo-tone-cinza', label:'Duo Tone Cinza', gallery:['cuir-supreme-duo-tone-cinza-1.png', 'cuir-supreme-duo-tone-cinza-2.png', 'cuir-supreme-duo-tone-cinza-3.png', 'cuir-supreme-duo-tone-cinza-4.png', 'cuir-supreme-duo-tone-cinza-5.png', 'cuir-supreme-duo-tone-cinza-6.png'] },
         { id:'branco-gelo', label:'Branco Gelo', gallery:['cuir-supreme-branco-gelo-1.png', 'cuir-supreme-branco-gelo-2.png', 'cuir-supreme-branco-gelo-3.png', 'cuir-supreme-branco-gelo-4.png', 'cuir-supreme-branco-gelo-5.png', 'cuir-supreme-branco-gelo-6.png'] },
+      ],
+    },
+    'cuir-heritage': {
+      kind: 'case',
+      label: 'Cuir Héritage',
+      desc: 'Couro PDU envelhecido com anel MagSafe aparente e moldura no tom da peça — um clássico contemporâneo com a assinatura dourada do Atelier.',
+      previewFit: 'cover',
+      colors: [
+        { id:'verde-musgo', label:'Verde Musgo', gallery:['cuir-heritage-verde-musgo-1.jpg', 'cuir-heritage-verde-musgo-2.jpg', 'cuir-heritage-verde-musgo-3.jpg', 'cuir-heritage-verde-musgo-4.jpg'] },
+        { id:'laranja-cravo', label:'Laranja Cravo', gallery:['cuir-heritage-laranja-cravo-1.jpg', 'cuir-heritage-laranja-cravo-2.jpg', 'cuir-heritage-laranja-cravo-3.jpg', 'cuir-heritage-laranja-cravo-4.jpg'] },
+        { id:'preto-old', label:'Preto Old', gallery:['cuir-heritage-preto-old-1.jpg', 'cuir-heritage-preto-old-2.jpg', 'cuir-heritage-preto-old-3.jpg', 'cuir-heritage-preto-old-4.jpg'] },
+        { id:'cinza-espacial', label:'Cinza Espacial', gallery:['cuir-heritage-cinza-espacial-1.jpg', 'cuir-heritage-cinza-espacial-2.jpg', 'cuir-heritage-cinza-espacial-3.jpg', 'cuir-heritage-cinza-espacial-4.jpg'] },
+        { id:'acid-green', label:'Acid Green', gallery:['cuir-heritage-acid-green-1.jpg', 'cuir-heritage-acid-green-2.jpg', 'cuir-heritage-acid-green-3.jpg', 'cuir-heritage-acid-green-4.jpg'] },
+        { id:'pink-flow', label:'Pink Flow', gallery:['cuir-heritage-pink-flow-1.jpg', 'cuir-heritage-pink-flow-2.jpg', 'cuir-heritage-pink-flow-3.jpg', 'cuir-heritage-pink-flow-4.jpg'] },
+        { id:'purple-rain', label:'Purple Rain', gallery:['cuir-heritage-purple-rain-1.jpg', 'cuir-heritage-purple-rain-2.jpg', 'cuir-heritage-purple-rain-3.jpg', 'cuir-heritage-purple-rain-4.jpg'] },
+        { id:'mustard-yellow', label:'Mustard Yellow', gallery:['cuir-heritage-mustard-yellow-1.jpg', 'cuir-heritage-mustard-yellow-2.jpg', 'cuir-heritage-mustard-yellow-3.jpg', 'cuir-heritage-mustard-yellow-4.jpg'] },
       ],
     },
     'metal': {
@@ -1446,6 +1473,11 @@
       colors: [
         { id:'marmore', label:'Black Gold', gallery:['case-marmore-1.png', 'case-marmore-2.png', 'case-marmore-3.png', 'case-marmore-4.png', 'case-marmore-5.png', 'case-marmore-6.png', 'case-marmore-7.jpg', 'case-marmore-8.jpg', 'case-marmore-9.jpg', 'case-marmore-10.jpg', 'case-marmore-11.jpg'] },
         { id:'champagne', label:'Champagne', gallery:['case-marmore-champagne-1.jpg', 'case-marmore-champagne-2.jpg', 'case-marmore-champagne-3.jpg', 'case-marmore-champagne-4.jpg', 'case-marmore-champagne-5.jpg'] },
+        { id:'true-orange', label:'True Orange', gallery:['case-marmore-true-orange-1.jpg', 'case-marmore-true-orange-2.jpg', 'case-marmore-true-orange-3.jpg', 'case-marmore-true-orange-4.jpg', 'case-marmore-true-orange-5.jpg'] },
+        { id:'true-white', label:'True White', gallery:['case-marmore-true-white-1.jpg', 'case-marmore-true-white-2.jpg', 'case-marmore-true-white-3.jpg', 'case-marmore-true-white-4.jpg'] },
+        { id:'true-black', label:'True Black', gallery:['case-marmore-true-black-1.jpg', 'case-marmore-true-black-2.jpg', 'case-marmore-true-black-3.jpg', 'case-marmore-true-black-4.jpg'] },
+        { id:'true-purple', label:'True Purple', gallery:['case-marmore-true-purple-1.jpg', 'case-marmore-true-purple-2.jpg', 'case-marmore-true-purple-3.jpg', 'case-marmore-true-purple-4.jpg'] },
+        { id:'true-brown', label:'True Brown', gallery:['case-marmore-true-brown-1.jpg', 'case-marmore-true-brown-2.jpg', 'case-marmore-true-brown-3.jpg', 'case-marmore-true-brown-4.jpg'] },
       ],
     },
     'skin-ouro-escovado': {
@@ -1518,12 +1550,13 @@
   }
 
   const SEARCH_SYNONYMS = {
-    'cuir-supreme': 'couro crocodilo',
+    'cuir-supreme': 'couro pdu classique',
+    'cuir-heritage': 'couro pdu heritage magsafe verde musgo laranja cravo preto old cinza espacial acid green pink flow purple rain mustard yellow',
     'metal': 'aluminio aeroespacial',
     'super-finas': 'fina fino ultra fina 0.3mm',
     'madeira': 'madeira nobre nogueira',
     'transparente': 'cristal transparente invisivel',
-    'marmore': 'marmore preto dourado veios',
+    'marmore': 'marmore preto dourado veios true orange white black purple brown laranja branco roxo marrom',
     'skin-ouro-escovado': 'ouro dourado escovado',
     'skin-gold-croco': 'gold croco crocodilo dourado',
     'skin-black-croco': 'dark black texture preto fosco',
@@ -1550,6 +1583,7 @@
     { label: 'Perguntas Frequentes', sub: 'Página', keywords: normalizeSearch('perguntas frequentes faq duvidas pedido prazo magsafe garantia'), action: () => { location.href = 'perguntas-frequentes.html'; } },
     { label: 'Guia de Cuidados', sub: 'Página', keywords: normalizeSearch('cuidados limpeza couro ceramica titanio skin manutencao'), action: () => { location.href = 'cuidados.html'; } },
     { label: 'Privacidade', sub: 'Página', keywords: normalizeSearch('privacidade dados lgpd politica'), action: () => { location.href = 'privacidade.html'; } },
+    { label: 'Cuir Héritage', sub: 'Case', keywords: normalizeSearch('cuir heritage couro pdu magsafe case'), action: () => { location.href = 'linha-cuir-supreme.html#heritage'; } },
   ];
 
   function renderSearchResults(query){
