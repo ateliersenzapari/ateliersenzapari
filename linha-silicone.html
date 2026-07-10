@@ -360,10 +360,9 @@
     display:flex; align-items:center; justify-content:center; padding:0 4px; line-height:1;
   }
   .cart-badge.hidden{ display:none; }
-  .sil-carousel{ display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding:2px 20px 18px; max-width:1200px; margin:0 auto; scrollbar-width:none; }
+  .sil-carousel{ display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding:2px 20px 16px; max-width:1200px; margin:0 auto; scrollbar-width:none; }
   .sil-carousel::-webkit-scrollbar{ display:none; }
-  .sil-carousel img{ scroll-snap-align:center; flex:0 0 86%; aspect-ratio:1/1; object-fit:cover; border-radius:18px; background:var(--sage); }
-  @media(min-width:720px){ .sil-carousel img{ flex-basis:42%; } }
+  .sil-carousel img{ scroll-snap-align:center; flex:0 0 auto; height:270px; width:270px; object-fit:cover; border-radius:16px; background:var(--sage); display:block; }
 </style>
 </head>
 <body>
