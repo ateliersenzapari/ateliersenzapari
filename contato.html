@@ -600,6 +600,16 @@
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
+      <a class="menu-row" href="linha-silicone.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="silicone-gloss-night-blue-card.jpg" alt="Silicone">
+          <span class="menu-row-text">
+            <span class="label">Silicone</span>
+            <span class="sub">Toque macio · gloss</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
       <a class="menu-row" href="linha-metal.html">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="case-metal.png" alt="Metal">
@@ -1378,6 +1388,18 @@
         { id:'mustard-yellow', label:'Mustard Yellow', gallery:['cuir-heritage-mustard-yellow-card.jpg', 'cuir-heritage-mustard-yellow-1.jpg', 'cuir-heritage-mustard-yellow-2.jpg', 'cuir-heritage-mustard-yellow-3.jpg', 'cuir-heritage-mustard-yellow-4.jpg'] },
       ],
     },
+    'silicone-gloss': {
+      kind: 'case',
+      label: 'Silicone Gloss',
+      desc: 'Silicone de toque macio com acabamento gloss e design escultural — leve, aveludado e com a estrela do Atelier em relevo.',
+      previewFit: 'cover',
+      colors: [
+        { id:'grey-matter', label:'Grey Matter', gallery:['silicone-gloss-grey-matter-card.jpg', 'silicone-gloss-grey-matter-6.jpg', 'silicone-gloss-grey-matter-7.jpg', 'silicone-gloss-grey-matter-8.jpg'] },
+        { id:'blue-sky', label:'Blue Sky', gallery:['silicone-gloss-blue-sky-card.jpg', 'silicone-gloss-blue-sky-2.jpg', 'silicone-gloss-blue-sky-5.jpg'] },
+        { id:'royal-pink', label:'Royal Pink', gallery:['silicone-gloss-royal-pink-card.jpg', 'silicone-gloss-royal-pink-3.jpg', 'silicone-gloss-royal-pink-4.jpg', 'silicone-gloss-royal-pink-5.jpg'] },
+        { id:'night-blue', label:'Night Blue', gallery:['silicone-gloss-night-blue-card.jpg', 'silicone-gloss-night-blue-2.jpg', 'silicone-gloss-night-blue-3.jpg', 'silicone-gloss-night-blue-4.jpg'] },
+      ],
+    },
     'metal': {
       kind: 'case',
       label: 'Metal',
@@ -1529,6 +1551,7 @@
     { label: 'Guia de Cuidados', sub: 'Página', keywords: normalizeSearch('cuidados limpeza couro ceramica titanio skin manutencao'), action: () => { location.href = 'cuidados.html'; } },
     { label: 'Privacidade', sub: 'Página', keywords: normalizeSearch('privacidade dados lgpd politica'), action: () => { location.href = 'privacidade.html'; } },
     { label: 'Cuir Héritage', sub: 'Case', keywords: normalizeSearch('cuir heritage couro pdu magsafe case'), action: () => { location.href = 'linha-cuir-supreme.html#heritage'; } },
+    { label: 'Silicone Gloss', sub: 'Case', keywords: normalizeSearch('silicone gloss grey matter blue sky royal pink night blue macio case'), action: () => { location.href = 'linha-silicone.html'; } },
   ];
 
   function renderSearchResults(query){
