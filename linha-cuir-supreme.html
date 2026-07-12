@@ -810,7 +810,7 @@
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
-      <a class="menu-row" href="colecao-lor-phenomenal.html">
+      <button class="menu-row" data-open-sub="wallets">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="thumb-wallet.png" alt="Wallets">
           <span class="menu-row-text">
@@ -819,15 +819,17 @@
           </span>
         </span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </a>
-      <a class="menu-row" href="colecao-lor-phenomenal.html">
+      </button>
+      <button class="menu-row" data-open-sub="airtags">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="thumb-airtag.png" alt="AirTag Accessories">
           <span class="menu-row-text">
             <span class="label">AirTag Accessories</span>
+            <span class="sub">Cuir Héritage</span>
           </span>
         </span>
-      </a>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
       <button class="menu-row" data-open-sub="watchbands">
         <span class="menu-row-main">
           <img class="menu-row-thumb" decoding="async" data-src="thumb-watchband.png" alt="Watch Bands">
@@ -909,7 +911,7 @@
       </a>
       <button class="menu-row" data-open-subsub="paneCasesTecido">
         <span class="menu-row-main">
-          <img class="menu-row-thumb" decoding="async" data-src="thumb-case.png" alt="Tecido">
+          <img class="menu-row-thumb" decoding="async" data-src="swatch-tecido-verde-musgo.svg" alt="Tecido">
           <span class="menu-row-text">
             <span class="label">Tecido</span>
             <span class="sub">Acabamento têxtil</span>
@@ -1031,16 +1033,16 @@
         </button>
         <span class="sub-title">Tecido — Série</span>
       </div>
-      <a class="menu-row" href="#"><span class="label">Série 17</span>
+      <button class="menu-row" data-open-product="17" data-linha="tecido"><span class="label">Série 17</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </a>
-      <a class="menu-row" href="#"><span class="label">Série 16</span>
+      </button>
+      <button class="menu-row" data-open-product="16" data-linha="tecido"><span class="label">Série 16</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </a>
-      <a class="menu-row" href="#"><span class="label">Série 15</span>
+      </button>
+      <button class="menu-row" data-open-product="15" data-linha="tecido"><span class="label">Série 15</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
-      </a>
-      <a class="menu-row shop-all" href="#">Ver todas — Tecido</a>
+      </button>
+      <button class="menu-row shop-all" data-open-product="17" data-linha="tecido">Ver todas — Tecido</button>
     </div>
     <div class="menu-pane pane-subsub" id="paneCasesMadeira">
       <div class="sub-head">
@@ -1078,6 +1080,46 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="menu-row shop-all" data-open-product="17" data-linha="marmore">Ver todas — Mármore</button>
+    </div>
+
+    <div class="menu-pane pane-sub" id="paneWallets">
+      <div class="sub-head">
+        <button class="back-btn" data-back>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">Wallets — Linhas</span>
+      </div>
+      <a class="menu-row" href="linha-wallet.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="swatch-wallet-cuir-heritage-verde-musgo.svg" alt="Wallet Cuir Héritage">
+          <span class="menu-row-text">
+            <span class="label">Cuir Héritage</span>
+            <span class="sub">MagSafe Card Holder · 8 cores</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row shop-all" href="colecao-lor-phenomenal.html">Ver todas as Wallets</a>
+    </div>
+
+    <div class="menu-pane pane-sub" id="paneAirtags">
+      <div class="sub-head">
+        <button class="back-btn" data-back>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-title">AirTag Accessories — Linhas</span>
+      </div>
+      <a class="menu-row" href="linha-airtag.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="swatch-airtag-cuir-heritage-verde-musgo.svg" alt="AirTag Cuir Héritage">
+          <span class="menu-row-text">
+            <span class="label">Cuir Héritage</span>
+            <span class="sub">Chaveiro em couro · 8 cores</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a class="menu-row shop-all" href="colecao-lor-phenomenal.html">Ver todas as AirTag Accessories</a>
     </div>
 
     <div class="menu-pane pane-sub" id="paneSkins">
@@ -1299,6 +1341,16 @@
         </button>
         <span class="sub-title">Watch Bands — Ultra</span>
       </div>
+      <a class="menu-row" href="linha-watchband.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="swatch-watchband-cuir-heritage-verde-musgo.svg" alt="Watch Band Cuir Héritage">
+          <span class="menu-row-text">
+            <span class="label">Cuir Héritage</span>
+            <span class="sub">Couro · 8 cores</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
       <a class="menu-row" href="#"><span class="label">Apple Watch Ultra 3</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
@@ -1318,6 +1370,16 @@
         </button>
         <span class="sub-title">AirPods</span>
       </div>
+      <a class="menu-row" href="linha-airpods.html">
+        <span class="menu-row-main">
+          <img class="menu-row-thumb" decoding="async" data-src="swatch-airpods-cuir-heritage-verde-musgo.svg" alt="AirPods Case Cuir Héritage">
+          <span class="menu-row-text">
+            <span class="label">Cuir Héritage</span>
+            <span class="sub">Estojo em couro · 8 cores</span>
+          </span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
       <a class="menu-row" href="#"><span class="label">AirPods Pro 3</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
       </a>
@@ -1757,6 +1819,90 @@
         { id:'dark-eclipse', label:'Dark Eclipse', gallery:['skin-dark-eclipse-1.jpg', 'skin-dark-eclipse-2.jpg', 'skin-dark-eclipse-3.jpg', 'skin-dark-eclipse-4.jpg', 'skin-dark-eclipse-5.jpg'] },
       ],
     },
+    'tecido': {
+      kind: 'case',
+      label: 'Tecido',
+      desc: 'Case em tecido técnico resistente à água, com moldura em silicone macio e a assinatura Senza Pari em relevo — leveza e textura têxtil sem abrir mão da proteção.',
+      previewFit: 'cover',
+      colors: [
+        { id:'verde-musgo', label:'Verde Musgo', gallery:['swatch-tecido-verde-musgo.svg'] },
+        { id:'laranja-cravo', label:'Laranja Cravo', gallery:['swatch-tecido-laranja-cravo.svg'] },
+        { id:'preto-old', label:'Preto Old', gallery:['swatch-tecido-preto-old.svg'] },
+        { id:'cinza-espacial', label:'Cinza Espacial', gallery:['swatch-tecido-cinza-espacial.svg'] },
+        { id:'acid-green', label:'Acid Green', gallery:['swatch-tecido-acid-green.svg'] },
+        { id:'pink-flow', label:'Pink Flow', gallery:['swatch-tecido-pink-flow.svg'] },
+        { id:'purple-rain', label:'Purple Rain', gallery:['swatch-tecido-purple-rain.svg'] },
+        { id:'mustard-yellow', label:'Mustard Yellow', gallery:['swatch-tecido-mustard-yellow.svg'] },
+      ],
+    },
+    'wallet-cuir-heritage': {
+      kind: 'accessory',
+      title: 'Wallet — Cuir Héritage',
+      label: 'Cuir Héritage',
+      desc: 'Porta-cartões MagSafe em couro PDU Cuir Héritage, com encaixe magnético preciso no iPhone e acabamento costurado à mão.',
+      previewFit: 'cover',
+      colors: [
+        { id:'verde-musgo', label:'Verde Musgo', gallery:['swatch-wallet-cuir-heritage-verde-musgo.svg'] },
+        { id:'laranja-cravo', label:'Laranja Cravo', gallery:['swatch-wallet-cuir-heritage-laranja-cravo.svg'] },
+        { id:'preto-old', label:'Preto Old', gallery:['swatch-wallet-cuir-heritage-preto-old.svg'] },
+        { id:'cinza-espacial', label:'Cinza Espacial', gallery:['swatch-wallet-cuir-heritage-cinza-espacial.svg'] },
+        { id:'acid-green', label:'Acid Green', gallery:['swatch-wallet-cuir-heritage-acid-green.svg'] },
+        { id:'pink-flow', label:'Pink Flow', gallery:['swatch-wallet-cuir-heritage-pink-flow.svg'] },
+        { id:'purple-rain', label:'Purple Rain', gallery:['swatch-wallet-cuir-heritage-purple-rain.svg'] },
+        { id:'mustard-yellow', label:'Mustard Yellow', gallery:['swatch-wallet-cuir-heritage-mustard-yellow.svg'] },
+      ],
+    },
+    'airtag-cuir-heritage': {
+      kind: 'accessory',
+      title: 'AirTag Holder — Cuir Héritage',
+      label: 'Cuir Héritage',
+      desc: 'Chaveiro porta-AirTag em couro PDU Cuir Héritage, com argola em metal e costura reforçada — protege e acompanha suas chaves.',
+      previewFit: 'cover',
+      colors: [
+        { id:'verde-musgo', label:'Verde Musgo', gallery:['swatch-airtag-cuir-heritage-verde-musgo.svg'] },
+        { id:'laranja-cravo', label:'Laranja Cravo', gallery:['swatch-airtag-cuir-heritage-laranja-cravo.svg'] },
+        { id:'preto-old', label:'Preto Old', gallery:['swatch-airtag-cuir-heritage-preto-old.svg'] },
+        { id:'cinza-espacial', label:'Cinza Espacial', gallery:['swatch-airtag-cuir-heritage-cinza-espacial.svg'] },
+        { id:'acid-green', label:'Acid Green', gallery:['swatch-airtag-cuir-heritage-acid-green.svg'] },
+        { id:'pink-flow', label:'Pink Flow', gallery:['swatch-airtag-cuir-heritage-pink-flow.svg'] },
+        { id:'purple-rain', label:'Purple Rain', gallery:['swatch-airtag-cuir-heritage-purple-rain.svg'] },
+        { id:'mustard-yellow', label:'Mustard Yellow', gallery:['swatch-airtag-cuir-heritage-mustard-yellow.svg'] },
+      ],
+    },
+    'watchband-cuir-heritage': {
+      kind: 'accessory',
+      title: 'Watch Band — Cuir Héritage',
+      label: 'Cuir Héritage',
+      desc: 'Pulseira em couro PDU Cuir Héritage para Apple Watch, fivela em metal escovado e acabamento macio ao toque.',
+      previewFit: 'cover',
+      colors: [
+        { id:'verde-musgo', label:'Verde Musgo', gallery:['swatch-watchband-cuir-heritage-verde-musgo.svg'] },
+        { id:'laranja-cravo', label:'Laranja Cravo', gallery:['swatch-watchband-cuir-heritage-laranja-cravo.svg'] },
+        { id:'preto-old', label:'Preto Old', gallery:['swatch-watchband-cuir-heritage-preto-old.svg'] },
+        { id:'cinza-espacial', label:'Cinza Espacial', gallery:['swatch-watchband-cuir-heritage-cinza-espacial.svg'] },
+        { id:'acid-green', label:'Acid Green', gallery:['swatch-watchband-cuir-heritage-acid-green.svg'] },
+        { id:'pink-flow', label:'Pink Flow', gallery:['swatch-watchband-cuir-heritage-pink-flow.svg'] },
+        { id:'purple-rain', label:'Purple Rain', gallery:['swatch-watchband-cuir-heritage-purple-rain.svg'] },
+        { id:'mustard-yellow', label:'Mustard Yellow', gallery:['swatch-watchband-cuir-heritage-mustard-yellow.svg'] },
+      ],
+    },
+    'airpods-cuir-heritage': {
+      kind: 'accessory',
+      title: 'AirPods Case — Cuir Héritage',
+      label: 'Cuir Héritage',
+      desc: 'Estojo em couro PDU Cuir Héritage para AirPods, com mosquetão destacável e recorte preciso para carregamento sem fio.',
+      previewFit: 'cover',
+      colors: [
+        { id:'verde-musgo', label:'Verde Musgo', gallery:['swatch-airpods-cuir-heritage-verde-musgo.svg'] },
+        { id:'laranja-cravo', label:'Laranja Cravo', gallery:['swatch-airpods-cuir-heritage-laranja-cravo.svg'] },
+        { id:'preto-old', label:'Preto Old', gallery:['swatch-airpods-cuir-heritage-preto-old.svg'] },
+        { id:'cinza-espacial', label:'Cinza Espacial', gallery:['swatch-airpods-cuir-heritage-cinza-espacial.svg'] },
+        { id:'acid-green', label:'Acid Green', gallery:['swatch-airpods-cuir-heritage-acid-green.svg'] },
+        { id:'pink-flow', label:'Pink Flow', gallery:['swatch-airpods-cuir-heritage-pink-flow.svg'] },
+        { id:'purple-rain', label:'Purple Rain', gallery:['swatch-airpods-cuir-heritage-purple-rain.svg'] },
+        { id:'mustard-yellow', label:'Mustard Yellow', gallery:['swatch-airpods-cuir-heritage-mustard-yellow.svg'] },
+      ],
+    },
   };
 
   function normalizeSearch(str){
@@ -1844,8 +1990,12 @@
     currentProduct = { linha, model, colorIndex: colorIndex || 0, galleryIndex: 0, qty: 1 };
     const lineData = LINES[linha];
     $('#productBackLabel').textContent = lineData.label;
-    const kindLabel = lineData.kind === 'skin' ? 'Skin' : 'Case';
-    $('#productTitle').textContent = `${kindLabel} Série ${model} — ${lineData.label}`;
+    if (lineData.kind === 'accessory') {
+      $('#productTitle').textContent = lineData.title || lineData.label;
+    } else {
+      const kindLabel = lineData.kind === 'skin' ? 'Skin' : 'Case';
+      $('#productTitle').textContent = `${kindLabel} Série ${model} — ${lineData.label}`;
+    }
     $('#productDesc').textContent = lineData.desc;
     $('#qtyValue').textContent = '1';
     renderSwatches();
@@ -1952,7 +2102,7 @@
     const color = lineData.colors[currentProduct.colorIndex];
     addToCart({
       sku: `${currentProduct.linha}-${currentProduct.model}-${color.id}`,
-      name: `${lineData.kind === 'skin' ? 'Skin' : 'Case'} Série ${currentProduct.model} — ${lineData.label}`,
+      name: lineData.kind === 'accessory' ? (lineData.title || lineData.label) : `${lineData.kind === 'skin' ? 'Skin' : 'Case'} Série ${currentProduct.model} — ${lineData.label}`,
       meta: color.label,
       img: color.gallery[0],
       qty: currentProduct.qty,

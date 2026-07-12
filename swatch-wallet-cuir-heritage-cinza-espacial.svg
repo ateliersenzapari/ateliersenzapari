@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 640">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="38%" r="75%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="60%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.14"/>
+    </radialGradient>
+    <pattern id="grain" width="14" height="14" patternTransform="rotate(35)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#000000" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="480" height="640" fill="#55585C"/>
+  <rect width="480" height="640" fill="url(#grain)"/>
+  <rect width="480" height="640" fill="url(#g)"/>
+  <path d="M240 258 L288 328 L240 468 L192 328 Z" fill="#F6F4EE" fill-opacity="0.16"/>
+  <g transform="translate(28,548)">
+    <rect x="0" y="0" width="187.0" height="46" rx="23" fill="#F6F4EE" fill-opacity="0.14"/>
+    <text x="20" y="20" font-family="Manrope, Arial, sans-serif" font-size="10.5" font-weight="600" letter-spacing="1.4" fill="#F6F4EE" fill-opacity="0.85">AMOSTRA DE COR</text>
+    <text x="20" y="36" font-family="Georgia, serif" font-size="15" font-weight="600" fill="#F6F4EE">Cinza Espacial</text>
+  </g>
+</svg>
