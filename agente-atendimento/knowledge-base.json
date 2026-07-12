@@ -30,7 +30,7 @@
       "instagram": "@ateliersenzapari",
       "instagram_link": "https://instagram.com/ateliersenzapari",
       "email": "contato@ateliersenzapari.com.br",
-      "endereco_fisico": "[PREENCHER] endereço completo/horário de atendimento presencial, se houver — o site só informa a cidade (Recife, Brasil)"
+      "endereco_fisico": "Atendimento 100% online, sem loja física aberta ao público. O Atelier tem espaço de produção próprio, mas não é aberto para visitas. Para clientes de João Pessoa e Recife, é possível combinar retirada em mãos do pedido em vez de envio pelos Correios."
     }
   },
 
@@ -44,7 +44,7 @@
   ],
 
   "dispositivos_suportados": {
-    "iphone": "Séries 15, 16 e 17, incluindo versões Pro e Pro Max (compatibilidade exata confirmada na consulta do pedido).",
+    "iphone": "Atualmente as peças são feitas apenas para iPhone Série 17 em diante (incluindo Pro/Pro Max). O site ainda mostra opção de escolher Séries 15 e 16 em alguns lugares, mas isso está desatualizado — todas as linhas hoje atendem só Série 17+.",
     "apple_watch": ["Apple Watch Ultra", "Apple Watch Ultra 2", "Apple Watch Ultra 3"],
     "airpods": ["AirPods", "AirPods Pro 2", "AirPods Pro 3"],
     "airtag": "Compatível (case/porta-chaves)",
@@ -60,16 +60,18 @@
       "descricao": "Cerâmica branca premium e platina polida sobre fundo grafite escuro. Uma coleção sobre silêncio, luz e precisão — inspirada em joalheria, mármore italiano e porcelana de hotel cinco estrelas.",
       "materiais": ["Cerâmica", "Platina polida"],
       "pecas": ["Case iPhone", "Skin (Alabaster Pearl)", "AirPods (Alabaster Pod)", "Wallet (Ceramic Wallet)", "Watch Band (Alabaster Link, Apple Watch Ultra)", "AirTag (Alabaster Tag)"],
-      "cores_variantes": "[PREENCHER] a página da coleção não lista cores adicionais além do acabamento branco/platina",
-      "preco": "Sob consulta"
+      "cores_variantes": "Somente branco (acabamento branco/platina).",
+      "preco": "Esgotado temporariamente — sem venda até novo aviso.",
+      "disponibilidade": "Esgotado temporariamente"
     },
     {
       "nome": "Eclipse Titanium",
       "descricao": "Titânio escovado e fibra de carbono forjado, envelhecidos à mão. Uma coleção sobre peso, precisão e sombra.",
       "materiais": ["Titânio", "Fibra de carbono forjado"],
       "pecas": ["Case iPhone", "Skin (Dark Eclipse)", "Watch Band (Apple Watch Ultra)", "AirPods", "AirTag", "Wallet"],
-      "cores_variantes": "[PREENCHER] linha monocromática titânio/escuro, sem lista de cores adicionais no site",
-      "preco": "Sob consulta",
+      "cores_variantes": "Somente preto (titânio escuro).",
+      "preco": "Esgotado temporariamente — sem venda até novo aviso.",
+      "disponibilidade": "Esgotado temporariamente",
       "observacao": "Novas peças desta coleção sendo adicionadas em breve."
     },
     {
@@ -78,7 +80,8 @@
       "descricao": "Couro de crocodilo em alto relevo, banhado a ouro. Uma coleção sobre luz, textura e exclusividade.",
       "materiais": ["Couro de crocodilo banhado a ouro"],
       "pecas_cores": ["Case iPhone — Preto & Ouro", "Case iPhone — Ouro Total", "Watch Band — Preto & Ouro (Apple Watch Ultra)", "AirPods — Preto & Ouro", "AirTag — Preto & Ouro", "Wallet — Preto & Ouro"],
-      "preco": "Sob consulta",
+      "preco": "Esgotado temporariamente — sem venda até novo aviso.",
+      "disponibilidade": "Esgotado temporariamente",
       "observacao": "Novas peças desta coleção sendo adicionadas em breve."
     }
   ],
@@ -100,8 +103,8 @@
           "cores": ["Verde Musgo", "Laranja Cravo", "Preto Old", "Cinza Espacial", "Acid Green", "Pink Flow", "Purple Rain", "Mustard Yellow"]
         }
       ],
-      "dispositivo_padrao": "iPhone Série 17 (Séries 16 e 15 também disponíveis)",
-      "preco": "Sob consulta",
+      "dispositivo_padrao": "iPhone Série 17 em diante",
+      "preco": "R$ 179,90",
       "detalhes_tecnicos": [
         "Couro legítimo, corte e costura artesanais",
         "Acabamento exclusivo com a assinatura Senza Pari",
@@ -114,32 +117,32 @@
       "descricao": "Estrutura em alumínio aeroespacial com acabamento escovado — leve, resistente e discreta.",
       "material": "Alumínio aeroespacial",
       "cores_variantes": "1 opção (Case — Metal)",
-      "modelos_iphone_compativeis": "[PREENCHER] a página não lista os modelos exatos, apenas indica 'toque na foto pra ver os modelos disponíveis'",
-      "preco": "Sob consulta"
+      "modelos_iphone_compativeis": "iPhone Série 17 em diante",
+      "preco": "[PREENCHER]"
     },
     {
       "nome": "Silicone Gloss",
       "descricao": "Silicone de toque macio e acabamento gloss, com design escultural e a estrela do Atelier em relevo.",
       "material": "Silicone (acabamento gloss / toque macio)",
       "cores": ["Grey Matter", "Blue Sky", "Royal Pink", "Night Blue", "Cold White", "Death Red", "Lime Yellow"],
-      "dispositivo_padrao": "iPhone Série 17 (outros modelos selecionáveis)",
-      "preco": "Sob consulta"
+      "dispositivo_padrao": "iPhone Série 17 em diante",
+      "preco": "R$ 139,90"
     },
     {
       "nome": "Super Finas",
       "descricao": "Proteção ultra fina de 0,3mm de espessura — feita pra manter a leveza e o design original do iPhone.",
-      "material": "[PREENCHER] não especificado explicitamente no site (apenas descrita como case ultra fina de 0,3mm)",
+      "material": "Alumínio e policarbonato.",
       "cores_variantes": "1 opção (Case — Super Fina)",
-      "modelos_iphone_compativeis": "[PREENCHER]",
-      "preco": "Sob consulta"
+      "modelos_iphone_compativeis": "iPhone Série 17 em diante",
+      "preco": "[PREENCHER]"
     },
     {
       "nome": "Transparentes",
       "descricao": "Policarbonato transparente de alta clareza, feito pra mostrar o design original do iPhone sem perder proteção.",
       "material": "Policarbonato transparente",
       "cores_variantes": "1 opção (Case — Cristal)",
-      "modelos_iphone_compativeis": "[PREENCHER]",
-      "preco": "Sob consulta"
+      "modelos_iphone_compativeis": "iPhone Série 17 em diante",
+      "preco": "[PREENCHER]"
     }
   ],
 
@@ -163,21 +166,31 @@
   },
 
   "precos": {
-    "modelo_de_precificacao": "Todos os produtos do site são exibidos como \"Sob consulta\" — não há preços numéricos publicados. O atendimento (humano) confirma valores caso a caso.",
-    "tabela_de_precos": "[PREENCHER] valores reais por linha/material/dispositivo — necessário para o agente conseguir informar faixas de preço"
+    "modelo_de_precificacao": "A maior parte das linhas já tem preço fixo divulgado abaixo. As coleções (Alabaster Ceramic, Eclipse Titanium, L'Or Phénoménal) estão esgotadas temporariamente. Onde o preço ainda não está definido, o atendimento humano confirma o valor.",
+    "tabela_de_precos": {
+      "Cuir Suprême": "R$ 179,90",
+      "Silicone Gloss": "R$ 139,90",
+      "Metal": "[PREENCHER]",
+      "Super Finas": "[PREENCHER]",
+      "Transparentes": "[PREENCHER]",
+      "Alabaster Ceramic": "Esgotado temporariamente",
+      "Eclipse Titanium": "Esgotado temporariamente",
+      "L'Or Phénoménal": "Esgotado temporariamente"
+    }
   },
 
   "pedidos": {
     "como_pedir": "Cada peça SENZA PARI é preparada individualmente, por isso o Atelier trabalha sob consulta. O cliente escolhe a peça no site e fala com o Atelier pelo WhatsApp ou pela página Fale conosco. O Atelier confirma disponibilidade, valores e prazo antes de qualquer pagamento.",
     "acompanhamento": "Criando uma conta no site, o cliente acompanha o status do pedido em Minha conta → Meus pedidos. O Atelier também mantém contato direto pelo WhatsApp durante a produção.",
     "personalizacao": "O Atelier avalia personalizações caso a caso — combinações de materiais, acabamentos e detalhes exclusivos.",
-    "prazo_producao_dias": "[PREENCHER] confirmado apenas no momento do pedido, não há número fixo publicado",
-    "prazo_entrega_dias": "[PREENCHER] não especificado; após a postagem o Atelier envia o código de rastreio",
+    "prazo_producao_dias": "2 dias úteis.",
+    "prazo_entrega_dias": "Não há um número fixo de dias — o prazo varia conforme o CEP de destino.",
     "frete": {
-      "valor": "[PREENCHER] não há tabela de frete publicada",
+      "valor": "Sempre grátis, enviado via Sedex. O tempo de chegada varia conforme o CEP de destino.",
       "reembolso_em_desistencia": "Em caso de arrependimento dentro de 7 dias, o frete é reembolsado integralmente."
     },
-    "formas_pagamento": "[PREENCHER] não mencionado em nenhuma página do site (ex: Pix, cartão, boleto, parcelamento)"
+    "retirada_local": "Para clientes de João Pessoa e Recife, é possível combinar retirada em mãos do pedido em vez de aguardar o envio pelos Correios.",
+    "formas_pagamento": "Pix e cartão de crédito."
   },
 
   "garantia": "Defeitos de fabricação têm cobertura de 90 dias corridos a partir do recebimento, além dos 7 dias de arrependimento previstos em lei.",
