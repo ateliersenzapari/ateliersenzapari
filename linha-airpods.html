@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perguntas Frequentes — SENZA PARI</title>
-<meta name="description" content="Dúvidas sobre pedidos, compatibilidade, MagSafe, prazos e garantia das peças do Atelier Senza Pari.">
-<link rel="canonical" href="https://ateliersenzapari.com.br/perguntas-frequentes.html">
+<title>AirPods Case Cuir Héritage — SENZA PARI</title>
+<meta name="description" content="AirPods Case Cuir Héritage: estojo em couro PDU legítimo com mosquetão destacável, em oito cores.">
+<link rel="canonical" href="https://ateliersenzapari.com.br/linha-airpods.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Perguntas Frequentes — SENZA PARI">
-<meta property="og:description" content="Dúvidas sobre pedidos, compatibilidade, MagSafe, prazos e garantia das peças do Atelier Senza Pari.">
+<meta property="og:title" content="AirPods Case Cuir Héritage — SENZA PARI">
+<meta property="og:description" content="AirPods Case Cuir Héritage: estojo em couro PDU legítimo com mosquetão destacável, em oito cores.">
 <meta property="og:image" content="https://ateliersenzapari.com.br/collection-lor-phenomenal.jpg">
-<meta property="og:url" content="https://ateliersenzapari.com.br/perguntas-frequentes.html">
+<meta property="og:url" content="https://ateliersenzapari.com.br/linha-airpods.html">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Perguntas Frequentes — SENZA PARI">
-<meta name="twitter:description" content="Dúvidas sobre pedidos, compatibilidade, MagSafe, prazos e garantia das peças do Atelier Senza Pari.">
+<meta name="twitter:title" content="AirPods Case Cuir Héritage — SENZA PARI">
+<meta name="twitter:description" content="AirPods Case Cuir Héritage: estojo em couro PDU legítimo com mosquetão destacável, em oito cores.">
 <meta name="twitter:image" content="https://ateliersenzapari.com.br/collection-lor-phenomenal.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -128,7 +128,11 @@
   .section-head h2{ font-family:'Bodoni Moda', serif; font-weight:500; font-size:24px; }
   .section-head a{ font-size:12px; color:var(--muted); white-space:nowrap; }
 
-  .eyebrow{ font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px 14px; }
+  .card-visual{ aspect-ratio:1/1.5; background:var(--sage); position:relative; overflow:hidden; border-radius:16px; }
+  .card-info{ padding:11px 2px 0; }
+  .card-name{ font-size:13.5px; font-weight:500; margin-bottom:3px; }
+  .card-price{ font-size:13px; color:var(--muted); }
 
   /* ---------- FOOTER ---------- */
   footer{ padding:44px 20px 40px; max-width:1200px; margin:0 auto; border-top:1px solid var(--line); }
@@ -210,15 +214,24 @@
   @media (min-width:860px){
     .header-inner{ padding:18px 40px; }
     .section{ padding:60px 40px; }
+    .grid{ grid-template-columns:repeat(4,1fr); gap:20px; }
     .menu-pane{ max-width:420px; }
   }
+  /* ---------- LINHA PAGE ---------- */
+  .linha-hero{ max-width:1200px; margin:0 auto; padding:14px 20px 0; }
   .back-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); font-weight:600; }
   .back-link svg{ width:14px; height:14px; stroke:var(--muted); }
-
-  .policy-item{ margin-bottom:26px; }
-  .policy-item h2{ font-family:'Bodoni Moda',serif; font-weight:500; font-size:18px; margin-bottom:8px; }
-  .policy-item p{ color:var(--muted); font-size:15px; line-height:1.75; }
-  .policy-item ul{ color:var(--muted); font-size:15px; line-height:1.75; padding-left:18px; margin-top:6px; }
+  .linha-intro{ padding:24px 0 0; }
+  .linha-intro h1{
+    font-family:'Bodoni Moda', serif; font-weight:400; font-size:clamp(28px,7vw,44px);
+    line-height:1.1; letter-spacing:-0.01em; margin-bottom:14px;
+  }
+  .linha-intro h1 em{ font-style:italic; color:var(--sage-deep); }
+  .linha-intro p{ color:var(--muted); font-size:15px; line-height:1.6; max-width:50ch; }
+  .color-card{ display:block; text-align:left; width:100%; }
+  .color-dots{ display:flex; gap:5px; margin-top:8px; }
+  .color-dot{ width:9px; height:9px; border-radius:50%; border:1px solid rgba(0,0,0,0.1); flex:0 0 auto; }
+  .color-dot.active{ box-shadow:0 0 0 2px var(--bg), 0 0 0 3px var(--ink); }
   /* ================= PRODUCT QUICK VIEW ================= */
   .product-overlay{
     position:fixed; inset:0; z-index:110; background:rgba(10,10,8,0.4);
@@ -347,6 +360,9 @@
     display:flex; align-items:center; justify-content:center; padding:0 4px; line-height:1;
   }
   .cart-badge.hidden{ display:none; }
+  .sil-carousel{ display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding:2px 20px 16px; max-width:1200px; margin:0 auto; scrollbar-width:none; }
+  .sil-carousel::-webkit-scrollbar{ display:none; }
+  .sil-carousel img{ scroll-snap-align:center; flex:0 0 auto; height:270px; width:270px; object-fit:cover; border-radius:16px; background:var(--sage); display:block; }
 </style>
 </head>
 <body>
@@ -382,61 +398,183 @@
   </div>
 </header>
 
-<section class="section" style="max-width:720px;">
-  <div class="collection-back" style="padding:0 0 20px;">
-    <a href="index.html" class="back-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
-      Voltar
-    </a>
-  </div>
-  <span class="eyebrow">Atendimento</span>
-  <h1 style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(28px,7vw,42px);margin:14px 0 24px;line-height:1.15;">Perguntas frequentes</h1>
-  <p style="color:var(--muted);font-size:15px;line-height:1.75;margin-bottom:34px;">Reunimos aqui as dúvidas mais comuns sobre pedidos, compatibilidade e o dia a dia com as peças do Atelier. Não encontrou a resposta? É só chamar.</p>
-
-  <div class="policy-item">
-    <h2>Como faço um pedido?</h2>
-    <p>Cada peça SENZA PARI é preparada individualmente, por isso trabalhamos <strong>sob consulta</strong>. Escolha a peça que deseja no site e fale com o Atelier pelo WhatsApp ou pela página <a href="contato.html" style="text-decoration:underline;">Fale conosco</a>. Confirmamos disponibilidade, valores e prazo antes de qualquer pagamento.</p>
-  </div>
-
-  <div class="policy-item">
-    <h2>Quais modelos de iPhone são compatíveis?</h2>
-    <p>As coleções atuais são desenhadas para as linhas mais recentes do iPhone. Na consulta do pedido, confirmamos a compatibilidade exata com o seu modelo — incluindo versões Pro e Pro Max. Skins podem ser produzidas para uma variedade maior de aparelhos.</p>
-  </div>
-
-  <div class="policy-item">
-    <h2>As cases funcionam com MagSafe?</h2>
-    <p>Sim. As cases das nossas coleções mantêm o alinhamento magnético para carregadores, carteiras e acessórios MagSafe, sem comprometer a estrutura da peça.</p>
-  </div>
-
-  <div class="policy-item">
-    <h2>Qual o prazo de produção e entrega?</h2>
-    <p>Por serem peças preparadas com cuidado artesanal, o prazo de produção é confirmado no momento do pedido. Após a postagem, enviamos o código de rastreio — a entrega é feita para <strong>todo o Brasil</strong>, a partir de Recife.</p>
-  </div>
-
-  <div class="policy-item">
-    <h2>Como acompanho meu pedido?</h2>
-    <p>Criando uma conta no site, você acompanha o status de cada pedido em <a href="conta.html#pedidos" style="text-decoration:underline;">Minha conta → Meus pedidos</a>. Também mantemos contato direto pelo WhatsApp durante a produção.</p>
-  </div>
-
-  <div class="policy-item">
-    <h2>Posso personalizar uma peça?</h2>
-    <p>O Atelier avalia personalizações caso a caso — combinações de materiais, acabamentos e detalhes exclusivos. Fale com a gente e conte o que você imagina.</p>
-  </div>
-
-  <div class="policy-item">
-    <h2>Qual a garantia das peças?</h2>
-    <p>Defeitos de fabricação têm cobertura de <strong>90 dias</strong> a partir do recebimento, além dos 7 dias de arrependimento previstos em lei. Os detalhes estão na página de <a href="trocas-devolucoes.html" style="text-decoration:underline;">Trocas e devoluções</a>.</p>
-  </div>
-
-  <div class="policy-item">
-    <h2>Como cuido da minha peça?</h2>
-    <p>Couro, cerâmica e titânio pedem cuidados diferentes — e simples. Preparamos um <a href="cuidados.html" style="text-decoration:underline;">Guia de cuidados</a> completo para cada material.</p>
-  </div>
-
-  <a href="contato.html" class="back-link" style="margin-top:8px;">
-    Falar com o Atelier
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" style="transform:rotate(180deg);"><path d="M15 18l-6-6 6-6"/></svg>
+<div class="linha-hero">
+  <a href="index.html" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+    Voltar
   </a>
+  <div class="linha-intro">
+    <span class="eyebrow" style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; display:block;">AirPods — Linha</span>
+    <h1>AirPods <em>Cuir Héritage</em></h1>
+    <p>Estojo em couro PDU Cuir Héritage para AirPods, com mosquetão destacável e recorte preciso para carregamento sem fio. Deslize pra ver as peças e escolha a sua cor.</p>
+  </div>
+</div>
+
+<div class="sil-carousel">
+  <img src="swatch-airpods-cuir-heritage-verde-musgo.svg" alt="AirPods Cuir Héritage — Verde Musgo" loading="lazy" decoding="async">
+  <img src="swatch-airpods-cuir-heritage-laranja-cravo.svg" alt="AirPods Cuir Héritage — Laranja Cravo" loading="lazy" decoding="async">
+  <img src="swatch-airpods-cuir-heritage-preto-old.svg" alt="AirPods Cuir Héritage — Preto Old" loading="lazy" decoding="async">
+  <img src="swatch-airpods-cuir-heritage-cinza-espacial.svg" alt="AirPods Cuir Héritage — Cinza Espacial" loading="lazy" decoding="async">
+  <img src="swatch-airpods-cuir-heritage-acid-green.svg" alt="AirPods Cuir Héritage — Acid Green" loading="lazy" decoding="async">
+</div>
+
+<section class="section" id="produtos-linha">
+  <div class="section-head"><h2>Cores disponíveis</h2></div>
+  <div class="grid" id="linhaGrid">
+    <article class="card">
+      <button class="card-visual color-card" style="background:#5C6B4822;" data-open-product="17" data-linha="airpods-cuir-heritage" data-color-idx="0">
+        <img src="swatch-airpods-cuir-heritage-verde-musgo.svg" alt="Verde Musgo" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async">
+      </button>
+      <div class="card-info">
+        <p class="card-name">AirPods Cuir Héritage — Verde Musgo</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot active" style="background:#5C6B48;"></span>
+          <span class="color-dot" style="background:#C1592B;"></span>
+          <span class="color-dot" style="background:#2A2420;"></span>
+          <span class="color-dot" style="background:#55585C;"></span>
+          <span class="color-dot" style="background:#A8E028;"></span>
+          <span class="color-dot" style="background:#E8899E;"></span>
+          <span class="color-dot" style="background:#6B4C8A;"></span>
+          <span class="color-dot" style="background:#D6A431;"></span>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <button class="card-visual color-card" style="background:#C1592B22;" data-open-product="17" data-linha="airpods-cuir-heritage" data-color-idx="1">
+        <img src="swatch-airpods-cuir-heritage-laranja-cravo.svg" alt="Laranja Cravo" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async">
+      </button>
+      <div class="card-info">
+        <p class="card-name">AirPods Cuir Héritage — Laranja Cravo</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot" style="background:#5C6B48;"></span>
+          <span class="color-dot active" style="background:#C1592B;"></span>
+          <span class="color-dot" style="background:#2A2420;"></span>
+          <span class="color-dot" style="background:#55585C;"></span>
+          <span class="color-dot" style="background:#A8E028;"></span>
+          <span class="color-dot" style="background:#E8899E;"></span>
+          <span class="color-dot" style="background:#6B4C8A;"></span>
+          <span class="color-dot" style="background:#D6A431;"></span>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <button class="card-visual color-card" style="background:#2A242022;" data-open-product="17" data-linha="airpods-cuir-heritage" data-color-idx="2">
+        <img src="swatch-airpods-cuir-heritage-preto-old.svg" alt="Preto Old" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async">
+      </button>
+      <div class="card-info">
+        <p class="card-name">AirPods Cuir Héritage — Preto Old</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot" style="background:#5C6B48;"></span>
+          <span class="color-dot" style="background:#C1592B;"></span>
+          <span class="color-dot active" style="background:#2A2420;"></span>
+          <span class="color-dot" style="background:#55585C;"></span>
+          <span class="color-dot" style="background:#A8E028;"></span>
+          <span class="color-dot" style="background:#E8899E;"></span>
+          <span class="color-dot" style="background:#6B4C8A;"></span>
+          <span class="color-dot" style="background:#D6A431;"></span>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <button class="card-visual color-card" style="background:#55585C22;" data-open-product="17" data-linha="airpods-cuir-heritage" data-color-idx="3">
+        <img src="swatch-airpods-cuir-heritage-cinza-espacial.svg" alt="Cinza Espacial" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async">
+      </button>
+      <div class="card-info">
+        <p class="card-name">AirPods Cuir Héritage — Cinza Espacial</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot" style="background:#5C6B48;"></span>
+          <span class="color-dot" style="background:#C1592B;"></span>
+          <span class="color-dot" style="background:#2A2420;"></span>
+          <span class="color-dot active" style="background:#55585C;"></span>
+          <span class="color-dot" style="background:#A8E028;"></span>
+          <span class="color-dot" style="background:#E8899E;"></span>
+          <span class="color-dot" style="background:#6B4C8A;"></span>
+          <span class="color-dot" style="background:#D6A431;"></span>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <button class="card-visual color-card" style="background:#A8E02822;" data-open-product="17" data-linha="airpods-cuir-heritage" data-color-idx="4">
+        <img src="swatch-airpods-cuir-heritage-acid-green.svg" alt="Acid Green" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async">
+      </button>
+      <div class="card-info">
+        <p class="card-name">AirPods Cuir Héritage — Acid Green</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot" style="background:#5C6B48;"></span>
+          <span class="color-dot" style="background:#C1592B;"></span>
+          <span class="color-dot" style="background:#2A2420;"></span>
+          <span class="color-dot" style="background:#55585C;"></span>
+          <span class="color-dot active" style="background:#A8E028;"></span>
+          <span class="color-dot" style="background:#E8899E;"></span>
+          <span class="color-dot" style="background:#6B4C8A;"></span>
+          <span class="color-dot" style="background:#D6A431;"></span>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <button class="card-visual color-card" style="background:#E8899E22;" data-open-product="17" data-linha="airpods-cuir-heritage" data-color-idx="5">
+        <img src="swatch-airpods-cuir-heritage-pink-flow.svg" alt="Pink Flow" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async">
+      </button>
+      <div class="card-info">
+        <p class="card-name">AirPods Cuir Héritage — Pink Flow</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot" style="background:#5C6B48;"></span>
+          <span class="color-dot" style="background:#C1592B;"></span>
+          <span class="color-dot" style="background:#2A2420;"></span>
+          <span class="color-dot" style="background:#55585C;"></span>
+          <span class="color-dot" style="background:#A8E028;"></span>
+          <span class="color-dot active" style="background:#E8899E;"></span>
+          <span class="color-dot" style="background:#6B4C8A;"></span>
+          <span class="color-dot" style="background:#D6A431;"></span>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <button class="card-visual color-card" style="background:#6B4C8A22;" data-open-product="17" data-linha="airpods-cuir-heritage" data-color-idx="6">
+        <img src="swatch-airpods-cuir-heritage-purple-rain.svg" alt="Purple Rain" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async">
+      </button>
+      <div class="card-info">
+        <p class="card-name">AirPods Cuir Héritage — Purple Rain</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot" style="background:#5C6B48;"></span>
+          <span class="color-dot" style="background:#C1592B;"></span>
+          <span class="color-dot" style="background:#2A2420;"></span>
+          <span class="color-dot" style="background:#55585C;"></span>
+          <span class="color-dot" style="background:#A8E028;"></span>
+          <span class="color-dot" style="background:#E8899E;"></span>
+          <span class="color-dot active" style="background:#6B4C8A;"></span>
+          <span class="color-dot" style="background:#D6A431;"></span>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <button class="card-visual color-card" style="background:#D6A43122;" data-open-product="17" data-linha="airpods-cuir-heritage" data-color-idx="7">
+        <img src="swatch-airpods-cuir-heritage-mustard-yellow.svg" alt="Mustard Yellow" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async">
+      </button>
+      <div class="card-info">
+        <p class="card-name">AirPods Cuir Héritage — Mustard Yellow</p>
+        <p class="card-price">Sob consulta</p>
+        <div class="color-dots">
+          <span class="color-dot" style="background:#5C6B48;"></span>
+          <span class="color-dot" style="background:#C1592B;"></span>
+          <span class="color-dot" style="background:#2A2420;"></span>
+          <span class="color-dot" style="background:#55585C;"></span>
+          <span class="color-dot" style="background:#A8E028;"></span>
+          <span class="color-dot" style="background:#E8899E;"></span>
+          <span class="color-dot" style="background:#6B4C8A;"></span>
+          <span class="color-dot active" style="background:#D6A431;"></span>
+        </div>
+      </div>
+    </article>
+  </div>
+  <p style="color:var(--muted);font-size:13px;margin-top:18px;">Toque numa cor pra ver os detalhes e adicionar ao carrinho.</p>
 </section>
 
 <footer>
