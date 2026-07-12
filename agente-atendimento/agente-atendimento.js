@@ -1,12 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const crypto = require('crypto');
-const OpenAI = require('openai');
+const Anthropic = require('@anthropic-ai/sdk');
 const knowledgeBase = require('./knowledge-base.json');
 
 const {
   PORT = 3000,
-  OPENAI_API_KEY,
+  ANTHROPIC_API_KEY,
   META_WHATSAPP_TOKEN,
   META_PHONE_NUMBER_ID,
   META_VERIFY_TOKEN,
@@ -15,12 +15,13 @@ const {
 } = process.env;
 
 for (const [name, value] of Object.entries({
-  OPENAI_API_KEY, META_WHATSAPP_TOKEN, META_PHONE_NUMBER_ID, META_VERIFY_TOKEN,
+  ANTHROPIC_API_KEY, META_WHATSAPP_TOKEN, META_PHONE_NUMBER_ID, META_VERIFY_TOKEN,
 })) {
   if (!value) console.warn(`[aviso] variável de ambiente ${name} não definida — veja .env.example`);
 }
 
-const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+const anthropic = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
+const CLAUDE_MODEL = 'claude-haiku-4-5-20251001';
 const app = express();
 app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf; } }));
 
@@ -92,13 +93,15 @@ async function handleIncomingMessage(customerPhone, messageText) {
   conversation.history.push({ role: 'user', content: messageText });
   conversation.history = conversation.history.slice(-MAX_HISTORY_MESSAGES);
 
-  const completion = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+  const completion = await anthropic.messages.create({
+    model: CLAUDE_MODEL,
+    max_tokens: 1024,
     temperature: 0.4,
-    messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...conversation.history],
+    system: SYSTEM_PROMPT,
+    messages: conversation.history,
   });
 
-  let reply = completion.choices[0]?.message?.content?.trim() || '';
+  let reply = completion.content?.[0]?.text?.trim() || '';
   const shouldHandoff = reply.includes(HANDOFF_TAG);
   reply = reply.replace(HANDOFF_TAG, '').trim();
 

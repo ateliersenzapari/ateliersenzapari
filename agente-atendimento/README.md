@@ -1,6 +1,6 @@
 # Agente de Atendimento — Atelier Senza Pari
 
-Bot de atendimento via WhatsApp para a SENZA PARI. Recebe mensagens pelo webhook da Meta Graph API (WhatsApp Business), responde usando a base de conhecimento da marca via OpenAI (`gpt-4o-mini`) e encaminha a conversa para um atendente humano quando necessário (fechamento de pedido, reclamação, ou pergunta fora do que a base sabe responder).
+Bot de atendimento via WhatsApp para a SENZA PARI. Recebe mensagens pelo webhook da Meta Graph API (WhatsApp Business), responde usando a base de conhecimento da marca via Claude (Anthropic, modelo `claude-haiku-4-5`) e encaminha a conversa para um atendente humano quando necessário (fechamento de pedido, reclamação, ou pergunta fora do que a base sabe responder).
 
 ## Estrutura
 
@@ -29,7 +29,7 @@ Enquanto um campo estiver como `[PREENCHER]`, o agente foi instruído a **não i
 ## 2. Pré-requisitos
 
 - Node.js 18 ou superior
-- Uma chave de API da OpenAI ([platform.openai.com/api-keys](https://platform.openai.com/api-keys))
+- Uma chave de API da Anthropic ([console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys)) — é necessário ter um método de pagamento cadastrado em Billing, a API é cobrada por uso
 - Uma conta em [Meta for Developers](https://developers.facebook.com/) com um App configurado para **WhatsApp Business Platform** (Graph API), incluindo:
   - `META_WHATSAPP_TOKEN` — token de acesso (em WhatsApp > API Setup)
   - `META_PHONE_NUMBER_ID` — ID do número de telefone conectado
