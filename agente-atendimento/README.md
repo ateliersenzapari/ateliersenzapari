@@ -9,7 +9,9 @@ agente-atendimento/
 ├── agente-atendimento.js   # servidor Node/Express (webhook do WhatsApp)
 ├── assistant.js            # lógica compartilhada: prompt + chamada ao Claude
 ├── test-local.js           # chat de teste no terminal, sem precisar de WhatsApp
+├── knowledge-base-check.js # lista campos [PREENCHER] pendentes na base
 ├── knowledge-base.json     # base de conhecimento (marca, coleções, FAQ, políticas)
+├── logs/                   # handoffs.jsonl — registro de conversas encaminhadas (gitignored)
 ├── package.json
 ├── railway.json            # config de deploy no Railway
 ├── render.yaml             # config de deploy no Render (Blueprint)
@@ -29,6 +31,14 @@ agente-atendimento/
 - Cores/variantes de Alabaster Ceramic, Eclipse Titanium, L'Or Phénoménal, e modelos de iPhone compatíveis com as linhas Metal, Super Finas e Transparentes
 
 Enquanto um campo estiver como `[PREENCHER]`, o agente foi instruído a **não inventar** a resposta — ele diz que um atendente humano vai confirmar e encaminha a conversa.
+
+Pra ver rapidamente quais campos ainda faltam, sem precisar abrir o JSON inteiro:
+
+```bash
+npm run check
+```
+
+O servidor também roda essa checagem sozinho ao iniciar e avisa nos logs se sobrou algum `[PREENCHER]`.
 
 ## 2. Pré-requisitos
 
@@ -126,6 +136,8 @@ O agente responde perguntas usando somente o conteúdo de `knowledge-base.json`.
 - a pergunta foge do escopo de produtos/marca do Atelier.
 
 Se `HUMAN_HANDOFF_WHATSAPP_NUMBER` estiver configurado no `.env`, esse número recebe uma mensagem de WhatsApp avisando do encaminhamento, com o telefone do cliente e a última mensagem enviada.
+
+Todo encaminhamento também fica registrado em `logs/handoffs.jsonl` (uma linha JSON por conversa: horário, telefone e última mensagem), independente de ter ou não o número de aviso configurado. Esse arquivo não é versionado no Git — é seu histórico local de quem precisou de atendimento manual.
 
 ## Próximos passos sugeridos (fora do escopo deste módulo)
 

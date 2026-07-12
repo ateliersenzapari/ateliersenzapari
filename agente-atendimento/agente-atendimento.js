@@ -1,7 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 const { createClient, askClaude } = require('./assistant');
+const { checkReadiness } = require('./knowledge-base-check');
 
 const {
   PORT = 3000,
@@ -19,9 +22,27 @@ for (const [name, value] of Object.entries({
   if (!value) console.warn(`[aviso] variável de ambiente ${name} não definida — veja .env.example`);
 }
 
+const pendingFields = checkReadiness();
+if (pendingFields.length > 0) {
+  console.warn(`[aviso] knowledge-base.json ainda tem ${pendingFields.length} campo(s) [PREENCHER]: ${pendingFields.join(', ')}`);
+}
+
 const anthropic = createClient(ANTHROPIC_API_KEY);
 const app = express();
 app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf; } }));
+
+const LOG_DIR = path.join(__dirname, 'logs');
+const HANDOFF_LOG_PATH = path.join(LOG_DIR, 'handoffs.jsonl');
+
+function logHandoff(customerPhone, lastMessage) {
+  try {
+    if (!fs.existsSync(LOG_DIR)) fs.mkdirSync(LOG_DIR);
+    const entry = JSON.stringify({ timestamp: new Date().toISOString(), phone: customerPhone, message: lastMessage });
+    fs.appendFileSync(HANDOFF_LOG_PATH, entry + '\n');
+  } catch (err) {
+    console.error('[log] falha ao gravar handoff:', err.message);
+  }
+}
 
 const CONVERSATION_TTL_MS = 24 * 60 * 60 * 1000; // janela de atendimento de 24h do WhatsApp
 const MAX_HISTORY_MESSAGES = 12;
@@ -88,6 +109,7 @@ async function handleIncomingMessage(customerPhone, messageText) {
       customerPhone,
       'Já chamei um atendente do Atelier pra te ajudar com isso — em breve alguém da equipe continua por aqui. 🙏'
     );
+    logHandoff(customerPhone, messageText);
     await notifyHumanHandoff(customerPhone, messageText);
   }
 }
