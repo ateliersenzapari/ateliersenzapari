@@ -1,0 +1,21 @@
+{
+  "name": "agente-atendimento-senza-pari",
+  "version": "1.0.0",
+  "description": "Agente de atendimento via WhatsApp (Meta Graph API) para o Atelier Senza Pari, usando OpenAI gpt-4o-mini",
+  "main": "agente-atendimento.js",
+  "scripts": {
+    "start": "node agente-atendimento.js",
+    "dev": "nodemon agente-atendimento.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "openai": "^4.52.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

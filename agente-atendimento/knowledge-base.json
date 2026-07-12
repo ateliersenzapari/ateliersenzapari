@@ -1,0 +1,265 @@
+{
+  "marca": {
+    "nome": "SENZA PARI",
+    "nome_completo": "Senza Pari Atelier",
+    "site": "https://ateliersenzapari.com.br",
+    "significado_nome": "\"Senza Pari\", em italiano, significa \"sem igual\".",
+    "fundador": "Luciano Fontes",
+    "historia": "Somos um atelier dedicado à criação de acessórios premium para o ecossistema Apple, desenvolvidos para pessoas que valorizam design atemporal, exclusividade e sofisticação. Nossa inspiração nasce da alta marroquinaria, da relojoaria e do universo do design de luxo contemporâneo. A SENZA PARI foi fundada por Luciano Fontes, a partir da convicção de que tecnologia e luxo podem coexistir de forma elegante, discreta e atemporal.",
+    "pilares": ["exclusividade", "autenticidade", "excelência"],
+    "localizacao": "Recife, Brasil",
+    "envios": "Entregas para todo o Brasil, a partir de Recife.",
+    "tom_de_voz": {
+      "estilo": "Elevado e sofisticado nos textos institucionais (referências a alta joalheria, relojoaria e marroquinaria de luxo), mas acolhedor e direto no atendimento ao cliente.",
+      "diretrizes": [
+        "Trate o cliente com cordialidade e classe, sem ser frio ou robótico.",
+        "Evite gírias, mas também evite formalidade excessiva que soe distante.",
+        "Frases curtas, seguras e claras. Nunca invente prazos, preços ou políticas.",
+        "Use 'Atelier' ao se referir à marca/equipe (ex: 'o Atelier confirma...').",
+        "Encerre com naturalidade, deixando a porta aberta para o cliente continuar a conversa."
+      ],
+      "exemplos_de_frases_do_site": [
+        "É só chamar.",
+        "Toque na foto pra ver os modelos disponíveis.",
+        "Escolha a sua cor e veja os modelos de iPhone disponíveis."
+      ]
+    },
+    "contato": {
+      "whatsapp": "+55 81 99249-2027",
+      "whatsapp_link": "https://wa.me/5581992492027",
+      "instagram": "@ateliersenzapari",
+      "instagram_link": "https://instagram.com/ateliersenzapari",
+      "email": "contato@ateliersenzapari.com.br",
+      "endereco_fisico": "[PREENCHER] endereço completo/horário de atendimento presencial, se houver — o site só informa a cidade (Recife, Brasil)"
+    }
+  },
+
+  "categorias_produto": [
+    { "categoria": "Cases", "descricao": "Capinhas para iPhone (Série 15, 16, 17, incluindo Pro/Pro Max) em diversas linhas e materiais." },
+    { "categoria": "Skins", "descricao": "Adesivos/acabamentos premium aplicados diretamente sobre o aparelho, com textura de couro, mármore ou metal." },
+    { "categoria": "Wallets", "descricao": "MagSafe Card Holder — porta-cartão magnético para acoplar ao iPhone." },
+    { "categoria": "AirTag Accessories", "descricao": "Cases/porta-chaves para AirTag." },
+    { "categoria": "Watch Bands", "descricao": "Pulseiras para Apple Watch Ultra, Ultra 2 e Ultra 3." },
+    { "categoria": "AirPods", "descricao": "Estojos em couro para AirPods, AirPods Pro 2 e AirPods Pro 3." }
+  ],
+
+  "dispositivos_suportados": {
+    "iphone": "Séries 15, 16 e 17, incluindo versões Pro e Pro Max (compatibilidade exata confirmada na consulta do pedido).",
+    "apple_watch": ["Apple Watch Ultra", "Apple Watch Ultra 2", "Apple Watch Ultra 3"],
+    "airpods": ["AirPods", "AirPods Pro 2", "AirPods Pro 3"],
+    "airtag": "Compatível (case/porta-chaves)",
+    "observacao": "Skins podem ser produzidas para uma variedade maior de aparelhos além dos listados acima."
+  },
+
+  "magsafe": "Sim, as cases de todas as coleções mantêm o alinhamento magnético para carregadores, carteiras e acessórios MagSafe, sem comprometer a estrutura da peça.",
+
+  "colecoes": [
+    {
+      "nome": "Alabaster Ceramic",
+      "tagline": "Pure luxury. Sculpted in silence.",
+      "descricao": "Cerâmica branca premium e platina polida sobre fundo grafite escuro. Uma coleção sobre silêncio, luz e precisão — inspirada em joalheria, mármore italiano e porcelana de hotel cinco estrelas.",
+      "materiais": ["Cerâmica", "Platina polida"],
+      "pecas": ["Case iPhone", "Skin (Alabaster Pearl)", "AirPods (Alabaster Pod)", "Wallet (Ceramic Wallet)", "Watch Band (Alabaster Link, Apple Watch Ultra)", "AirTag (Alabaster Tag)"],
+      "cores_variantes": "[PREENCHER] a página da coleção não lista cores adicionais além do acabamento branco/platina",
+      "preco": "Sob consulta"
+    },
+    {
+      "nome": "Eclipse Titanium",
+      "descricao": "Titânio escovado e fibra de carbono forjado, envelhecidos à mão. Uma coleção sobre peso, precisão e sombra.",
+      "materiais": ["Titânio", "Fibra de carbono forjado"],
+      "pecas": ["Case iPhone", "Skin (Dark Eclipse)", "Watch Band (Apple Watch Ultra)", "AirPods", "AirTag", "Wallet"],
+      "cores_variantes": "[PREENCHER] linha monocromática titânio/escuro, sem lista de cores adicionais no site",
+      "preco": "Sob consulta",
+      "observacao": "Novas peças desta coleção sendo adicionadas em breve."
+    },
+    {
+      "nome": "L'Or Phénoménal",
+      "eyebrow": "Atelier de Lumière",
+      "descricao": "Couro de crocodilo em alto relevo, banhado a ouro. Uma coleção sobre luz, textura e exclusividade.",
+      "materiais": ["Couro de crocodilo banhado a ouro"],
+      "pecas_cores": ["Case iPhone — Preto & Ouro", "Case iPhone — Ouro Total", "Watch Band — Preto & Ouro (Apple Watch Ultra)", "AirPods — Preto & Ouro", "AirTag — Preto & Ouro", "Wallet — Preto & Ouro"],
+      "preco": "Sob consulta",
+      "observacao": "Novas peças desta coleção sendo adicionadas em breve."
+    }
+  ],
+
+  "linhas": [
+    {
+      "nome": "Cuir Suprême",
+      "descricao": "Couro PDU em dois estilos — o Classique liso e o Héritage com anel MagSafe aparente.",
+      "material": "Couro PDU (couro legítimo, corte e costura artesanais)",
+      "estilos": [
+        {
+          "nome": "Classique",
+          "cores": ["Green Acid", "Light Blue", "Dark Gold", "Duo Tone", "Black Black", "Grass Green", "Vermelho Bordô", "Duo Tone Cinza", "Branco Gelo"],
+          "observacao": "Novas cores em produção."
+        },
+        {
+          "nome": "Héritage",
+          "descricao": "Couro PDU envelhecido, anel MagSafe aparente e moldura no tom da peça, com a assinatura dourada do Atelier.",
+          "cores": ["Verde Musgo", "Laranja Cravo", "Preto Old", "Cinza Espacial", "Acid Green", "Pink Flow", "Purple Rain", "Mustard Yellow"]
+        }
+      ],
+      "dispositivo_padrao": "iPhone Série 17 (Séries 16 e 15 também disponíveis)",
+      "preco": "Sob consulta",
+      "detalhes_tecnicos": [
+        "Couro legítimo, corte e costura artesanais",
+        "Acabamento exclusivo com a assinatura Senza Pari",
+        "Encaixe preciso, sem interferir em botões ou câmeras",
+        "Peça produzida sob encomenda"
+      ]
+    },
+    {
+      "nome": "Metal",
+      "descricao": "Estrutura em alumínio aeroespacial com acabamento escovado — leve, resistente e discreta.",
+      "material": "Alumínio aeroespacial",
+      "cores_variantes": "1 opção (Case — Metal)",
+      "modelos_iphone_compativeis": "[PREENCHER] a página não lista os modelos exatos, apenas indica 'toque na foto pra ver os modelos disponíveis'",
+      "preco": "Sob consulta"
+    },
+    {
+      "nome": "Silicone Gloss",
+      "descricao": "Silicone de toque macio e acabamento gloss, com design escultural e a estrela do Atelier em relevo.",
+      "material": "Silicone (acabamento gloss / toque macio)",
+      "cores": ["Grey Matter", "Blue Sky", "Royal Pink", "Night Blue", "Cold White", "Death Red", "Lime Yellow"],
+      "dispositivo_padrao": "iPhone Série 17 (outros modelos selecionáveis)",
+      "preco": "Sob consulta"
+    },
+    {
+      "nome": "Super Finas",
+      "descricao": "Proteção ultra fina de 0,3mm de espessura — feita pra manter a leveza e o design original do iPhone.",
+      "material": "[PREENCHER] não especificado explicitamente no site (apenas descrita como case ultra fina de 0,3mm)",
+      "cores_variantes": "1 opção (Case — Super Fina)",
+      "modelos_iphone_compativeis": "[PREENCHER]",
+      "preco": "Sob consulta"
+    },
+    {
+      "nome": "Transparentes",
+      "descricao": "Policarbonato transparente de alta clareza, feito pra mostrar o design original do iPhone sem perder proteção.",
+      "material": "Policarbonato transparente",
+      "cores_variantes": "1 opção (Case — Cristal)",
+      "modelos_iphone_compativeis": "[PREENCHER]",
+      "preco": "Sob consulta"
+    }
+  ],
+
+  "skins": {
+    "descricao": "Skins premium em peles nobres, com acabamento artesanal, textura sofisticada e encaixe preciso para um visual exclusivo.",
+    "filtros_site": {
+      "modelo": ["iPhone Série 17", "iPhone Série 16", "iPhone Série 15"],
+      "cor": ["Dourado", "Preto", "Mármore", "Champagne"]
+    },
+    "lista": [
+      { "nome": "Ouro Escovado", "cor": "Dourado" },
+      { "nome": "Gold Croco", "cor": "Dourado" },
+      { "nome": "Dark Black | Texture", "cor": "Preto" },
+      { "nome": "Black Gold Marble", "cor": "Mármore" },
+      { "nome": "Green Gold Marble", "cor": "Mármore" },
+      { "nome": "Gold Champagne", "cor": "Champagne" },
+      { "nome": "Dark Eclipse", "cor": "Preto" },
+      { "nome": "Alabaster Pearl", "cor": "Branco" }
+    ],
+    "preco": "Sob consulta"
+  },
+
+  "precos": {
+    "modelo_de_precificacao": "Todos os produtos do site são exibidos como \"Sob consulta\" — não há preços numéricos publicados. O atendimento (humano) confirma valores caso a caso.",
+    "tabela_de_precos": "[PREENCHER] valores reais por linha/material/dispositivo — necessário para o agente conseguir informar faixas de preço"
+  },
+
+  "pedidos": {
+    "como_pedir": "Cada peça SENZA PARI é preparada individualmente, por isso o Atelier trabalha sob consulta. O cliente escolhe a peça no site e fala com o Atelier pelo WhatsApp ou pela página Fale conosco. O Atelier confirma disponibilidade, valores e prazo antes de qualquer pagamento.",
+    "acompanhamento": "Criando uma conta no site, o cliente acompanha o status do pedido em Minha conta → Meus pedidos. O Atelier também mantém contato direto pelo WhatsApp durante a produção.",
+    "personalizacao": "O Atelier avalia personalizações caso a caso — combinações de materiais, acabamentos e detalhes exclusivos.",
+    "prazo_producao_dias": "[PREENCHER] confirmado apenas no momento do pedido, não há número fixo publicado",
+    "prazo_entrega_dias": "[PREENCHER] não especificado; após a postagem o Atelier envia o código de rastreio",
+    "frete": {
+      "valor": "[PREENCHER] não há tabela de frete publicada",
+      "reembolso_em_desistencia": "Em caso de arrependimento dentro de 7 dias, o frete é reembolsado integralmente."
+    },
+    "formas_pagamento": "[PREENCHER] não mencionado em nenhuma página do site (ex: Pix, cartão, boleto, parcelamento)"
+  },
+
+  "garantia": "Defeitos de fabricação têm cobertura de 90 dias corridos a partir do recebimento, além dos 7 dias de arrependimento previstos em lei.",
+
+  "politica_trocas_devolucoes": {
+    "arrependimento": {
+      "prazo_dias": 7,
+      "base_legal": "Código de Defesa do Consumidor, Art. 49",
+      "regra": "Até 7 dias corridos a partir do recebimento do produto para desistir da compra, sem precisar justificar o motivo. O valor pago é reembolsado integralmente, incluindo o frete."
+    },
+    "troca_por_defeito": {
+      "prazo_dias": 90,
+      "regra": "Até 90 dias corridos a partir do recebimento para solicitar troca ou reparo, sem custo adicional, em caso de defeito de fabricação."
+    },
+    "condicoes": [
+      "Produto sem sinais de uso, com todas as etiquetas e proteções originais",
+      "Embalagem original preservada",
+      "Nota fiscal ou comprovante de compra"
+    ],
+    "como_solicitar": "Entrar em contato pelo WhatsApp ou e-mail informando o número do pedido e o motivo da troca/devolução. A equipe do Atelier passa o passo a passo do envio.",
+    "reembolso": "Após receber e conferir o produto devolvido, o Atelier processa o reembolso em até 10 dias úteis, no mesmo método de pagamento utilizado na compra."
+  },
+
+  "guia_cuidados": {
+    "couro": "Limpe com pano macio e seco, em movimentos leves. Evite água em excesso, álcool, perfumes e solventes — eles ressecam e mancham. Com o uso, o couro desenvolve uma pátina natural que valoriza a peça. Se molhar, seque à sombra, longe de fontes de calor.",
+    "ceramica_alabaster": "Passe um pano levemente umedecido em água e seque em seguida com um tecido macio. A superfície é resistente a riscos do dia a dia, mas sensível a impactos concentrados — evite quedas sobre superfícies duras. Não use esponjas abrasivas nem produtos de limpeza pesada.",
+    "titanio_fibra_carbono": "Praticamente imune à rotina: basta um pano seco ou levemente úmido. O titânio não oxida e a fibra de carbono mantém o acabamento por anos. Evite polidores e abrasivos, que podem opacificar o acabamento fosco.",
+    "skins": "Após a aplicação, aguarde 24 horas antes de expor a peça a calor ou umidade — é o tempo do adesivo assentar por completo. No dia a dia, limpe com pano macio seco. Evite deixar o aparelho sob sol forte por longos períodos e não descole as bordas para 'testar'.",
+    "armazenamento": "Quando não estiver em uso, guarde a peça na embalagem original, em local seco e arejado. Evite empilhar objetos pesados sobre ela e mantenha longe de luz solar direta por períodos prolongados."
+  },
+
+  "faq": [
+    {
+      "pergunta": "Como faço um pedido?",
+      "resposta": "Cada peça SENZA PARI é preparada individualmente, por isso trabalhamos sob consulta. Escolha a peça que deseja no site e fale com o Atelier pelo WhatsApp ou pela página Fale conosco. Confirmamos disponibilidade, valores e prazo antes de qualquer pagamento."
+    },
+    {
+      "pergunta": "Quais modelos de iPhone são compatíveis?",
+      "resposta": "As coleções atuais são desenhadas para as linhas mais recentes do iPhone. Na consulta do pedido, confirmamos a compatibilidade exata com o seu modelo — incluindo versões Pro e Pro Max. Skins podem ser produzidas para uma variedade maior de aparelhos."
+    },
+    {
+      "pergunta": "As cases funcionam com MagSafe?",
+      "resposta": "Sim. As cases das nossas coleções mantêm o alinhamento magnético para carregadores, carteiras e acessórios MagSafe, sem comprometer a estrutura da peça."
+    },
+    {
+      "pergunta": "Qual o prazo de produção e entrega?",
+      "resposta": "Por serem peças preparadas com cuidado artesanal, o prazo de produção é confirmado no momento do pedido. Após a postagem, enviamos o código de rastreio — a entrega é feita para todo o Brasil, a partir de Recife."
+    },
+    {
+      "pergunta": "Como acompanho meu pedido?",
+      "resposta": "Criando uma conta no site, você acompanha o status de cada pedido em Minha conta → Meus pedidos. Também mantemos contato direto pelo WhatsApp durante a produção."
+    },
+    {
+      "pergunta": "Posso personalizar uma peça?",
+      "resposta": "O Atelier avalia personalizações caso a caso — combinações de materiais, acabamentos e detalhes exclusivos. Fale com a gente e conte o que você imagina."
+    },
+    {
+      "pergunta": "Qual a garantia das peças?",
+      "resposta": "Defeitos de fabricação têm cobertura de 90 dias a partir do recebimento, além dos 7 dias de arrependimento previstos em lei. Os detalhes estão na política de Trocas e devoluções."
+    },
+    {
+      "pergunta": "Como cuido da minha peça?",
+      "resposta": "Couro, cerâmica e titânio pedem cuidados diferentes — e simples. Consulte o guia de cuidados completo para cada material."
+    }
+  ],
+
+  "assistente": {
+    "nome_do_agente": "Claudia",
+    "papel": "Assistente virtual de atendimento do Atelier Senza Pari via WhatsApp — primeiro contato com o cliente, tira dúvidas sobre produtos, materiais, coleções, prazos e políticas usando exclusivamente esta base de conhecimento, e conduz para o fechamento com um atendente humano.",
+    "regras": [
+      "Nunca invente preços, prazos, formas de pagamento ou informações que estejam marcadas como [PREENCHER] nesta base — para esses casos, informe que um atendente humano vai confirmar esse detalhe.",
+      "Sempre responda em português do Brasil, no tom de voz descrito em marca.tom_de_voz.",
+      "Toda venda é fechada sob consulta com um humano — a Claudia nunca fecha pedido, nunca cobra pagamento e nunca promete prazo exato.",
+      "Se o cliente pedir para falar com uma pessoa, ou demonstrar reclamação/insatisfação, ou perguntar algo fora do escopo desta base, acione o encaminhamento para humano imediatamente."
+    ],
+    "gatilhos_encaminhar_humano": [
+      "Cliente pede explicitamente para falar com atendente/humano/pessoa",
+      "Cliente quer fechar pedido, pagar ou combinar entrega",
+      "Reclamação, defeito no produto ou insatisfação",
+      "Pedido de personalização detalhada",
+      "Pergunta cuja resposta depende de um campo marcado [PREENCHER] nesta base (preço exato, prazo exato, forma de pagamento)",
+      "Mensagem fora do escopo de produtos/marca do Atelier"
+    ]
+  }
+}
