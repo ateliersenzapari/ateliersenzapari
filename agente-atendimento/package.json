@@ -5,7 +5,8 @@
   "main": "agente-atendimento.js",
   "scripts": {
     "start": "node agente-atendimento.js",
-    "dev": "nodemon agente-atendimento.js"
+    "dev": "nodemon agente-atendimento.js",
+    "chat": "node test-local.js"
   },
   "engines": {
     "node": ">=18"

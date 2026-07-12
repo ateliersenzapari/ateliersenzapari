@@ -1,8 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const crypto = require('crypto');
-const Anthropic = require('@anthropic-ai/sdk');
-const knowledgeBase = require('./knowledge-base.json');
+const { createClient, askClaude } = require('./assistant');
 
 const {
   PORT = 3000,
@@ -20,12 +19,10 @@ for (const [name, value] of Object.entries({
   if (!value) console.warn(`[aviso] variável de ambiente ${name} não definida — veja .env.example`);
 }
 
-const anthropic = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
-const CLAUDE_MODEL = 'claude-haiku-4-5-20251001';
+const anthropic = createClient(ANTHROPIC_API_KEY);
 const app = express();
 app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf; } }));
 
-const HANDOFF_TAG = '[ENCAMINHAR_HUMANO]';
 const CONVERSATION_TTL_MS = 24 * 60 * 60 * 1000; // janela de atendimento de 24h do WhatsApp
 const MAX_HISTORY_MESSAGES = 12;
 
@@ -40,21 +37,6 @@ function getConversation(phone) {
   conversations.set(phone, fresh);
   return fresh;
 }
-
-function buildSystemPrompt() {
-  return [
-    'Você é a Claudia, assistente virtual de atendimento do Atelier Senza Pari no WhatsApp.',
-    'Responda SOMENTE com base nos dados de BASE_DE_CONHECIMENTO (JSON) abaixo. Nunca invente preços, prazos ou políticas.',
-    'Se a resposta depender de um campo marcado como "[PREENCHER]" na base, diga que um atendente humano vai confirmar esse detalhe.',
-    `Se o cliente pedir para falar com uma pessoa, quiser fechar pedido/pagamento, reclamar de defeito, ou perguntar algo fora do escopo do Atelier, responda educadamente e finalize com a tag exata ${HANDOFF_TAG} em uma linha própria — o sistema cuida do encaminhamento, você não precisa avisar isso ao cliente.`,
-    `Tom de voz: ${knowledgeBase.marca.tom_de_voz.estilo}`,
-    '',
-    'BASE_DE_CONHECIMENTO:',
-    JSON.stringify(knowledgeBase),
-  ].join('\n');
-}
-
-const SYSTEM_PROMPT = buildSystemPrompt();
 
 async function sendWhatsAppMessage(to, text) {
   const url = `https://graph.facebook.com/v20.0/${META_PHONE_NUMBER_ID}/messages`;
@@ -93,17 +75,7 @@ async function handleIncomingMessage(customerPhone, messageText) {
   conversation.history.push({ role: 'user', content: messageText });
   conversation.history = conversation.history.slice(-MAX_HISTORY_MESSAGES);
 
-  const completion = await anthropic.messages.create({
-    model: CLAUDE_MODEL,
-    max_tokens: 1024,
-    temperature: 0.4,
-    system: SYSTEM_PROMPT,
-    messages: conversation.history,
-  });
-
-  let reply = completion.content?.[0]?.text?.trim() || '';
-  const shouldHandoff = reply.includes(HANDOFF_TAG);
-  reply = reply.replace(HANDOFF_TAG, '').trim();
+  const { reply, shouldHandoff } = await askClaude(anthropic, conversation.history);
 
   if (reply) {
     conversation.history.push({ role: 'assistant', content: reply });

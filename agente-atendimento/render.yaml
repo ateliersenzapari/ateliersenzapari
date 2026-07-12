@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: agente-atendimento-senza-pari
+    runtime: node
+    plan: free
+    rootDir: agente-atendimento
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: META_WHATSAPP_TOKEN
+        sync: false
+      - key: META_PHONE_NUMBER_ID
+        sync: false
+      - key: META_VERIFY_TOKEN
+        sync: false
+      - key: META_APP_SECRET
+        sync: false
+      - key: HUMAN_HANDOFF_WHATSAPP_NUMBER
+        sync: false

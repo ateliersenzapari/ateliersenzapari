@@ -6,9 +6,13 @@ Bot de atendimento via WhatsApp para a SENZA PARI. Recebe mensagens pelo webhook
 
 ```
 agente-atendimento/
-├── agente-atendimento.js   # servidor Node/Express
+├── agente-atendimento.js   # servidor Node/Express (webhook do WhatsApp)
+├── assistant.js            # lógica compartilhada: prompt + chamada ao Claude
+├── test-local.js           # chat de teste no terminal, sem precisar de WhatsApp
 ├── knowledge-base.json     # base de conhecimento (marca, coleções, FAQ, políticas)
 ├── package.json
+├── railway.json            # config de deploy no Railway
+├── render.yaml             # config de deploy no Render (Blueprint)
 ├── .env.example
 └── .gitignore
 ```
@@ -56,6 +60,18 @@ O servidor sobe em `http://localhost:3000` (ou na porta definida em `PORT`). End
 - `GET /webhook` — usado pela Meta para validar o cadastro do webhook
 - `POST /webhook` — recebe as mensagens do WhatsApp
 
+### Testando a Claudia sem WhatsApp
+
+Antes de mexer com Meta/webhook, dá pra conversar com a Claudia direto no terminal — só precisa da `ANTHROPIC_API_KEY` configurada:
+
+```bash
+npm run chat
+```
+
+Isso abre um chat local usando exatamente a mesma lógica e base de conhecimento do agente, sem precisar de número de WhatsApp nem ngrok. Bom pra validar respostas e ajustar o `knowledge-base.json` rapidamente.
+
+> Se aparecer erro `credit balance is too low`, é porque a conta Anthropic ainda não tem créditos aplicados — confirme a compra em [console.anthropic.com](https://console.anthropic.com) (Settings → Billing) antes de testar.
+
 ### Testando o webhook localmente
 
 A Meta precisa de uma URL pública HTTPS para enviar eventos. Para testar antes do deploy, exponha sua porta local com [ngrok](https://ngrok.com/):
@@ -68,7 +84,7 @@ Use a URL HTTPS gerada (ex: `https://abcd1234.ngrok-free.app/webhook`) na config
 
 ## 4. Deploy (Railway ou Render)
 
-O agente é um processo Node contínuo (precisa ficar sempre no ar para receber webhooks), então **não roda em hospedagem compartilhada tipo Hostinger**. Recomendado: Railway ou Render (planos gratuitos/baratos já atendem).
+O agente é um processo Node contínuo (precisa ficar sempre no ar para receber webhooks), então **não roda em hospedagem compartilhada tipo Hostinger**. Recomendado: Railway ou Render (planos gratuitos/baratos já atendem). Já incluímos `railway.json` e `render.yaml` nesta pasta para agilizar a configuração.
 
 ### Railway
 
