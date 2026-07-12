@@ -145,3 +145,13 @@ Todo encaminhamento também fica registrado em `logs/handoffs.jsonl` (uma linha 
 - Automações no n8n (ex: registrar conversas encaminhadas em uma planilha/CRM)
 - Integração com CRM
 - Geração/agendamento automático de conteúdo (posts, Reels, Stories)
+
+### Integração com Instagram (depois do WhatsApp)
+
+O Instagram bloqueia leitura automática de fora (scraping retorna 403), então hoje a única forma de puxar conteúdo de lá é manualmente (print da bio/destaques/posts). A forma correta de automatizar é via **Instagram Graph API**, oficial da Meta:
+
+1. Dentro do **mesmo App** já criado em developers.facebook.com para o WhatsApp, adicionar o produto **Instagram**.
+2. Vincular a conta Instagram Business/Creator do Atelier à **Página do Facebook** do negócio (a Graph API exige essa ligação Página ↔ Instagram).
+3. Gerar um token com permissões `instagram_basic` (leitura) e, se for publicar depois, `instagram_content_publish`.
+
+Com isso, dá pra: ler posts/legendas automaticamente para manter a base de conhecimento atualizada, e futuramente agendar publicações de posts/Reels/Stories. Não precisa ser feito agora — só faz sentido depois que o WhatsApp estiver funcionando, já que reaproveita o mesmo App.
