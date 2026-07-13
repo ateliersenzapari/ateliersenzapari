@@ -1759,7 +1759,22 @@
     $('#productOverlay').classList.add('open');
     $('.product-sheet').scrollTop = 0;
   }
-  function closeProduct(){ $('#productOverlay').classList.remove('open'); }
+  function closeProduct(){
+    $('#productOverlay').classList.remove('open');
+    const url = new URL(window.location.href);
+    if (url.searchParams.has('linha')){
+      url.searchParams.delete('linha');
+      url.searchParams.delete('cor');
+      history.replaceState(null, '', url.pathname + url.search + url.hash);
+    }
+  }
+  function updateProductURL(){
+    const url = new URL(window.location.href);
+    const color = LINES[currentProduct.linha].colors[currentProduct.colorIndex];
+    url.searchParams.set('linha', currentProduct.linha);
+    url.searchParams.set('cor', color.id);
+    history.replaceState(null, '', url.pathname + '?' + url.searchParams.toString());
+  }
   function renderSwatches(){
     const colors = LINES[currentProduct.linha].colors;
     const row = $('#productSwatches');
@@ -1789,6 +1804,7 @@
     $('#productPreviewImg').src = gallery[currentProduct.galleryIndex];
     $('#productPreviewImg').alt = color.label;
     $('#colorLabelText').textContent = color.label;
+    updateProductURL();
     renderGalleryNav();
   }
   function renderGalleryNav(){
@@ -1869,6 +1885,19 @@
       openProduct(btn.dataset.linha, btn.dataset.openProduct, colorIdx);
     });
   });
+
+  (function openProductFromURL(){
+    const params = new URLSearchParams(window.location.search);
+    const linha = params.get('linha');
+    if (!linha || !LINES[linha]) return;
+    const colorId = params.get('cor');
+    let colorIdx = 0;
+    if (colorId){
+      const idx = LINES[linha].colors.findIndex(c => c.id === colorId);
+      if (idx >= 0) colorIdx = idx;
+    }
+    openProduct(linha, '17', colorIdx);
+  })();
 </script>
 
 <script type="module" src="account.js"></script>
