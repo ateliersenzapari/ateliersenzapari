@@ -1375,13 +1375,34 @@
       img.removeAttribute('data-src');
     });
   }
+  function syncBodyScrollLock(){
+    const anyOpen = document.querySelector('.menu-overlay.open, .cart-overlay.open, .product-overlay.open');
+    if (anyOpen) {
+      if (document.body.style.position !== 'fixed') {
+        document.body.dataset.scrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${window.scrollY}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+      }
+    } else if (document.body.style.position === 'fixed') {
+      const y = parseInt(document.body.dataset.scrollY || '0', 10);
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      window.scrollTo(0, y);
+    }
+  }
   $('#menuBtn').addEventListener('click', () => {
     $('#menuOverlay').classList.add('open');
     hydrateMenuThumbs();
+    syncBodyScrollLock();
   });
   $('#menuClose').addEventListener('click', () => {
     $('#menuOverlay').classList.remove('open');
     resetPanes();
+    syncBodyScrollLock();
   });
 
   function resetPanes(){
@@ -1548,8 +1569,9 @@
     resetPanes();
     renderCartItems();
     $('#cartOverlay').classList.add('open');
+    syncBodyScrollLock();
   }
-  function closeCart(){ $('#cartOverlay').classList.remove('open'); }
+  function closeCart(){ $('#cartOverlay').classList.remove('open'); syncBodyScrollLock(); }
   document.querySelectorAll('#cartBtn, #cartBtnMenu').forEach(btn => btn.addEventListener('click', openCart));
   $('#cartClose').addEventListener('click', closeCart);
   $('#cartOverlay').addEventListener('click', (e) => { if (e.target.id === 'cartOverlay') closeCart(); });
@@ -1926,9 +1948,11 @@
     document.querySelectorAll('.accordion-item').forEach(item => item.classList.remove('open'));
     $('#productOverlay').classList.add('open');
     $('.product-sheet').scrollTop = 0;
+    syncBodyScrollLock();
   }
   function closeProduct(){
     $('#productOverlay').classList.remove('open');
+    syncBodyScrollLock();
     const url = new URL(window.location.href);
     if (url.searchParams.has('linha')){
       url.searchParams.delete('linha');
