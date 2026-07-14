@@ -3,9 +3,9 @@
   "nodes": [
     {
       "parameters": {
-        "content": "## Workflow 2 - Resposta Automatica com IA\n\nGera uma resposta com Claude para e-mails em vendas@/contato@ e envia um RASCUNHO para o WhatsApp do Luciano aprovar antes de disparar.\n\nPor padrao o envio automatico fica DESLIGADO (node \"Envio Automatico Ativado?\").\nDepois de validar a qualidade das respostas por 2-3 semanas, mude o valor \"envioAutomatico\" para true no node \"Config\".\n\nfinanceiro@ NAO passa por este workflow (tratar manualmente).",
-        "height": 280,
-        "width": 400
+        "content": "## Workflow 2 - Resposta Automatica com IA\n\nGera uma resposta com Claude para e-mails em vendas@/contato@ e envia um RASCUNHO por e-mail pro Luciano aprovar antes de disparar (versao temporaria sem WhatsApp - a Meta ainda nao liberou o app da API do WhatsApp Business nessa conta).\n\nPor padrao o envio automatico fica DESLIGADO (node \"Envio Automatico Ativado?\").\nDepois de validar a qualidade das respostas por 2-3 semanas, mude o valor \"envioAutomatico\" para true no node \"Config\".\n\nQuando o WhatsApp Business API estiver liberado, e so trocar o node \"Enviar Rascunho por E-mail\" por uma chamada a API do WhatsApp (mesmo padrao do Workflow 3).\n\nfinanceiro@ NAO passa por este workflow (tratar manualmente).",
+        "height": 320,
+        "width": 420
       },
       "id": "note-1",
       "name": "Sticky Note",
@@ -58,8 +58,7 @@
         "assignments": {
           "assignments": [
             { "id": "1", "name": "envioAutomatico", "type": "boolean", "value": false },
-            { "id": "2", "name": "numeroWhatsappLuciano", "type": "string", "value": "5581992492027" },
-            { "id": "3", "name": "whatsappPhoneNumberId", "type": "string", "value": "1072860789244510" }
+            { "id": "2", "name": "emailAprovacao", "type": "string", "value": "luciano@ateliersenzapari.com.br" }
           ]
         }
       },
@@ -110,7 +109,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const resposta = $input.first().json;\nconst dados = $('Extrair Dados').first().json;\nconst config = $('Config').first().json;\n\nconst texto = (resposta.content && resposta.content[0] && resposta.content[0].text) || '';\n\nreturn [{\n  json: {\n    ...dados,\n    respostaIA: texto,\n    envioAutomatico: config.envioAutomatico,\n    numeroWhatsappLuciano: config.numeroWhatsappLuciano,\n    whatsappPhoneNumberId: config.whatsappPhoneNumberId\n  }\n}];"
+        "jsCode": "const resposta = $input.first().json;\nconst dados = $('Extrair Dados').first().json;\nconst config = $('Config').first().json;\n\nconst texto = (resposta.content && resposta.content[0] && resposta.content[0].text) || '';\n\nreturn [{\n  json: {\n    ...dados,\n    respostaIA: texto,\n    envioAutomatico: config.envioAutomatico,\n    emailAprovacao: config.emailAprovacao\n  }\n}];"
       },
       "id": "extrair-resposta",
       "name": "Extrair Texto da Resposta",
@@ -120,23 +119,20 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "=https://graph.facebook.com/v19.0/{{ $json.whatsappPhoneNumberId }}/messages",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ messaging_product: \"whatsapp\", to: $json.numeroWhatsappLuciano, type: \"text\", text: { body: \"Rascunho de resposta gerado por IA\\n\\nPara: \" + $json.remetenteNome + \" <\" + $json.remetente + \">\\nAssunto: \" + $json.assunto + \"\\n\\n--- Resposta sugerida ---\\n\" + $json.respostaIA + \"\\n\\n(Envio automatico esta \" + ($json.envioAutomatico ? \"LIGADO\" : \"DESLIGADO\") + \")\" } }) }}",
+        "fromEmail": "contato@ateliersenzapari.com.br",
+        "toEmail": "={{ $json.emailAprovacao }}",
+        "subject": "=[Rascunho IA] Re: {{ $json.assunto }}",
+        "text": "=Rascunho de resposta gerado por IA - revise antes de encaminhar pro cliente.\n\nPara: {{ $json.remetenteNome }} <{{ $json.remetente }}>\nAssunto original: {{ $json.assunto }}\n\n--- E-mail recebido ---\n{{ $json.corpo }}\n\n--- Resposta sugerida pela IA ---\n{{ $json.respostaIA }}\n\n(Envio automatico esta {{ $json.envioAutomatico ? \"LIGADO\" : \"DESLIGADO\" }})",
         "options": {}
       },
-      "id": "notificar-whatsapp",
-      "name": "Enviar Rascunho para WhatsApp",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "id": "notificar-email",
+      "name": "Enviar Rascunho por E-mail",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
       "position": [620, 350],
       "credentials": {
-        "httpHeaderAuth": {
-          "name": "Meta Graph API - WhatsApp Business"
+        "smtp": {
+          "name": "iCloud SMTP - contato@ateliersenzapari.com.br"
         }
       }
     },
@@ -203,9 +199,9 @@
       "main": [[{ "node": "Extrair Texto da Resposta", "type": "main", "index": 0 }]]
     },
     "Extrair Texto da Resposta": {
-      "main": [[{ "node": "Enviar Rascunho para WhatsApp", "type": "main", "index": 0 }]]
+      "main": [[{ "node": "Enviar Rascunho por E-mail", "type": "main", "index": 0 }]]
     },
-    "Enviar Rascunho para WhatsApp": {
+    "Enviar Rascunho por E-mail": {
       "main": [[{ "node": "Envio Automatico Ativado?", "type": "main", "index": 0 }]]
     },
     "Envio Automatico Ativado?": {
