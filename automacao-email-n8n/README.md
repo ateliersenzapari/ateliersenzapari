@@ -14,6 +14,15 @@ A conta de WhatsApp Business dessa empresa ainda **não tem um App técnico cone
 
 Quando o App do WhatsApp Business existir e o token estiver em mãos, é só importar o Workflow 3 e, se quiser, trocar o node de e-mail do Workflow 2 de volta pra WhatsApp (mesmo padrão de chamada usado no Workflow 3).
 
+## Status atual (caixa única)
+
+Confirmado com o usuário: `contato@`, `vendas@` e `financeiro@` **não são contas separadas** — é tudo a **mesma caixa de entrada** no iCloud (mesmo login/senha de app), só endereços diferentes chegando no mesmo lugar. Por causa disso:
+
+- Cada workflow usa **um único gatilho IMAP** (credencial `iCloud IMAP - contato@ateliersenzapari.com.br`), não mais uma credencial IMAP por endereço.
+- Os Workflows 2 e 4 filtram pelo campo **"Para" (destinatário)** do e-mail recebido, dentro do node de extração — só seguem adiante se o e-mail foi endereçado a `vendas@`/`contato@` (Workflow 2) ou `vendas@` (Workflow 4).
+- Todos os workflows (1, 2, 3) **ignoram e-mails vindos de dentro do próprio domínio** (`@ateliersenzapari.com.br`) — sem essa proteção, o Workflow 1 encaminharia uma cópia pra `vendas@`/`financeiro@`/`luciano@`, essa cópia cairia de volta na mesma caixa, seria lida de novo e reencaminhada — um loop infinito de e-mails.
+- O "encaminhamento" do Workflow 1 vira, na prática, uma cópia com o assunto marcado `[Roteado automaticamente]` dentro da mesma caixa — serve como uma etiqueta/tag pra facilitar buscar por departamento, já que não existe uma caixa fisicamente separada pra mover o e-mail.
+
 ## Arquivos
 
 | Arquivo | O que faz |
@@ -27,11 +36,11 @@ Quando o App do WhatsApp Business existir e o token estiver em mãos, é só imp
 
 ### 1. Gerar a senha de app do Apple ID
 
-Em [appleid.apple.com](https://appleid.apple.com) → Segurança → Senhas de App → gerar uma senha específica para o n8n.
+Em [appleid.apple.com](https://appleid.apple.com) → Início de Sessão e Segurança → Senhas de App → gerar uma senha específica para o n8n.
 
 **Nunca use a senha normal do Apple ID.** Essa senha de app é revogável a qualquer momento, sem afetar o login normal.
 
-Se você tem `contato@`, `financeiro@`, `luciano@` e `vendas@` como contas/alias separados no iCloud+, gere uma senha de app por conta usada nos workflows (os workflows 2 e 4 usam contas IMAP dedicadas para `vendas@`).
+Como `contato@`, `vendas@` e `financeiro@` são a mesma caixa (ver "Status atual" acima), **uma única senha de app já é suficiente** para todos os workflows.
 
 ### 2. Criar as credenciais no n8n
 
@@ -40,7 +49,7 @@ Crie estas credenciais no n8n **antes** de importar os workflows (os nomes abaix
 - **IMAP** `iCloud IMAP - contato@ateliersenzapari.com.br`
   - Host: `imap.mail.me.com`, Porta: `993`, SSL: sim
   - Usuário: `contato@ateliersenzapari.com.br`, Senha: senha de app
-- **IMAP** `iCloud IMAP - vendas@ateliersenzapari.com.br` (mesma coisa, para a conta `vendas@`)
+  - Essa única credencial é usada em todos os workflows (Workflows 1, 2, 3 e 4) — não precisa criar uma pra `vendas@`, é a mesma caixa.
 - **SMTP** `iCloud SMTP - contato@ateliersenzapari.com.br`
   - Host: `smtp.mail.me.com`, Porta: `587`, STARTTLS: sim
   - Mesmo usuário/senha de app da conta `contato@`

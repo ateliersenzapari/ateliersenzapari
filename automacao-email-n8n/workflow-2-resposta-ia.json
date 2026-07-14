@@ -3,9 +3,9 @@
   "nodes": [
     {
       "parameters": {
-        "content": "## Workflow 2 - Resposta Automatica com IA\n\nGera uma resposta com Claude para e-mails em vendas@/contato@ e envia um RASCUNHO por e-mail pro Luciano aprovar antes de disparar (versao temporaria sem WhatsApp - a Meta ainda nao liberou o app da API do WhatsApp Business nessa conta).\n\nPor padrao o envio automatico fica DESLIGADO (node \"Envio Automatico Ativado?\").\nDepois de validar a qualidade das respostas por 2-3 semanas, mude o valor \"envioAutomatico\" para true no node \"Config\".\n\nQuando o WhatsApp Business API estiver liberado, e so trocar o node \"Enviar Rascunho por E-mail\" por uma chamada a API do WhatsApp (mesmo padrao do Workflow 3).\n\nfinanceiro@ NAO passa por este workflow (tratar manualmente).",
-        "height": 320,
-        "width": 420
+        "content": "## Workflow 2 - Resposta Automatica com IA\n\nContato@, vendas@ e financeiro@ caem todos na MESMA caixa (mesma conta iCloud) - por isso este workflow usa um unico gatilho IMAP e filtra pelo campo \"Para\" (destinatario) do e-mail, dentro do node \"Extrair Dados\", em vez de usar contas separadas.\n\nGera uma resposta com Claude para e-mails endereçados a vendas@/contato@ e envia um RASCUNHO por e-mail pro Luciano aprovar antes de disparar (versao temporaria sem WhatsApp - a Meta ainda nao liberou o app da API do WhatsApp Business nessa conta).\n\nPor padrao o envio automatico fica DESLIGADO (node \"Envio Automatico Ativado?\").\nDepois de validar a qualidade das respostas por 2-3 semanas, mude o valor \"envioAutomatico\" para true no node \"Config\".\n\nQuando o WhatsApp Business API estiver liberado, e so trocar o node \"Enviar Rascunho por E-mail\" por uma chamada a API do WhatsApp (mesmo padrao do Workflow 3).\n\nfinanceiro@ e e-mails internos (@ateliersenzapari.com.br) NAO passam por este workflow.",
+        "height": 400,
+        "width": 440
       },
       "id": "note-1",
       "name": "Sticky Note",
@@ -23,30 +23,10 @@
         }
       },
       "id": "imap-vendas",
-      "name": "IMAP - vendas@",
+      "name": "IMAP - Caixa Compartilhada",
       "type": "n8n-nodes-base.emailReadImap",
       "typeVersion": 2,
       "position": [-260, 260],
-      "credentials": {
-        "imap": {
-          "name": "iCloud IMAP - vendas@ateliersenzapari.com.br"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "mailbox": "INBOX",
-        "postProcessAction": "read",
-        "format": "simple",
-        "options": {
-          "forceReconnect": 120
-        }
-      },
-      "id": "imap-contato",
-      "name": "IMAP - contato@",
-      "type": "n8n-nodes-base.emailReadImap",
-      "typeVersion": 2,
-      "position": [-260, 440],
       "credentials": {
         "imap": {
           "name": "iCloud IMAP - contato@ateliersenzapari.com.br"
@@ -66,17 +46,17 @@
       "name": "Config",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [-260, 640]
+      "position": [-260, 460]
     },
     {
       "parameters": {
-        "jsCode": "const items = $input.all();\n\nreturn items.map((item) => {\n  const json = item.json;\n  const remetente = (json.from && json.from.value && json.from.value[0] && json.from.value[0].address) || json.from || '';\n  const remetenteNome = (json.from && json.from.value && json.from.value[0] && json.from.value[0].name) || '';\n  const assunto = json.subject || '';\n  const corpo = json.textPlain || json.text || '';\n\n  return {\n    json: {\n      remetente,\n      remetenteNome,\n      assunto,\n      corpo\n    }\n  };\n});"
+        "jsCode": "const items = $input.all();\nconst DOMINIO_PROPRIO = 'ateliersenzapari.com.br';\nconst resultado = [];\n\nfor (const item of items) {\n  const json = item.json;\n  const remetente = (json.from && json.from.value && json.from.value[0] && json.from.value[0].address) || json.from || '';\n  const remetenteNome = (json.from && json.from.value && json.from.value[0] && json.from.value[0].name) || '';\n  const destinatarios = (json.to && json.to.value) ? json.to.value.map((v) => (v.address || '').toLowerCase()) : [];\n  const paraTexto = destinatarios.join(' ');\n  const assunto = json.subject || '';\n  const corpo = json.textPlain || json.text || '';\n\n  // Ignora e-mails internos (nossos proprios encaminhamentos/rascunhos) para nao criar loop\n  if (remetente.toLowerCase().includes(DOMINIO_PROPRIO)) continue;\n  // financeiro@ e tratado manualmente, nao por IA\n  if (paraTexto.includes('financeiro@')) continue;\n  // So processa o que foi endereçado a vendas@ ou contato@\n  if (!paraTexto.includes('vendas@') && !paraTexto.includes('contato@')) continue;\n\n  resultado.push({\n    json: {\n      remetente,\n      remetenteNome,\n      destinatario: destinatarios[0] || 'contato@ateliersenzapari.com.br',\n      assunto,\n      corpo\n    }\n  });\n}\n\nreturn resultado;"
       },
       "id": "extrair",
       "name": "Extrair Dados",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [-40, 350]
+      "position": [-40, 260]
     },
     {
       "parameters": {
@@ -100,7 +80,7 @@
       "name": "Gerar Resposta (Claude)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [180, 350],
+      "position": [180, 260],
       "credentials": {
         "httpHeaderAuth": {
           "name": "Anthropic API Key"
@@ -115,7 +95,7 @@
       "name": "Extrair Texto da Resposta",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [400, 350]
+      "position": [400, 260]
     },
     {
       "parameters": {
@@ -129,7 +109,7 @@
       "name": "Enviar Rascunho por E-mail",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
-      "position": [620, 350],
+      "position": [620, 260],
       "credentials": {
         "smtp": {
           "name": "iCloud SMTP - contato@ateliersenzapari.com.br"
@@ -155,11 +135,11 @@
       "name": "Envio Automatico Ativado?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [840, 350]
+      "position": [840, 260]
     },
     {
       "parameters": {
-        "fromEmail": "={{ $('Extrair Dados').first().json.remetente.includes('@vendas') ? 'vendas@ateliersenzapari.com.br' : 'contato@ateliersenzapari.com.br' }}",
+        "fromEmail": "={{ $json.destinatario }}",
         "toEmail": "={{ $json.remetente }}",
         "subject": "=Re: {{ $json.assunto }}",
         "text": "={{ $json.respostaIA }}",
@@ -169,7 +149,7 @@
       "name": "Enviar Resposta por E-mail",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
-      "position": [1060, 260],
+      "position": [1060, 180],
       "credentials": {
         "smtp": {
           "name": "iCloud SMTP - contato@ateliersenzapari.com.br"
@@ -182,14 +162,11 @@
       "name": "Aguardar Aprovacao Manual",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
-      "position": [1060, 460]
+      "position": [1060, 380]
     }
   ],
   "connections": {
-    "IMAP - vendas@": {
-      "main": [[{ "node": "Extrair Dados", "type": "main", "index": 0 }]]
-    },
-    "IMAP - contato@": {
+    "IMAP - Caixa Compartilhada": {
       "main": [[{ "node": "Extrair Dados", "type": "main", "index": 0 }]]
     },
     "Extrair Dados": {
