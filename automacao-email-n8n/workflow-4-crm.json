@@ -1,0 +1,81 @@
+{
+  "name": "Atelier Senza Pari - Workflow 4 - Integracao com CRM",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Workflow 4 - Integracao com CRM\n\nCria um lead no CRM sempre que chega um e-mail em vendas@.\n\nAtive este workflow por ultimo, quando o endpoint do CRM ja estiver pronto.\nPreencha a URL do endpoint e, se necessario, a credencial de autenticacao no node 'Criar Lead no CRM'.",
+        "height": 220,
+        "width": 380
+      },
+      "id": "note-1",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-220, -20]
+    },
+    {
+      "parameters": {
+        "mailbox": "INBOX",
+        "postProcessAction": "read",
+        "format": "simple",
+        "options": {
+          "forceReconnect": 120
+        }
+      },
+      "id": "imap-vendas",
+      "name": "IMAP - vendas@",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [-220, 260],
+      "credentials": {
+        "imap": {
+          "name": "iCloud IMAP - vendas@ateliersenzapari.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nreturn items.map((item) => {\n  const json = item.json;\n  const nome = (json.from && json.from.value && json.from.value[0] && json.from.value[0].name) || '';\n  const email = (json.from && json.from.value && json.from.value[0] && json.from.value[0].address) || json.from || '';\n  const mensagem = json.textPlain || json.text || '';\n\n  return {\n    json: {\n      nome,\n      email,\n      mensagem,\n      data: json.date || new Date().toISOString(),\n      origem: 'email',\n      status: 'novo'\n    }\n  };\n});"
+      },
+      "id": "extrair-lead",
+      "name": "Extrair Dados do Lead",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [0, 260]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://SEU_ENDPOINT_CRM_AQUI/leads",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ nome: $json.nome, email: $json.email, mensagem: $json.mensagem, data: $json.data, origem: $json.origem, status: $json.status }) }}",
+        "options": {}
+      },
+      "id": "criar-lead",
+      "name": "Criar Lead no CRM",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [220, 260],
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "CRM API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "IMAP - vendas@": {
+      "main": [[{ "node": "Extrair Dados do Lead", "type": "main", "index": 0 }]]
+    },
+    "Extrair Dados do Lead": {
+      "main": [[{ "node": "Criar Lead no CRM", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
