@@ -58,7 +58,7 @@
         "assignments": {
           "assignments": [
             { "id": "1", "name": "envioAutomatico", "type": "boolean", "value": false },
-            { "id": "2", "name": "numeroWhatsappLuciano", "type": "string", "value": "5511999999999" },
+            { "id": "2", "name": "numeroWhatsappLuciano", "type": "string", "value": "5581992492027" },
             { "id": "3", "name": "whatsappPhoneNumberId", "type": "string", "value": "SEU_PHONE_NUMBER_ID_AQUI" }
           ]
         }

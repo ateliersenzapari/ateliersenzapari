@@ -48,10 +48,10 @@ No n8n: **Workflows → Import from File** → selecione cada `.json`. Repita pa
 
 ### 4. Preencher os placeholders
 
-- Em `workflow-2-resposta-ia.json` e `workflow-3-notificacao-whatsapp.json`, abra o node **Config** e preencha:
-  - `numeroWhatsappLuciano`: número do Luciano no formato internacional (ex: `5511999999999`)
-  - `whatsappPhoneNumberId`: o `phone_number_id` da conta WhatsApp Business (Meta Graph API)
+- Em `workflow-2-resposta-ia.json` e `workflow-3-notificacao-whatsapp.json`, o node **Config** já vem com `numeroWhatsappLuciano = 5581992492027` (o mesmo número usado no botão de WhatsApp do site, em `contato.html`). Se não for o número certo para receber essas notificações, troque no node Config.
+  - Falta preencher `whatsappPhoneNumberId`: o `phone_number_id` da conta WhatsApp Business, disponível em [business.facebook.com](https://business.facebook.com) → WhatsApp Manager → API Setup (o mesmo valor já usado no bot do WhatsApp — copie de lá).
 - Em `workflow-4-crm.json`, abra o node **Criar Lead no CRM** e troque `https://SEU_ENDPOINT_CRM_AQUI/leads` pela URL real do endpoint.
+  - O site já usa Firebase/Firestore (projeto `senza-pari`, ver `account.js`) para contas e pedidos, mas as regras atuais em `firestore.rules` não têm uma coleção `leads` nem permitem escrita anônima — não fiz essa mudança porque mexe em regra de segurança de produção. Se preferir usar o Firestore como CRM em vez de um serviço externo, me avise e eu preparo a regra + a autenticação (service account) do lado do n8n.
 
 ### 5. Ordem recomendada de ativação
 
