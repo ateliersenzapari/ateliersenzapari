@@ -1,17 +1,17 @@
 {
-  "name": "Atelier Senza Pari - Workflow 4 - Integracao com CRM",
+  "name": "Atelier Senza Pari - Workflow 4 - Integracao com HubSpot",
   "nodes": [
     {
       "parameters": {
-        "content": "## Workflow 4 - Integracao com CRM\n\nCria um lead no CRM sempre que chega um e-mail em vendas@.\n\nAtive este workflow por ultimo, quando o endpoint do CRM ja estiver pronto.\nPreencha a URL do endpoint e, se necessario, a credencial de autenticacao no node 'Criar Lead no CRM'.",
-        "height": 220,
+        "content": "## Workflow 4 - Integracao com HubSpot\n\nSempre que chega um e-mail em vendas@:\n1. Cria (ou atualiza, se o e-mail ja existir) um contato no HubSpot com status de lead\n2. Cria uma nota no HubSpot com o assunto e o corpo do e-mail\n3. Associa essa nota ao contato\n\nAntes de ativar, crie a credencial 'HubSpot Private App Token' (veja README.md).",
+        "height": 240,
         "width": 380
       },
       "id": "note-1",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [-220, -20]
+      "position": [-220, -40]
     },
     {
       "parameters": {
@@ -35,7 +35,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const items = $input.all();\n\nreturn items.map((item) => {\n  const json = item.json;\n  const nome = (json.from && json.from.value && json.from.value[0] && json.from.value[0].name) || '';\n  const email = (json.from && json.from.value && json.from.value[0] && json.from.value[0].address) || json.from || '';\n  const mensagem = json.textPlain || json.text || '';\n\n  return {\n    json: {\n      nome,\n      email,\n      mensagem,\n      data: json.date || new Date().toISOString(),\n      origem: 'email',\n      status: 'novo'\n    }\n  };\n});"
+        "jsCode": "const items = $input.all();\n\nreturn items.map((item) => {\n  const json = item.json;\n  const nomeCompleto = (json.from && json.from.value && json.from.value[0] && json.from.value[0].name) || '';\n  const email = (json.from && json.from.value && json.from.value[0] && json.from.value[0].address) || json.from || '';\n  const assunto = json.subject || '';\n  const mensagem = json.textPlain || json.text || '';\n\n  const partesNome = nomeCompleto.trim().split(/\\s+/).filter(Boolean);\n  const firstname = partesNome[0] || '';\n  const lastname = partesNome.slice(1).join(' ');\n\n  return {\n    json: {\n      firstname,\n      lastname,\n      email,\n      assunto,\n      mensagem,\n      data: json.date || new Date().toISOString()\n    }\n  };\n});"
       },
       "id": "extrair-lead",
       "name": "Extrair Dados do Lead",
@@ -45,23 +45,85 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://SEU_ENDPOINT_CRM_AQUI/leads",
+        "method": "PUT",
+        "url": "https://api.hubapi.com/crm/v3/objects/contacts/batch/upsert",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ nome: $json.nome, email: $json.email, mensagem: $json.mensagem, data: $json.data, origem: $json.origem, status: $json.status }) }}",
+        "jsonBody": "={{ JSON.stringify({ inputs: [ { idProperty: \"email\", id: $json.email, properties: { email: $json.email, firstname: $json.firstname, lastname: $json.lastname, lifecyclestage: \"lead\", hs_lead_status: \"NEW\" } } ] }) }}",
         "options": {}
       },
-      "id": "criar-lead",
-      "name": "Criar Lead no CRM",
+      "id": "upsert-contato",
+      "name": "Upsert Contato no HubSpot",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [220, 260],
       "credentials": {
         "httpHeaderAuth": {
-          "name": "CRM API"
+          "name": "HubSpot Private App Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const resposta = $input.first().json;\nconst dados = $('Extrair Dados do Lead').first().json;\nconst contatoId = resposta.results && resposta.results[0] && resposta.results[0].id;\n\nreturn [{\n  json: {\n    ...dados,\n    contatoId\n  }\n}];"
+      },
+      "id": "extrair-id-contato",
+      "name": "Extrair ID do Contato",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 260]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.hubapi.com/crm/v3/objects/notes",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ properties: { hs_note_body: \"Novo contato via e-mail (vendas@ateliersenzapari.com.br)\\n\\nAssunto: \" + $json.assunto + \"\\n\\n\" + $json.mensagem, hs_timestamp: Date.now() } }) }}",
+        "options": {}
+      },
+      "id": "criar-nota",
+      "name": "Criar Nota no HubSpot",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [660, 260],
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "HubSpot Private App Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const resposta = $input.first().json;\nconst dados = $('Extrair ID do Contato').first().json;\n\nreturn [{\n  json: {\n    ...dados,\n    notaId: resposta.id\n  }\n}];"
+      },
+      "id": "extrair-id-nota",
+      "name": "Extrair ID da Nota",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [880, 260]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.hubapi.com/crm/v4/objects/notes/{{ $json.notaId }}/associations/default/contacts/{{ $json.contatoId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": false,
+        "options": {}
+      },
+      "id": "associar-nota",
+      "name": "Associar Nota ao Contato",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1100, 260],
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "HubSpot Private App Token"
         }
       }
     }
@@ -71,7 +133,19 @@
       "main": [[{ "node": "Extrair Dados do Lead", "type": "main", "index": 0 }]]
     },
     "Extrair Dados do Lead": {
-      "main": [[{ "node": "Criar Lead no CRM", "type": "main", "index": 0 }]]
+      "main": [[{ "node": "Upsert Contato no HubSpot", "type": "main", "index": 0 }]]
+    },
+    "Upsert Contato no HubSpot": {
+      "main": [[{ "node": "Extrair ID do Contato", "type": "main", "index": 0 }]]
+    },
+    "Extrair ID do Contato": {
+      "main": [[{ "node": "Criar Nota no HubSpot", "type": "main", "index": 0 }]]
+    },
+    "Criar Nota no HubSpot": {
+      "main": [[{ "node": "Extrair ID da Nota", "type": "main", "index": 0 }]]
+    },
+    "Extrair ID da Nota": {
+      "main": [[{ "node": "Associar Nota ao Contato", "type": "main", "index": 0 }]]
     }
   },
   "active": false,
