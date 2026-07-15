@@ -77,30 +77,48 @@ Variáveis (exemplo real, testado com sucesso):
 
 ---
 
-## 🎯 Workflows Planejados
+## 🎯 Workflows
 
-### 1. **Daily Content Scheduler** (Publicação Automática) — próximo passo
-**Acionamento:** Diariamente em horário configurável
-**Função:** Lê calendário de conteúdo e publica automaticamente via `createPost`
+### 1. **Daily Content Scheduler** — ✅ construído e testado
+**Workflow:** [Instagram - Daily Content Scheduler](https://senza-pari.app.n8n.cloud/workflow/WpKsvYJDw2dnfRyI) (`WpKsvYJDw2dnfRyI`)
+**Acionamento:** Diariamente às 09:03 (Schedule Trigger)
+**Função:** Lê a Data Table `Instagram Content Calendar` e publica automaticamente via `createPost`
 
-**Fluxo:**
+**Data Table:** `Instagram Content Calendar` (id `CLNLJqbgy4K7cyqh`, projeto pessoal)
+
+| Coluna | Tipo | Descrição |
+|---|---|---|
+| `scheduledDate` | date | Data agendada para publicação |
+| `postType` | string | `post`, `reel` ou `story` |
+| `caption` | string | Legenda do post |
+| `imageUrl` | string | URL pública da imagem |
+| `status` | string | `pending` → `published` ou `failed` |
+| `bufferPostId` | string | Preenchido automaticamente após publicar |
+| `errorMessage` | string | Preenchido automaticamente se falhar |
+
+**Como adicionar um post ao calendário:** inserir uma linha na Data Table com `status = pending`, `scheduledDate` na data desejada, `postType`, `caption` e `imageUrl`. O workflow roda todo dia às 09:03, pega todas as linhas `pending` com `scheduledDate` até hoje, e publica cada uma.
+
+**Fluxo real implementado:**
 ```
-Schedule Trigger
+Schedule Trigger (09:03 diário)
     ↓
-Read Calendar (Google Sheets / n8n Data Table)
+Get Due Posts (Data Table: status=pending AND scheduledDate <= hoje)
     ↓
-Filter: posts agendados para hoje
+Loop Content Calendar (1 por vez)
     ↓
-Loop: para cada post → createPost mutation
+Publish to Instagram (createPost mutation via Buffer GraphQL)
     ↓
-Log resultado (sucesso/erro)
+Published Successfully? (IF: __typename === PostActionSuccess)
+    ├─ true  → Mark as Published (status=published, bufferPostId=...)
+    └─ false → Mark as Failed (status=failed, errorMessage=...)
+    ↓ (ambos voltam pro loop)
 ```
 
-**Dados esperados por post:**
-- Data/hora do post
-- Tipo (`post`, `reel`, `story`)
-- Legenda/Caption
-- URL da imagem (pública, ex: hospedada no próprio site)
+**Limitação atual:** `channelId` do Instagram está fixo no node `Publish to Instagram` (single-channel). Se no futuro a Atelier tiver mais de uma conta/canal, isso vira uma coluna na Data Table.
+
+**Testado em 2026-07-15:** 2 linhas de teste passaram pelo pipeline completo (Buffer mockado para não publicar de verdade), confirmando leitura do calendário, loop, atualização de status e tratamento de sucesso/erro. Linhas de teste removidas após validação.
+
+⚠️ **Workflow ainda está INATIVO** (não publicado/ativado no n8n) — precisa ser ativado manualmente na UI do n8n (toggle "Active") para rodar sozinho todo dia. Enquanto inativo, só roda via execução manual.
 
 ---
 
@@ -151,4 +169,4 @@ Publicado com sucesso em 2026-07-15 via workflow `Buffer Setup - Get Profiles (v
 
 ---
 
-**Última atualização:** 2026-07-15 — primeiro post de teste publicado com sucesso.
+**Última atualização:** 2026-07-15 — Daily Content Scheduler construído, testado end-to-end e pronto para ativação.
