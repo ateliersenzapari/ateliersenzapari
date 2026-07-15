@@ -135,6 +135,13 @@ Plano completo revisável em: **[Calendário de Conteúdo — Instagram Senza Pa
 
 **Como ativar cada peça quando a arte chegar:** me diga qual dia/item a imagem corresponde (ex: "dia 3, post 2" ou "reel de quinta"), me mande a URL da imagem/vídeo. Eu atualizo a linha (`imageUrl` + `status = pending`) e ela entra na fila automaticamente no horário já definido — não precisa recriar nada.
 
+⚠️ **Formato de imagem por tipo de post — regra fixa:**
+- `post` (feed/carrossel): **1080x1080px (1:1, quadrado)**
+- `story`: **1080x1920px (9:16, vertical)** — nunca reaproveitar a arte quadrada do feed. O Instagram estica/corta o quadrado pra caber no formato vertical, cortando texto nas bordas (aconteceu no carrossel "Exclusividade" de 15/07 — story usou a arte de feed e cortou "IDENTIDADE QUE MARCA" e "ACABAMENTO EXCEPCIONAL" nas laterais).
+- `reel`: **1080x1920px (9:16, vertical)**
+
+Cada peça de story/reel precisa de arte própria nesse formato, gerada separadamente da arte de feed.
+
 ---
 
 ### 2. **Auto-Reply to Comments** (Respostas Automáticas)
