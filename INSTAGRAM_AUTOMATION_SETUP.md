@@ -2,195 +2,153 @@
 
 ## 📋 Status de Setup
 
-- ✅ Buffer MCP conectado
-- ✅ n8n configurado e pronto
-- ⏳ Aguardando: Token Buffer + Account ID
-- ⏳ Aguardando: Credencial httpHeaderAuth no n8n
+- ✅ Buffer conectado via n8n (API GraphQL nova — `api.buffer.com`, não a REST antiga `/1/...`)
+- ✅ Credencial `Header Auth account` configurada no n8n (httpHeaderAuth, header `Authorization: Bearer <token>`)
+- ✅ Instagram Business `@ateliersenzapari` conectado no Buffer
+- ✅ Primeiro post de teste publicado com sucesso (ver "Post de teste" abaixo)
+
+**IDs conhecidos:**
+- Organization ID: `6a56faeaffc5fa0c4f864e19`
+- Instagram Channel ID: `6a570b3080cc80cdcab86492`
+
+⚠️ **Nunca commitar o token real neste arquivo ou em qualquer lugar do repo.** O token fica só na credencial do n8n (`Header Auth account`, id `f4bRFl5zmjKGFAgE`).
+
+---
+
+## 🔑 API do Buffer — GraphQL (não a REST antiga)
+
+A Buffer migrou para uma API GraphQL. Toda automação usa:
+
+- **Endpoint:** `POST https://api.buffer.com`
+- **Auth:** header `Authorization: Bearer <token>` (Personal Access Key, gerado em Buffer → Settings → Developer → Buffer API → Personal Keys)
+- **Content-Type:** `application/json`
+- **Corpo:** `{ "query": "...", "variables": { ... } }`
+
+Docs oficiais: https://developers.buffer.com
+
+### Descobrir organizationId
+```graphql
+query GetOrganizations { account { organizations { id name } } }
+```
+
+### Descobrir canais conectados (ex: Instagram)
+```graphql
+query GetChannels($orgId: OrganizationId!) {
+  channels(input: { organizationId: $orgId }) {
+    id name displayName service avatar
+  }
+}
+```
+
+### Publicar um post (mutation completa e testada)
+```graphql
+mutation CreatePost($input: CreatePostInput!) {
+  createPost(input: $input) {
+    __typename
+    ... on PostActionSuccess { post { id } }
+    ... on MutationError { message }
+  }
+}
+```
+
+Variáveis (exemplo real, testado com sucesso):
+```json
+{
+  "input": {
+    "channelId": "6a570b3080cc80cdcab86492",
+    "text": "Legenda do post...",
+    "assets": [{ "image": { "url": "https://ateliersenzapari.com.br/nome-da-imagem.jpg" } }],
+    "schedulingType": "automatic",
+    "mode": "shareNow",
+    "metadata": {
+      "instagram": { "type": "post", "shouldShareToFeed": true }
+    }
+  }
+}
+```
+
+**Campos obrigatórios para Instagram:**
+- `metadata.instagram.type`: `post` | `reel` | `story` (outros valores existem mas não são válidos p/ Instagram: `short`, `whats_new`, `offer`, `event`, `carousel`, `ghost_post`, `thread`)
+- `metadata.instagram.shouldShareToFeed`: boolean, obrigatório
+
+**Enums úteis:**
+- `schedulingType`: `automatic` (publica direto) | `notification` (só notifica pra postar manual)
+- `mode`: `addToQueue` | `shareNow` | `shareNext` | `customScheduled`
 
 ---
 
 ## 🎯 Workflows Planejados
 
-### 1. **Daily Content Scheduler** (Publicação Automática)
-**Acionamento:** Diariamente às 9h (configurável)  
-**Função:** Lê calendário de conteúdo e publica automaticamente
+### 1. **Daily Content Scheduler** (Publicação Automática) — próximo passo
+**Acionamento:** Diariamente em horário configurável
+**Função:** Lê calendário de conteúdo e publica automaticamente via `createPost`
 
 **Fluxo:**
 ```
-Schedule Trigger (09:00) 
+Schedule Trigger
     ↓
 Read Calendar (Google Sheets / n8n Data Table)
     ↓
-Check if Post Exists Today
+Filter: posts agendados para hoje
     ↓
-Format Post Data
+Loop: para cada post → createPost mutation
     ↓
-Publish via Buffer API
-    ↓
-Log Result
+Log resultado (sucesso/erro)
 ```
 
-**Dados esperados:**
-- Data do post (YYYY-MM-DD)
-- Tipo (Post, Story, Reel)
+**Dados esperados por post:**
+- Data/hora do post
+- Tipo (`post`, `reel`, `story`)
 - Legenda/Caption
-- URL da imagem (ou enviar como arquivo)
-- Hashtags (opcional)
+- URL da imagem (pública, ex: hospedada no próprio site)
 
 ---
 
 ### 2. **Auto-Reply to Comments** (Respostas Automáticas)
-**Acionamento:** A cada 15 minutos (polling)  
-**Função:** Monitora comentários e responde automaticamente
-
-**Fluxo:**
-```
-Schedule Trigger (a cada 15 min)
-    ↓
-Fetch Comments via Buffer API
-    ↓
-Filter Unanswered Comments
-    ↓
-Classify Comment (Pergunta, Complimento, etc)
-    ↓
-Generate Reply (Anthropic API)
-    ↓
-Post Reply
-    ↓
-Mark as Answered
-```
+**Acionamento:** Polling a cada 15 minutos
+**Função:** Monitora comentários e responde automaticamente via IA
 
 ---
 
 ### 3. **Capture DM Leads** (Captura de Mensagens)
-**Acionamento:** A cada 30 minutos  
-**Função:** Captura DMs e salva em planilha para follow-up
-
-**Fluxo:**
-```
-Schedule Trigger (a cada 30 min)
-    ↓
-Fetch New DMs via Buffer API
-    ↓
-Extract Lead Info (Nome, Email/Username, Mensagem)
-    ↓
-Save to Google Sheets / Airtable
-    ↓
-Send Notification (Email/Slack)
-```
+**Acionamento:** Polling a cada 30 minutos
+**Função:** Captura DMs e salva em planilha/CRM para follow-up
 
 ---
 
 ### 4. **Analytics Dashboard** (Relatório Diário)
-**Acionamento:** Diariamente às 21h  
-**Função:** Coleta métricas e envia relatório
-
-**Fluxo:**
-```
-Schedule Trigger (21:00)
-    ↓
-Fetch Daily Metrics (Buffer API)
-    ↓
-Calculate Insights (Likes, Comments, Reaches)
-    ↓
-Format Report
-    ↓
-Send Email Report
-```
+**Acionamento:** Diariamente à noite
+**Função:** Coleta métricas e envia relatório por email
 
 ---
 
-## 🔑 Credenciais Necessárias no n8n
+## ✅ Post de Teste (referência)
 
-### 1. Buffer API (httpHeaderAuth)
-**Tipo:** `httpHeaderAuth`  
-**Nome da Credencial:** `Buffer API Token`  
-**Header Name:** `Authorization`  
-**Header Value:** `Bearer -LK5vRHWQK4s0GhoWcSvoWgBKBhOx1mF1itUCMldBil`
+Publicado com sucesso em 2026-07-15 via workflow `Buffer Setup - Get Profiles (v2 - GraphQL)`
+(https://senza-pari.app.n8n.cloud/workflow/HkIWw3gV4JElz6rf):
 
-### 2. Anthropic API (para respostas automáticas)
-**Já configurado:** ✅ `Anthropic API Key`
-
-### 3. Google Sheets (opcional, para calendário)
-**Tipo:** `googleSheets`  
-**Uso:** Armazenar calendário de conteúdo
-
-### 4. Airtable (opcional, para leads)
-**Tipo:** `airtable`  
-**Uso:** Armazenar leads capturados
-
----
-
-## 🚀 Próximos Passos
-
-### Fase 1: Validação (Hoje)
-1. ✅ Criar credencial httpHeaderAuth com seu token Buffer
-2. ✅ Testar conexão com Buffer API
-3. ✅ Extrair Instagram Account ID
-
-### Fase 2: MVP (Amanhã)
-1. Criar Data Table com calendário de posts
-2. Montar o workflow "Daily Content Scheduler"
-3. Fazer teste manual de publicação
-
-### Fase 3: Automação Completa (Próxima semana)
-1. Montar "Auto-Reply to Comments"
-2. Montar "Capture DM Leads"
-3. Montar "Analytics Dashboard"
-
----
-
-## 📱 Credenciais Buffer - Como Verificar
-
-### Account ID do Instagram no Buffer:
-
-```bash
-# Via curl (com seu token):
-curl -s "https://api.buffer.com/1/user.json?access_token=SEU_TOKEN" \
-  | jq '.connected_social_profiles[] | select(.service=="instagram")'
-```
-
-**Resposta esperada:**
-```json
-{
-  "service": "instagram",
-  "id": "12345678900",
-  "formatted_username": "@ateliersenzapari"
-}
-```
-
-Copie o valor de `"id"` — esse é seu **Instagram Account ID**.
+- Canal: `@ateliersenzapari` (Instagram)
+- Imagem: `https://ateliersenzapari.com.br/alabaster-ceramic-cover.jpg`
+- Post ID retornado pelo Buffer: `6a5717000c92fc86088c8609`
+- Resultado: `PostActionSuccess`
 
 ---
 
 ## 🔗 Links Úteis
 
-- **Buffer API Docs:** https://buffer.com/developers/api
+- **Buffer API Docs (GraphQL):** https://developers.buffer.com
+- **n8n workflow de setup/teste:** https://senza-pari.app.n8n.cloud/workflow/HkIWw3gV4JElz6rf
 - **n8n Docs:** https://docs.n8n.io
-- **Schedule Trigger:** https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.scheduletrigger/
-- **HTTP Request:** https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.httprequest/
 
 ---
 
 ## ⚠️ Notas Importantes
 
-1. **Token Expiração:** Tokens do Buffer via usuário de sistema não expiram
-2. **Rate Limiting:** Buffer API tem limite de 150 requisições/hora
-3. **Sincronização:** Sempre testar workflows manualmente ANTES de ativar agendamento
-4. **Permissões:** Certifique-se que seu token tem permissões para: `updates:create`, `updates:approve`, `updates:publish`
+1. **Nunca commitar tokens/segredos neste repositório** — usar sempre credenciais do n8n.
+2. Buffer parece invalidar Personal Keys anteriores ao gerar uma nova — se a credencial no n8n parar de funcionar, gerar novo token e atualizar a credencial `Header Auth account`.
+3. Sempre testar workflows manualmente (execução `manual`) antes de ativar agendamento em produção.
+4. `shouldShareToFeed` é obrigatório em posts do Instagram mesmo quando não é um Reel/Story.
 
 ---
 
-## 📝 Status de Implementação
-
-| Workflow | Status | Progresso |
-|----------|--------|-----------|
-| Daily Content Scheduler | ⏳ Aguardando token | 10% |
-| Auto-Reply Comments | 📋 Planejado | 5% |
-| Capture DM Leads | 📋 Planejado | 5% |
-| Analytics Dashboard | 📋 Planejado | 5% |
-
----
-
-**Criado em:** 2026-07-15  
-**Próxima atualização:** Após validação do token Buffer
+**Última atualização:** 2026-07-15 — primeiro post de teste publicado com sucesso.
