@@ -81,28 +81,28 @@ Variáveis (exemplo real, testado com sucesso):
 
 ### 1. **Daily Content Scheduler** — ✅ construído e testado
 **Workflow:** [Instagram - Daily Content Scheduler](https://senza-pari.app.n8n.cloud/workflow/WpKsvYJDw2dnfRyI) (`WpKsvYJDw2dnfRyI`)
-**Acionamento:** Diariamente às 09:03 (Schedule Trigger)
+**Acionamento:** A cada 15 minutos (Schedule Trigger) — cada linha carrega seu próprio horário exato (`scheduledDate` com data+hora), então o conteúdo do dia é distribuído ao longo do dia, não publicado tudo de uma vez
 **Função:** Lê a Data Table `Instagram Content Calendar` e publica automaticamente via `createPost`
 
 **Data Table:** `Instagram Content Calendar` (id `CLNLJqbgy4K7cyqh`, projeto pessoal)
 
 | Coluna | Tipo | Descrição |
 |---|---|---|
-| `scheduledDate` | date | Data agendada para publicação |
+| `scheduledDate` | date | Data **e hora** agendada (ex: `2026-07-16T20:00:00-03:00`) |
 | `postType` | string | `post`, `reel` ou `story` |
-| `caption` | string | Legenda do post |
-| `imageUrl` | string | URL pública da imagem |
-| `status` | string | `pending` → `published` ou `failed` |
+| `caption` | string | Legenda do post (reels trazem `[CONCEITO: ...]` antes da legenda) |
+| `imageUrl` | string | URL pública da imagem/vídeo — **vazio até a arte chegar** |
+| `status` | string | `draft` (sem arte ainda) → `pending` (pronto pra publicar) → `published` ou `failed` |
 | `bufferPostId` | string | Preenchido automaticamente após publicar |
 | `errorMessage` | string | Preenchido automaticamente se falhar |
 
-**Como adicionar um post ao calendário:** inserir uma linha na Data Table com `status = pending`, `scheduledDate` na data desejada, `postType`, `caption` e `imageUrl`. O workflow roda todo dia às 09:03, pega todas as linhas `pending` com `scheduledDate` até hoje, e publica cada uma.
+**Fluxo de status:** uma linha só é publicada quando `status = pending` **e** já tem `imageUrl`. Linhas `draft` ficam invisíveis pro workflow — é assim que o calendário pode ser pré-carregado sem risco de publicar algo sem arte.
 
 **Fluxo real implementado:**
 ```
-Schedule Trigger (09:03 diário)
+Schedule Trigger (a cada 15 min)
     ↓
-Get Due Posts (Data Table: status=pending AND scheduledDate <= hoje)
+Get Due Posts (Data Table: status=pending AND scheduledDate <= agora)
     ↓
 Loop Content Calendar (1 por vez)
     ↓
@@ -116,9 +116,24 @@ Published Successfully? (IF: __typename === PostActionSuccess)
 
 **Limitação atual:** `channelId` do Instagram está fixo no node `Publish to Instagram` (single-channel). Se no futuro a Atelier tiver mais de uma conta/canal, isso vira uma coluna na Data Table.
 
-**Testado em 2026-07-15:** 2 linhas de teste passaram pelo pipeline completo (Buffer mockado para não publicar de verdade), confirmando leitura do calendário, loop, atualização de status e tratamento de sucesso/erro. Linhas de teste removidas após validação.
+**Testado em 2026-07-15:**
+- Pipeline completo (Buffer mockado) validado end-to-end: leitura → loop → publicação → atualização de status, incluindo o branch de erro.
+- Filtro de data/hora validado com um caso vencido (2020, processado) e um futuro (2030, ignorado) — confirma que o agendamento por horário funciona.
+- Linhas de teste removidas após validação.
 
-⚠️ **Workflow ainda está INATIVO** (não publicado/ativado no n8n) — precisa ser ativado manualmente na UI do n8n (toggle "Active") para rodar sozinho todo dia. Enquanto inativo, só roda via execução manual.
+⚠️ **Workflow ainda está INATIVO** — precisa ser ativado manualmente na UI do n8n (toggle "Active") pra rodar sozinho. Enquanto inativo, só roda via execução manual.
+
+---
+
+### Calendário de conteúdo — 10 dias (15/07 a 24/07)
+
+Plano completo revisável em: **[Calendário de Conteúdo — Instagram Senza Pari](https://claude.ai/code/artifact/b5a0501b-ec31-48ab-b6e0-0677ad0db4da)**
+
+- **93 linhas** já cadastradas na Data Table como **rascunho** (`status = draft`, sem imagem): 30 posts, 60 stories, 3 reels.
+- Cadência: 3 posts/dia + 6 stories/dia todo dia; reels às quintas (16/07, 23/07) e sábado (18/07).
+- Cada linha já tem legenda e horário definidos — falta só a arte.
+
+**Como ativar cada peça quando a arte chegar:** me diga qual dia/item a imagem corresponde (ex: "dia 3, post 2" ou "reel de quinta"), me mande a URL da imagem/vídeo. Eu atualizo a linha (`imageUrl` + `status = pending`) e ela entra na fila automaticamente no horário já definido — não precisa recriar nada.
 
 ---
 
