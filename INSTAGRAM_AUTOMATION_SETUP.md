@@ -14,6 +14,12 @@
 ⚠️ **Regra fixa de legenda (a partir de 16/07/2026):** toda legenda de post/reel/story deve incluir a linha:
 `Entre em contato via WhatsApp para saber sobre esse produto.`
 
+⚠️ **Horários fixos diários (a partir de 17/07/2026):** 4 posts por dia, sempre nesses horários:
+- **09h** — livre (lifestyle)
+- **13h** — SEMPRE produto (foto só do case/produto, sem pessoa)
+- **17h** — livre (lifestyle)
+- **20h** — livre (lifestyle)
+
 ⚠️ **Nunca commitar o token real neste arquivo ou em qualquer lugar do repo.** O token fica só na credencial do n8n (`Header Auth account`, id `f4bRFl5zmjKGFAgE`).
 
 ---
