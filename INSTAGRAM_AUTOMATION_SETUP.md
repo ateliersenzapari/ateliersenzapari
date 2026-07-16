@@ -11,6 +11,9 @@
 - Organization ID: `6a56faeaffc5fa0c4f864e19`
 - Instagram Channel ID: `6a570b3080cc80cdcab86492`
 
+⚠️ **Regra fixa de legenda (a partir de 16/07/2026):** toda legenda de post/reel/story deve incluir a linha:
+`Entre em contato via WhatsApp para saber sobre esse produto.`
+
 ⚠️ **Nunca commitar o token real neste arquivo ou em qualquer lugar do repo.** O token fica só na credencial do n8n (`Header Auth account`, id `f4bRFl5zmjKGFAgE`).
 
 ---
