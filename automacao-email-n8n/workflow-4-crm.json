@@ -1,0 +1,81 @@
+{
+  "name": "Atelier Senza Pari - Workflow 4 - Integracao com HubSpot",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Workflow 4 - Integracao com HubSpot\n\ncontato@, vendas@ e financeiro@ caem todos na MESMA caixa (mesma conta iCloud), entao este workflow usa um unico gatilho IMAP e filtra pelo campo \"Para\" dentro do node \"Extrair Dados do Lead\" - so segue adiante quando o e-mail foi endereçado a vendas@.\n\nSempre que chega um e-mail em vendas@:\n1. Cria (ou atualiza, se o e-mail ja existir) um contato no HubSpot com status de lead\n\nA conta HubSpot em uso nao tem o escopo de Notes (crm.objects.notes) disponivel, entao esse workflow so cria/atualiza o contato - nao anexa o texto do e-mail como nota. O e-mail original continua guardado normalmente na caixa.\n\nAntes de ativar, crie a credencial 'HubSpot Private App Token' (veja README.md).",
+        "height": 280,
+        "width": 400
+      },
+      "id": "note-1",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-220, -60]
+    },
+    {
+      "parameters": {
+        "mailbox": "INBOX",
+        "postProcessAction": "read",
+        "format": "simple",
+        "options": {
+          "forceReconnect": 120
+        }
+      },
+      "id": "imap-vendas",
+      "name": "IMAP - Caixa Compartilhada",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [-220, 260],
+      "credentials": {
+        "imap": {
+          "name": "iCloud IMAP - contato@ateliersenzapari.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst DOMINIO_PROPRIO = 'ateliersenzapari.com.br';\nconst resultado = [];\n\nfor (const item of items) {\n  const json = item.json;\n  const nomeCompleto = (json.from && json.from.value && json.from.value[0] && json.from.value[0].name) || '';\n  const email = (json.from && json.from.value && json.from.value[0] && json.from.value[0].address) || json.from || '';\n  const destinatarios = (json.to && json.to.value) ? json.to.value.map((v) => (v.address || '').toLowerCase()) : [];\n  const paraTexto = destinatarios.join(' ');\n  const assunto = json.subject || '';\n  const mensagem = json.textPlain || json.text || '';\n\n  // Ignora e-mails internos (nossos proprios encaminhamentos/rascunhos) para nao criar lead falso\n  if (email.toLowerCase().includes(DOMINIO_PROPRIO)) continue;\n  // So processa o que foi endereçado a vendas@\n  if (!paraTexto.includes('vendas@')) continue;\n\n  const partesNome = nomeCompleto.trim().split(/\\s+/).filter(Boolean);\n  const firstname = partesNome[0] || '';\n  const lastname = partesNome.slice(1).join(' ');\n\n  resultado.push({\n    json: {\n      firstname,\n      lastname,\n      email,\n      assunto,\n      mensagem,\n      data: json.date || new Date().toISOString()\n    }\n  });\n}\n\nreturn resultado;"
+      },
+      "id": "extrair-lead",
+      "name": "Extrair Dados do Lead",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [0, 260]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://api.hubapi.com/crm/v3/objects/contacts/batch/upsert",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ inputs: [ { idProperty: \"email\", id: $json.email, properties: { email: $json.email, firstname: $json.firstname, lastname: $json.lastname, lifecyclestage: \"lead\", hs_lead_status: \"NEW\" } } ] }) }}",
+        "options": {}
+      },
+      "id": "upsert-contato",
+      "name": "Upsert Contato no HubSpot",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [220, 260],
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "HubSpot Private App Token"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "IMAP - Caixa Compartilhada": {
+      "main": [[{ "node": "Extrair Dados do Lead", "type": "main", "index": 0 }]]
+    },
+    "Extrair Dados do Lead": {
+      "main": [[{ "node": "Upsert Contato no HubSpot", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

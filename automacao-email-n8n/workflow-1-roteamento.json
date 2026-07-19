@@ -1,0 +1,201 @@
+{
+  "name": "Atelier Senza Pari - Workflow 1 - Roteamento de E-mail",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Workflow 1 - Roteamento de E-mail\n\nMonitora a caixa **contato@ateliersenzapari.com.br** (todos os enderecos - contato@, vendas@, financeiro@, luciano@ - caem nessa MESMA caixa) e encaminha uma copia marcada com [Roteado automaticamente] para financeiro@, vendas@ ou luciano@ conforme regras de palavra-chave, facilitando localizar/filtrar por assunto.\n\nProtecao contra loop: e-mails vindos de dentro do proprio dominio (@ateliersenzapari.com.br) ou com assunto ja comecando com [Roteado automaticamente] sao ignorados (categoria 'interno'), pra nao reencaminhar a propria copia pra sempre.\n\nAntes de ativar:\n1. Crie as credenciais IMAP e SMTP (veja README.md)\n2. Ajuste as listas de palavras-chave no node \"Classificar E-mail\"\n3. Teste alguns dias com o workflow em modo manual antes de ativar",
+        "height": 260,
+        "width": 380
+      },
+      "id": "note-1",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-200, 0]
+    },
+    {
+      "parameters": {
+        "mailbox": "INBOX",
+        "postProcessAction": "read",
+        "format": "simple",
+        "options": {
+          "forceReconnect": 120
+        }
+      },
+      "id": "imap-trigger",
+      "name": "IMAP - contato@",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [-200, 300],
+      "credentials": {
+        "imap": {
+          "name": "iCloud IMAP - contato@ateliersenzapari.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nconst DOMINIO_PROPRIO = 'ateliersenzapari.com.br';\nconst PREFIXO_ROTEADO = '[roteado automaticamente]';\nconst PALAVRAS_FINANCEIRO = ['boleto', 'nota fiscal', 'das', 'honorarios', 'honorários'];\nconst REMETENTES_FINANCEIRO = ['anexoconsultoria.com.br'];\nconst PALAVRAS_VENDAS = ['pedido', 'produto', 'comprar', 'disponibilidade', 'preco', 'preço'];\nconst REMETENTES_LUCIANO = ['itau.com.br', 'bradesco.com.br', 'bb.com.br', 'gov.br', 'receita.fazenda.gov.br', 'hapvida.com.br'];\n\nfunction normalizar(texto) {\n  return (texto || '')\n    .toString()\n    .toLowerCase()\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '');\n}\n\nreturn items.map((item) => {\n  const json = item.json;\n\n  const remetente = (json.from && json.from.value && json.from.value[0] && json.from.value[0].address) || json.from || '';\n  const remetenteNome = (json.from && json.from.value && json.from.value[0] && json.from.value[0].name) || '';\n  const assunto = json.subject || '';\n  const corpo = json.textPlain || json.text || '';\n\n  const remetenteNorm = normalizar(remetente);\n  const assuntoNorm = normalizar(assunto);\n  const textoNorm = normalizar(assunto + ' ' + corpo);\n\n  let categoria = 'manual';\n\n  // Todos os enderecos (contato@, vendas@, financeiro@, luciano@) caem na MESMA caixa.\n  // Sem essa checagem, um e-mail encaminhado por este proprio workflow seria lido de\n  // novo e reencaminhado outra vez, causando loop infinito.\n  if (remetenteNorm.includes(DOMINIO_PROPRIO) || assuntoNorm.includes(PREFIXO_ROTEADO)) {\n    categoria = 'interno';\n  } else if (\n    REMETENTES_FINANCEIRO.some((d) => remetenteNorm.includes(d)) ||\n    PALAVRAS_FINANCEIRO.some((p) => textoNorm.includes(normalizar(p)))\n  ) {\n    categoria = 'financeiro';\n  } else if (PALAVRAS_VENDAS.some((p) => textoNorm.includes(normalizar(p)))) {\n    categoria = 'vendas';\n  } else if (REMETENTES_LUCIANO.some((d) => remetenteNorm.includes(d))) {\n    categoria = 'luciano';\n  }\n\n  return {\n    json: {\n      categoria,\n      remetente,\n      remetenteNome,\n      assunto,\n      corpo,\n      data: json.date || new Date().toISOString()\n    }\n  };\n});"
+      },
+      "id": "classificar",
+      "name": "Classificar E-mail",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [20, 300]
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 4,
+        "output": "={{ $json.categoria === 'financeiro' ? 0 : $json.categoria === 'vendas' ? 1 : $json.categoria === 'luciano' ? 2 : 3 }}"
+      },
+      "id": "rotear",
+      "name": "Rotear",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "1", "name": "toEmail", "type": "string", "value": "financeiro@ateliersenzapari.com.br" },
+            { "id": "2", "name": "assuntoFinal", "type": "string", "value": "=[Roteado automaticamente] {{ $json.assunto }}" },
+            { "id": "3", "name": "corpoFinal", "type": "string", "value": "=Encaminhado automaticamente pelo roteamento de e-mail.\n\nDe: {{ $json.remetenteNome }} <{{ $json.remetente }}>\nData: {{ $json.data }}\nAssunto: {{ $json.assunto }}\n\n---\n\n{{ $json.corpo }}" }
+          ]
+        }
+      },
+      "id": "montar-financeiro",
+      "name": "Montar E-mail - Financeiro",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [480, 100]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "1", "name": "toEmail", "type": "string", "value": "vendas@ateliersenzapari.com.br" },
+            { "id": "2", "name": "assuntoFinal", "type": "string", "value": "=[Roteado automaticamente] {{ $json.assunto }}" },
+            { "id": "3", "name": "corpoFinal", "type": "string", "value": "=Encaminhado automaticamente pelo roteamento de e-mail.\n\nDe: {{ $json.remetenteNome }} <{{ $json.remetente }}>\nData: {{ $json.data }}\nAssunto: {{ $json.assunto }}\n\n---\n\n{{ $json.corpo }}" }
+          ]
+        }
+      },
+      "id": "montar-vendas",
+      "name": "Montar E-mail - Vendas",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [480, 280]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "1", "name": "toEmail", "type": "string", "value": "luciano@ateliersenzapari.com.br" },
+            { "id": "2", "name": "assuntoFinal", "type": "string", "value": "=[Roteado automaticamente] {{ $json.assunto }}" },
+            { "id": "3", "name": "corpoFinal", "type": "string", "value": "=Encaminhado automaticamente pelo roteamento de e-mail.\n\nDe: {{ $json.remetenteNome }} <{{ $json.remetente }}>\nData: {{ $json.data }}\nAssunto: {{ $json.assunto }}\n\n---\n\n{{ $json.corpo }}" }
+          ]
+        }
+      },
+      "id": "montar-luciano",
+      "name": "Montar E-mail - Luciano",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [480, 460]
+    },
+    {
+      "parameters": {
+        "fromEmail": "contato@ateliersenzapari.com.br",
+        "toEmail": "={{ $json.toEmail }}",
+        "subject": "={{ $json.assuntoFinal }}",
+        "text": "={{ $json.corpoFinal }}",
+        "options": {}
+      },
+      "id": "enviar-financeiro",
+      "name": "Enviar - Financeiro",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [700, 100],
+      "credentials": {
+        "smtp": {
+          "name": "iCloud SMTP - contato@ateliersenzapari.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "contato@ateliersenzapari.com.br",
+        "toEmail": "={{ $json.toEmail }}",
+        "subject": "={{ $json.assuntoFinal }}",
+        "text": "={{ $json.corpoFinal }}",
+        "options": {}
+      },
+      "id": "enviar-vendas",
+      "name": "Enviar - Vendas",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [700, 280],
+      "credentials": {
+        "smtp": {
+          "name": "iCloud SMTP - contato@ateliersenzapari.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "contato@ateliersenzapari.com.br",
+        "toEmail": "={{ $json.toEmail }}",
+        "subject": "={{ $json.assuntoFinal }}",
+        "text": "={{ $json.corpoFinal }}",
+        "options": {}
+      },
+      "id": "enviar-luciano",
+      "name": "Enviar - Luciano",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [700, 460],
+      "credentials": {
+        "smtp": {
+          "name": "iCloud SMTP - contato@ateliersenzapari.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "manter-manual",
+      "name": "Manter em Contato (revisao manual)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [480, 620]
+    }
+  ],
+  "connections": {
+    "IMAP - contato@": {
+      "main": [[{ "node": "Classificar E-mail", "type": "main", "index": 0 }]]
+    },
+    "Classificar E-mail": {
+      "main": [[{ "node": "Rotear", "type": "main", "index": 0 }]]
+    },
+    "Rotear": {
+      "main": [
+        [{ "node": "Montar E-mail - Financeiro", "type": "main", "index": 0 }],
+        [{ "node": "Montar E-mail - Vendas", "type": "main", "index": 0 }],
+        [{ "node": "Montar E-mail - Luciano", "type": "main", "index": 0 }],
+        [{ "node": "Manter em Contato (revisao manual)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Montar E-mail - Financeiro": {
+      "main": [[{ "node": "Enviar - Financeiro", "type": "main", "index": 0 }]]
+    },
+    "Montar E-mail - Vendas": {
+      "main": [[{ "node": "Enviar - Vendas", "type": "main", "index": 0 }]]
+    },
+    "Montar E-mail - Luciano": {
+      "main": [[{ "node": "Enviar - Luciano", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

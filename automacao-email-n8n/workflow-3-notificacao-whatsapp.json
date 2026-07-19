@@ -1,0 +1,123 @@
+{
+  "name": "Atelier Senza Pari - Workflow 3 - Notificacao no WhatsApp",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Workflow 3 - Notificacao no WhatsApp\n\nAvisa o Luciano no WhatsApp quando chega um e-mail com palavra critica (contrato, pagamento, urgente, Hapvida, BTG, Sefaz).\n\nSe voce quiser monitorar mais de uma caixa (contato@, financeiro@, etc), duplique o node IMAP para cada conta e conecte todos em 'Verificar Palavras Criticas'.\n\nPreencha o numero e o phone_number_id no node 'Config'.",
+        "height": 260,
+        "width": 380
+      },
+      "id": "note-1",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-220, -20]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "1", "name": "numeroWhatsappLuciano", "type": "string", "value": "5581992492027" },
+            { "id": "2", "name": "whatsappPhoneNumberId", "type": "string", "value": "1072860789244510" }
+          ]
+        }
+      },
+      "id": "config",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-220, 300]
+    },
+    {
+      "parameters": {
+        "mailbox": "INBOX",
+        "postProcessAction": "read",
+        "format": "simple",
+        "options": {
+          "forceReconnect": 120
+        }
+      },
+      "id": "imap-contato",
+      "name": "IMAP - contato@",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [-220, 500],
+      "credentials": {
+        "imap": {
+          "name": "iCloud IMAP - contato@ateliersenzapari.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst config = $('Config').first().json;\nconst DOMINIO_PROPRIO = 'ateliersenzapari.com.br';\n\nconst PALAVRAS_CRITICAS = ['contrato', 'pagamento', 'urgente', 'hapvida', 'btg', 'sefaz'];\n\nfunction normalizar(texto) {\n  return (texto || '')\n    .toString()\n    .toLowerCase()\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '');\n}\n\nconst resultado = [];\nfor (const item of items) {\n  const json = item.json;\n  const remetente = (json.from && json.from.value && json.from.value[0] && json.from.value[0].address) || json.from || '';\n\n  // Ignora e-mails internos (nossos proprios encaminhamentos/rascunhos) para nao notificar duplicado\n  if (remetente.toLowerCase().includes(DOMINIO_PROPRIO)) continue;\n\n  const assunto = json.subject || '';\n  const corpo = json.textPlain || json.text || '';\n  const textoNorm = normalizar(assunto + ' ' + corpo);\n\n  const critico = PALAVRAS_CRITICAS.some((p) => textoNorm.includes(p));\n\n  resultado.push({\n    json: {\n      critico,\n      remetente,\n      assunto,\n      previa: corpo.substring(0, 150),\n      numeroWhatsappLuciano: config.numeroWhatsappLuciano,\n      whatsappPhoneNumberId: config.whatsappPhoneNumberId\n    }\n  });\n}\n\nreturn resultado;"
+      },
+      "id": "verificar",
+      "name": "Verificar Palavras Criticas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [0, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "cond-critico",
+              "leftValue": "={{ $json.critico }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "eh-critico",
+      "name": "E Critico?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [220, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v19.0/{{ $json.whatsappPhoneNumberId }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ messaging_product: \"whatsapp\", to: $json.numeroWhatsappLuciano, type: \"text\", text: { body: \"Novo e-mail importante\\n\\nDe: \" + $json.remetente + \"\\nAssunto: \" + $json.assunto + \"\\nPrevia: \" + $json.previa } }) }}",
+        "options": {}
+      },
+      "id": "enviar-whatsapp",
+      "name": "Notificar WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 320],
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "Meta Graph API - WhatsApp Business"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "IMAP - contato@": {
+      "main": [[{ "node": "Verificar Palavras Criticas", "type": "main", "index": 0 }]]
+    },
+    "Verificar Palavras Criticas": {
+      "main": [[{ "node": "E Critico?", "type": "main", "index": 0 }]]
+    },
+    "E Critico?": {
+      "main": [
+        [{ "node": "Notificar WhatsApp", "type": "main", "index": 0 }],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

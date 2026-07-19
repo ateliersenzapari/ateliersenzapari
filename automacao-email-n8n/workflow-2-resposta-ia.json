@@ -1,0 +1,195 @@
+{
+  "name": "Atelier Senza Pari - Workflow 2 - Resposta Automatica com IA",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Workflow 2 - Resposta Automatica com IA\n\nContato@, vendas@ e financeiro@ caem todos na MESMA caixa (mesma conta iCloud) - por isso este workflow usa um unico gatilho IMAP e filtra pelo campo \"Para\" (destinatario) do e-mail, dentro do node \"Extrair Dados\", em vez de usar contas separadas.\n\nGera uma resposta com Claude para e-mails endereçados a vendas@/contato@ e envia um RASCUNHO por e-mail pro Luciano aprovar antes de disparar (versao temporaria sem WhatsApp - a Meta ainda nao liberou o app da API do WhatsApp Business nessa conta).\n\nPor padrao o envio automatico fica DESLIGADO (node \"Envio Automatico Ativado?\").\nDepois de validar a qualidade das respostas por 2-3 semanas, mude o valor \"envioAutomatico\" para true no node \"Config\".\n\nQuando o WhatsApp Business API estiver liberado, e so trocar o node \"Enviar Rascunho por E-mail\" por uma chamada a API do WhatsApp (mesmo padrao do Workflow 3).\n\nfinanceiro@ e e-mails internos (@ateliersenzapari.com.br) NAO passam por este workflow.",
+        "height": 400,
+        "width": 440
+      },
+      "id": "note-1",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-260, -40]
+    },
+    {
+      "parameters": {
+        "mailbox": "INBOX",
+        "postProcessAction": "read",
+        "format": "simple",
+        "options": {
+          "forceReconnect": 120
+        }
+      },
+      "id": "imap-vendas",
+      "name": "IMAP - Caixa Compartilhada",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [-260, 260],
+      "credentials": {
+        "imap": {
+          "name": "iCloud IMAP - contato@ateliersenzapari.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "1", "name": "envioAutomatico", "type": "boolean", "value": false },
+            { "id": "2", "name": "emailAprovacao", "type": "string", "value": "luciano@ateliersenzapari.com.br" }
+          ]
+        }
+      },
+      "id": "config",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-260, 460]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst DOMINIO_PROPRIO = 'ateliersenzapari.com.br';\nconst resultado = [];\n\nfor (const item of items) {\n  const json = item.json;\n  const remetente = (json.from && json.from.value && json.from.value[0] && json.from.value[0].address) || json.from || '';\n  const remetenteNome = (json.from && json.from.value && json.from.value[0] && json.from.value[0].name) || '';\n  const destinatarios = (json.to && json.to.value) ? json.to.value.map((v) => (v.address || '').toLowerCase()) : [];\n  const paraTexto = destinatarios.join(' ');\n  const assunto = json.subject || '';\n  const corpo = json.textPlain || json.text || '';\n\n  // Ignora e-mails internos (nossos proprios encaminhamentos/rascunhos) para nao criar loop\n  if (remetente.toLowerCase().includes(DOMINIO_PROPRIO)) continue;\n  // financeiro@ e tratado manualmente, nao por IA\n  if (paraTexto.includes('financeiro@')) continue;\n  // So processa o que foi endereçado a vendas@ ou contato@\n  if (!paraTexto.includes('vendas@') && !paraTexto.includes('contato@')) continue;\n\n  resultado.push({\n    json: {\n      remetente,\n      remetenteNome,\n      destinatario: destinatarios[0] || 'contato@ateliersenzapari.com.br',\n      assunto,\n      corpo\n    }\n  });\n}\n\nreturn resultado;"
+      },
+      "id": "extrair",
+      "name": "Extrair Dados",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-40, 260]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: \"claude-sonnet-5\", max_tokens: 1024, system: \"Voce e o atendimento da Atelier Senza Pari, marca de acessorios de luxo para iPhone. Responda de forma cordial, objetiva, em portugues, mantendo o tom sofisticado da marca. Nao invente prazos, precos ou politicas que nao estejam no e-mail recebido; se nao souber algo, diga que um responsavel vai confirmar em breve.\", messages: [{ role: \"user\", content: \"E-mail recebido de \" + $json.remetenteNome + \" <\" + $json.remetente + \">.\\n\\nAssunto: \" + $json.assunto + \"\\n\\nMensagem:\\n\" + $json.corpo }] }) }}",
+        "options": {}
+      },
+      "id": "chamar-ia",
+      "name": "Gerar Resposta (Claude)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [180, 260],
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "Anthropic API Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const resposta = $input.first().json;\nconst dados = $('Extrair Dados').first().json;\nconst config = $('Config').first().json;\n\nconst texto = (resposta.content && resposta.content[0] && resposta.content[0].text) || '';\n\nreturn [{\n  json: {\n    ...dados,\n    respostaIA: texto,\n    envioAutomatico: config.envioAutomatico,\n    emailAprovacao: config.emailAprovacao\n  }\n}];"
+      },
+      "id": "extrair-resposta",
+      "name": "Extrair Texto da Resposta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [400, 260]
+    },
+    {
+      "parameters": {
+        "fromEmail": "contato@ateliersenzapari.com.br",
+        "toEmail": "={{ $json.emailAprovacao }}",
+        "subject": "=[Rascunho IA] Re: {{ $json.assunto }}",
+        "text": "=Rascunho de resposta gerado por IA - revise antes de encaminhar pro cliente.\n\nPara: {{ $json.remetenteNome }} <{{ $json.remetente }}>\nAssunto original: {{ $json.assunto }}\n\n--- E-mail recebido ---\n{{ $json.corpo }}\n\n--- Resposta sugerida pela IA ---\n{{ $json.respostaIA }}\n\n(Envio automatico esta {{ $json.envioAutomatico ? \"LIGADO\" : \"DESLIGADO\" }})",
+        "options": {}
+      },
+      "id": "notificar-email",
+      "name": "Enviar Rascunho por E-mail",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [620, 260],
+      "credentials": {
+        "smtp": {
+          "name": "iCloud SMTP - contato@ateliersenzapari.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "cond-envio",
+              "leftValue": "={{ $json.envioAutomatico }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "envio-ativado",
+      "name": "Envio Automatico Ativado?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [840, 260]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $json.destinatario }}",
+        "toEmail": "={{ $json.remetente }}",
+        "subject": "=Re: {{ $json.assunto }}",
+        "text": "={{ $json.respostaIA }}",
+        "options": {}
+      },
+      "id": "enviar-resposta",
+      "name": "Enviar Resposta por E-mail",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1060, 180],
+      "credentials": {
+        "smtp": {
+          "name": "iCloud SMTP - contato@ateliersenzapari.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "aguardar-aprovacao",
+      "name": "Aguardar Aprovacao Manual",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1060, 380]
+    }
+  ],
+  "connections": {
+    "IMAP - Caixa Compartilhada": {
+      "main": [[{ "node": "Extrair Dados", "type": "main", "index": 0 }]]
+    },
+    "Extrair Dados": {
+      "main": [[{ "node": "Gerar Resposta (Claude)", "type": "main", "index": 0 }]]
+    },
+    "Gerar Resposta (Claude)": {
+      "main": [[{ "node": "Extrair Texto da Resposta", "type": "main", "index": 0 }]]
+    },
+    "Extrair Texto da Resposta": {
+      "main": [[{ "node": "Enviar Rascunho por E-mail", "type": "main", "index": 0 }]]
+    },
+    "Enviar Rascunho por E-mail": {
+      "main": [[{ "node": "Envio Automatico Ativado?", "type": "main", "index": 0 }]]
+    },
+    "Envio Automatico Ativado?": {
+      "main": [
+        [{ "node": "Enviar Resposta por E-mail", "type": "main", "index": 0 }],
+        [{ "node": "Aguardar Aprovacao Manual", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
