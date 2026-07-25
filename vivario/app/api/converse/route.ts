@@ -96,7 +96,9 @@ function messagesFor(
 }
 
 export async function POST(request: Request) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  // Chaves coladas de celular costumam vir com espaço ou quebra de linha, o que
+  // faz a Anthropic devolver 401 mesmo com a chave correta.
+  const apiKey = process.env.ANTHROPIC_API_KEY?.trim();
   if (!apiKey) {
     return Response.json(
       { error: "ANTHROPIC_API_KEY não está configurada no ambiente." },
@@ -169,12 +171,19 @@ export async function POST(request: Request) {
         send({ type: "done" });
       } catch (error) {
         if (!request.signal.aborted) {
-          const message =
-            error instanceof Anthropic.APIError
-              ? `Erro da API (${error.status}): ${error.message}`
-              : error instanceof Error
-                ? error.message
-                : "Erro desconhecido.";
+          // Sem isto o motivo real fica só no navegador e some dos logs da Vercel.
+          console.error("[converse] falha na chamada à Anthropic:", error);
+
+          let message: string;
+          if (error instanceof Anthropic.APIError && error.status === 401) {
+            message =
+              "A Anthropic recusou a chave (401). Confira se ANTHROPIC_API_KEY foi colada inteira, " +
+              "sem espaços, e se a chave ainda existe no console da Anthropic.";
+          } else if (error instanceof Anthropic.APIError) {
+            message = `Erro da API (${error.status}): ${error.message}`;
+          } else {
+            message = error instanceof Error ? error.message : "Erro desconhecido.";
+          }
           send({ type: "error", message });
         }
       } finally {
